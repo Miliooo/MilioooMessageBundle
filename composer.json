@@ -1,8 +1,8 @@
 {
-    "name": "milia/message-bundle",
+    "name": "miliooo/message-bundle",
     "type": "symfony-bundle",
-    "description": "Provides direct messages for your users",
-    "keywords": ["symfony", "message", "messaging, personal messages"],
+    "description": "Provides direct personal messages for your users",
+    "keywords": ["symfony", "message", "messaging", "messages"],
     "homepage": "https://github.com/Miliooo/MilioooMessageBundle",
     "license": "MIT",
     "authors": [
@@ -19,12 +19,12 @@
         "symfony/twig-bundle": "~2.3"
     },
     "autoload": {
-        "psr-0": {"Milioo\\MessageBundle": ""}
+        "psr-0": {"Miliooo": ""}
     },
-    "target-dir": "Milioo/MessageBundle",
+    "target-dir": "Miliooo",
     "extra": {
         "branch-alias": {
-            "dev-master": "master"
+            "dev-master": "master-dev"
         }
     }
 }

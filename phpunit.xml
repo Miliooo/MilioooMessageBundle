@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="bootstrap.php" color="true">
+    <php>
+        <ini name="xdebug.max_nesting_level" value="200" />
+    </php>
+    <testsuites>
+        <testsuite name="MiliooMessaging">
+            <directory suffix="Test.php">./Messaging/Tests</directory>
+        </testsuite>
+        <testsuite name="MiliooMessagingBundle">
+            <directory suffix="Test.php">./MessagingBundle/Tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>./</directory>
+            <exclude>
+                <directory>./vendor</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>
