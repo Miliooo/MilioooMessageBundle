@@ -1,0 +1,30 @@
+{
+    "name": "milia/message-bundle",
+    "type": "symfony-bundle",
+    "description": "Provides direct messages for your users",
+    "keywords": ["symfony", "message", "messaging, personal messages"],
+    "homepage": "https://github.com/Miliooo/MilioooMessageBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michiel Boeckaert",
+            "email": "boeckaert@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/form": "~2.3",
+        "symfony/framework-bundle": "~2.3",
+        "symfony/security": "~2.3",
+        "symfony/twig-bundle": "~2.3"
+    },
+    "autoload": {
+        "psr-0": {"Milioo\\MessageBundle": ""}
+    },
+    "target-dir": "Milioo/MessageBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "master"
+        }
+    }
+}
