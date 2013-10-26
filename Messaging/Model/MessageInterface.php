@@ -10,6 +10,10 @@
 
 namespace Miliooo\Messaging\Model;
 
+use Miliooo\Messaging\Model\ParticipantInterface;
+use Miliooo\Messaging\Model\MessageMetaInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * The message Interface
  *
@@ -34,7 +38,7 @@ interface MessageInterface
     /**
      * Sets the creation time of the message
      *
-     * @var \DateTime
+     * @param \DateTime $createdAt The time the message was created
      */
     public function setCreatedAt(\DateTime $createdAt);
 
@@ -51,4 +55,32 @@ interface MessageInterface
      * @param string $body The body
      */
     public function setBody($body);
+
+    /**
+     * Sets the sender of the message
+     *
+     * @param ParticipantInterface $sender The sender of the message
+     */
+    public function setSender(ParticipantInterface $sender);
+
+    /**
+     * Gets the sender of the message
+     *
+     * @return ParticipantInterface
+     */
+    public function getSender();
+
+    /**
+     * Adds message meta to the messageMeta collection
+     *
+     * @param MessageMetaInterface $messageMeta 
+     */
+    public function addMessageMeta(MessageMetaInterface $messageMeta);
+
+    /**
+     * Returns an array collection with message meta
+     *
+     * @return ArrayCollection collection of messageMeta
+     */
+    public function getMessageMeta();
 }

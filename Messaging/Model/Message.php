@@ -10,10 +10,14 @@
 
 namespace Miliooo\Messaging\Model;
 
+use Miliooo\Messaging\Model\ParticipantInterface;
+use Miliooo\Messaging\Model\MessageMetaInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * The message model
  *
- * @author Michiel Boeckaert <boeckaert@gmaiLcom>
+ * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
 abstract class Message implements MessageInterface
 {
@@ -32,11 +36,33 @@ abstract class Message implements MessageInterface
     protected $createdAt;
 
     /**
+     * The sender of the message
+     *
+     * @var ParticipantInterface
+     */
+    protected $sender;
+
+    /**
      * The body of the message
      * 
      * @var string
      */
     protected $body;
+
+    /**
+     * A collection of message metas
+     * @var ArrayCollection
+     */
+    protected $messageMeta;
+
+    /**
+     * Constructor.
+     * 
+     */
+    public function __construct()
+    {
+        $this->messageMeta = new ArrayCollection();
+    }
 
     /**
      * {@inheritdoc}
@@ -62,16 +88,53 @@ abstract class Message implements MessageInterface
         return $this->createdAt;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getBody()
     {
         return $this->body;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setBody($body)
     {
         $this->body = $body;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function setSender(ParticipantInterface $sender)
+    {
+        $this->sender = $sender;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSender()
+    {
+        return $this->sender;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addMessageMeta(MessageMetaInterface $messageMeta)
+    {
+        $this->messageMeta->add($messageMeta);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMessageMeta()
+    {
+        return $this->messageMeta;
+    }
 }
 
 

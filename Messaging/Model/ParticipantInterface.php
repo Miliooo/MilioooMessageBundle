@@ -1,5 +1,7 @@
 <?php
 
+namespace Miliooo\Messaging\Model;
+
 /*
  * This file is part of the MilioooMessageBundle package.
  *
@@ -9,11 +11,20 @@
  */
 
 /**
- * Description of ParticipantInterface
+ * This is the interface your user class should implement
  *
- * @author michiel
+ * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class ParticipantInterface
+interface ParticipantInterface
 {
-    //put your code here
+
+    /**
+     * Gets an uniqie identifier for the participant
+     *
+     * In most cases should be the id of the user but it can be anything
+     * that uniquely represents a participant
+     *
+     * @return string The unique identifier
+     */
+    public function getParticipantId();
 }

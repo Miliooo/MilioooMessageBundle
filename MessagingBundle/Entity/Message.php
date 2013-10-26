@@ -13,7 +13,7 @@ namespace Miliooo\MessagingBundle\Entity;
 use Miliooo\Messaging\Model\Message as BaseMessage;
 
 /**
- * Description of Message
+ * The message class
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
