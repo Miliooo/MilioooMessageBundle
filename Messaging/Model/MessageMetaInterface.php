@@ -11,6 +11,7 @@
 namespace Miliooo\Messaging\Model;
 
 use Miliooo\Messaging\Model\ParticipantInterface;
+use Miliooo\Messaging\Model\MessageInterface;
 
 /**
  * Interface for the message meta
@@ -46,4 +47,18 @@ interface MessageMetaInterface
      * @return boolean true if it's read false otherwise
      */
     public function getIsRead();
+
+    /**
+     * Sets the message this message meta belongs to
+     *
+     * @param MessageInterface $message The message this meta belongs to
+     */
+    public function setMessage(MessageInterface $message);
+
+    /**
+     * Gets the message from the messagemeta
+     *
+     * @return MessageInterface The message this meta belongs to
+     */
+    public function getMessage();
 }

@@ -11,6 +11,7 @@
 namespace Miliooo\Messaging\Model;
 
 use Miliooo\Messaging\Model\ParticipantInterface;
+use Miliooo\Messaging\Model\MessageInterface;
 
 /**
  * The message meta model class
@@ -31,7 +32,7 @@ abstract class MessageMeta implements MessageMetaInterface
      * 
      * @var boolean true if it's read by the given participant, false otherwise
      */
-    protected $isRead;
+    protected $isRead = false;
 
     /**
      * {@inheritdoc}
@@ -63,5 +64,21 @@ abstract class MessageMeta implements MessageMetaInterface
     public function getIsRead()
     {
         return $this->isRead;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setMessage(MessageInterface $message)
+    {
+        $this->message = $message;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMessage()
+    {
+        return $this->message;
     }
 }

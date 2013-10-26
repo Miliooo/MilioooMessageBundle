@@ -11,6 +11,8 @@
 namespace Miliooo\Messaging\Tests\Model;
 
 use Miliooo\Messaging\Model\Message;
+use Miliooo\Messaging\Tests\TestHelpers\ParticipantTestHelper;
+use Miliooo\Messaging\Model\MessageMeta;
 
 /**
  * Test file for the message model
@@ -62,10 +64,54 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($sender, $this->message->getSender());
     }
 
-    public function testAddMessageMetaWorks()
+    public function testAddMessageMetaAddsItToTheArrayCollection()
     {
         $messageMetaMock = $this->getMock('Miliooo\Messaging\Model\MessageMetaInterface');
         $this->message->addMessageMeta($messageMetaMock);
         $this->assertTrue($this->message->getMessageMeta()->contains($messageMetaMock));
+    }
+
+    public function testAddMessageMetaSetsTheCurrentMessage()
+    {
+        $messageMetaMock = $this->getMock('Miliooo\Messaging\Model\MessageMetaInterface');
+        $messageMetaMock->expects($this->once())->method('setMessage')->with($this->message);
+        $this->message->addMessageMeta($messageMetaMock);
+    }
+
+    public function testGetMessageMetaForParticipant()
+    {
+        $participant1 = new ParticipantTestHelper(1);
+        $participant2 = new ParticipantTestHelper(2);
+
+        $messageMetaMock1 = $this->getNewMessageMeta();
+        $messageMetaMock1->setParticipant($participant1);
+
+        $this->message->addMessageMeta($messageMetaMock1);
+        $messageMetaMock2 = $this->getNewMessageMeta();
+        $messageMetaMock2->setParticipant($participant2);
+        $this->message->addMessageMeta($messageMetaMock2);
+        $this->assertEquals($messageMetaMock2, $this->message->getMessageMetaForParticipant($participant2));
+    }
+
+    public function testGetMessageMetaForParticipantReturnsNullWhenNotFound()
+    {
+        $participant = new ParticipantTestHelper(100);
+        $messageMeta = $this->getNewMessageMeta();
+        $messageMeta->setParticipant($participant);
+
+        $this->message->addMessageMeta($messageMeta);
+
+        $participant20 = new ParticipantTestHelper(20);
+        $this->assertNull($this->message->getMessageMetaForParticipant($participant20));
+    }
+
+    /**
+     * Helper function
+     * 
+     * @return MessageMeta
+     */
+    protected function getNewMessageMeta()
+    {
+        return $this->getMockForAbstractClass('Miliooo\Messaging\Model\MessageMeta');
     }
 }

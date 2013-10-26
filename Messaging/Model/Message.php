@@ -125,6 +125,7 @@ abstract class Message implements MessageInterface
      */
     public function addMessageMeta(MessageMetaInterface $messageMeta)
     {
+        $messageMeta->setMessage($this);
         $this->messageMeta->add($messageMeta);
     }
 
@@ -134,5 +135,19 @@ abstract class Message implements MessageInterface
     public function getMessageMeta()
     {
         return $this->messageMeta;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMessageMetaForParticipant(ParticipantInterface $participant)
+    {
+        foreach ($this->messageMeta as $meta) {
+            if ($meta->getParticipant()->getParticipantId() === $participant->getParticipantId()) {
+                return $meta;
+            }
+        }
+
+        return null;
     }
 }

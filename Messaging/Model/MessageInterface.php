@@ -83,4 +83,13 @@ interface MessageInterface
      * @return ArrayCollection collection of messageMeta
      */
     public function getMessageMeta();
+
+    /**
+     * Gets message meta for the given participant
+     *
+     * @param ParticipantInterface $participant The participant
+     *
+     * @return MessageMetaInterface|null The messagemeta or null when not found
+     */
+    public function getMessageMetaForParticipant(ParticipantInterface $participant);
 }

@@ -50,4 +50,16 @@ class MessageMetaTest extends \PHPUnit_Framework_TestCase
         $this->messageMeta->setIsRead(false);
         $this->assertFalse($this->messageMeta->getIsRead());
     }
+
+    public function testIsReadDefaultsToFalse()
+    {
+        $this->assertAttributeEquals(false, 'isRead', $this->messageMeta);
+    }
+
+    public function testMessageWorks()
+    {
+        $message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');
+        $this->messageMeta->setMessage($message);
+        $this->assertSame($message, $this->messageMeta->getMessage());
+    }
 }
