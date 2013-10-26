@@ -19,7 +19,6 @@ use Miliooo\Messaging\Model\MessageMeta;
  */
 class MessageMetaTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * The class under test
      * 

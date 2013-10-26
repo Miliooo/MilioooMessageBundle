@@ -17,7 +17,6 @@ namespace Miliooo\Messaging\Model;
  */
 interface ParticipantInterface
 {
-
     /**
      * Gets an uniqie identifier for the participant
      *

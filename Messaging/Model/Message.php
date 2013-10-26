@@ -136,5 +136,3 @@ abstract class Message implements MessageInterface
         return $this->messageMeta;
     }
 }
-
-
