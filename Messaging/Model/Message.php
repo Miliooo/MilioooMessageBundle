@@ -13,6 +13,7 @@ namespace Miliooo\Messaging\Model;
 use Miliooo\Messaging\Model\ParticipantInterface;
 use Miliooo\Messaging\Model\MessageMetaInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
  * The message model
@@ -51,9 +52,17 @@ abstract class Message implements MessageInterface
 
     /**
      * A collection of message metas
+     * 
      * @var ArrayCollection
      */
     protected $messageMeta;
+
+    /**
+     * The thread this message belongs to
+     *
+     * @var ThreadInterface
+     */
+    protected $thread;
 
     /**
      * Constructor.
@@ -149,5 +158,21 @@ abstract class Message implements MessageInterface
         }
 
         return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setThread(ThreadInterface $thread)
+    {
+        $this->thread = $thread;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getThread()
+    {
+        return $this->thread;
     }
 }

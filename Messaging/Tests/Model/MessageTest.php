@@ -105,6 +105,13 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->message->getMessageMetaForParticipant($participant20));
     }
 
+    public function testThreadWorks()
+    {
+        $thread = $this->getMock('Miliooo\Messaging\Model\ThreadInterface');
+        $this->message->setThread($thread);
+        $this->assertSame($thread, $this->message->getThread());
+    }
+
     /**
      * Helper function
      * 

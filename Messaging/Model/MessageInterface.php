@@ -13,6 +13,7 @@ namespace Miliooo\Messaging\Model;
 use Miliooo\Messaging\Model\ParticipantInterface;
 use Miliooo\Messaging\Model\MessageMetaInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
  * The message Interface
@@ -92,4 +93,18 @@ interface MessageInterface
      * @return MessageMetaInterface|null The messagemeta or null when not found
      */
     public function getMessageMetaForParticipant(ParticipantInterface $participant);
+
+    /**
+     * Sets the thread this message belongs to
+     *
+     * @param ThreadInterface $thread The thread this message belongs to
+     */
+    public function setThread(ThreadInterface $thread);
+
+    /**
+     * Gets the thread this message belongs to
+     *
+     * @return ThreadInterface the thread this message belongs to
+     */
+    public function getThread();
 }
