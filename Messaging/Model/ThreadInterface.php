@@ -12,6 +12,7 @@ namespace Miliooo\Messaging\Model;
 
 use Miliooo\Messaging\Model\ParticipantInterface;
 use Miliooo\Messaging\Model\MessageInterface;
+use Miliooo\Messaging\Model\ThreadMetaInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -93,4 +94,27 @@ interface ThreadInterface
      * @return MessageInterface The last message of the thread
      */
     public function getLastMessage();
+
+    /**
+     * Adds thread meta to the thread meta collection
+     *
+     * @param ThreadMetaInterface $threadMeta
+     */
+    public function addThreadMeta(ThreadMetaInterface $threadMeta);
+
+    /**
+     * Returns an array collection with thread meta
+     *
+     * @return ArrayCollection An ArrayCollection of threadmeta
+     */
+    public function getThreadMeta();
+
+    /**
+     * Gets thread meta for the given participant
+     *
+     * @param ParticipantInterface $participant The participant
+     *
+     * @return ThreadMetaInterface
+     */
+    public function getThreadMetaForParticipant(ParticipantInterface $participant);
 }

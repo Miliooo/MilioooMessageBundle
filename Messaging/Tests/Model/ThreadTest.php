@@ -12,6 +12,8 @@ namespace Miliooo\Messaging\Tests\Model;
 
 use Miliooo\Messaging\Model\Thread;
 use Miliooo\Messaging\Model\Message;
+use Miliooo\Messaging\Tests\TestHelpers\ParticipantTestHelper;
+use Miliooo\Messaging\Model\ThreadMeta;
 
 /**
  * Test file for the thread model
@@ -66,7 +68,12 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
 
     public function testMessagesIsAnArrayCollection()
     {
-        $this->assertAttributeInstanceOf('Doctrine\Common\Collections\ArrayCollection', 'messages', $this->thread);
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $this->thread->getMessages());
+    }
+
+    public function testThreadMetaIsAnArrayCollection()
+    {
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $this->thread->getThreadMeta());
     }
 
     public function testAddMessageWorksByCheckingItIsPartOfTheGetMessages()
@@ -77,6 +84,14 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($messages->contains($message));
     }
 
+    public function testAddThreadMetaWorksByCheckingItIsPartOfTheGetThreadMeta()
+    {
+        $threadMeta = $this->getMock('Miliooo\Messaging\Model\ThreadMetaInterface');
+        $this->thread->addThreadMeta($threadMeta);
+        $threadMetas = $this->thread->getThreadMeta();
+        $this->assertTrue($threadMetas->contains($threadMeta));
+    }
+
     public function testAddMessageSetsTheMessageThreadToCurrentThread()
     {
         $message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');
@@ -84,14 +99,29 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
         $this->thread->addMessage($message);
     }
 
+    public function testAddThreadMetaSetsTheThreadMetaToTheCurrentThread()
+    {
+        $threadMeta = $this->getMock('Miliooo\Messaging\Model\ThreadMetaInterface');
+        $threadMeta->expects($this->once())->method('setThread')->with($this->thread);
+        $this->thread->addThreadMeta($threadMeta);
+    }
+
     public function testGetMessagesReturnsRightAmountOfmessages()
     {
         $message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');
+        $this->assertCount(0, $this->thread->getMessages());
         $this->thread->addMessage($message);
         $this->thread->addMessage($message);
         $this->assertCount(2, $this->thread->getMessages());
-        $this->thread->addMessage($message);
-        $this->assertCount(3, $this->thread->getMessages());
+    }
+
+    public function testGetThreadMetaReturnsRightAmountOfMetas()
+    {
+        $threadMeta = $this->getMock('Miliooo\Messaging\Model\ThreadMetaInterface');
+        $this->assertCount(0, $this->thread->getThreadMeta());
+        $this->thread->addThreadMeta($threadMeta);
+        $this->thread->addThreadMeta($threadMeta);
+        $this->assertCount(2, $this->thread->getThreadMeta());
     }
 
     public function testGetFirstMessage()
@@ -120,6 +150,34 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('this is the second message', $this->thread->getLastMessage()->getBody());
     }
 
+    public function testGetThreadMetaForParticipant()
+    {
+        $participant1 = new ParticipantTestHelper(1);
+        $threadMeta = $this->getNewThreadMeta();
+        $threadMeta->setParticipant($participant1);
+        $this->thread->addThreadMeta($threadMeta);
+
+        $participant2 = new ParticipantTestHelper(2);
+        $threadMeta2 = $this->getNewThreadMeta();
+        $threadMeta2->setParticipant($participant2);
+        $this->thread->addThreadMeta($threadMeta2);
+
+        $this->assertSame($threadMeta2, $this->thread->getThreadMetaForParticipant($participant2));
+    }
+
+    public function testGetThreadMetaForParticipantReturnsNullWhenNotFound()
+    {
+        $participant1 = new ParticipantTestHelper(1);
+
+        $this->assertNull($this->thread->getThreadMetaForParticipant($participant1));
+        $threadMeta = $this->getNewThreadMeta();
+        $threadMeta->setParticipant($participant1);
+        $this->thread->addThreadMeta($threadMeta);
+
+        $participant2 = new ParticipantTestHelper(2);
+        $this->assertNull($this->thread->getThreadMetaForParticipant($participant2));
+    }
+
     /**
      * Helper function to get a new message instance from an abstract class
      * 
@@ -128,5 +186,15 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
     protected function getNewMessage()
     {
         return $this->getMockForAbstractClass('Miliooo\Messaging\Model\Message');
+    }
+
+    /**
+     * Helper function to get a new thread meta from an abstract class
+     * 
+     * @return ThreadMeta
+     */
+    protected function getNewThreadMeta()
+    {
+        return $this->getMockForAbstractClass('Miliooo\Messaging\Model\ThreadMeta');
     }
 }

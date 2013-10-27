@@ -50,11 +50,18 @@ abstract class Thread implements ThreadInterface
     protected $createdAt;
 
     /**
-     * An array collection of messages who belong to this thread
+     * An array collection of messages for this thread
      * 
      * @var ArrayCollection
      */
     protected $messages;
+
+    /**
+     * An array collection of thread metas for this thread
+     *
+     * @var ArrayCollection
+     */
+    protected $threadMeta;
 
     /**
      * Constructor.
@@ -63,6 +70,7 @@ abstract class Thread implements ThreadInterface
     public function __construct()
     {
         $this->messages = new ArrayCollection();
+        $this->threadMeta = new ArrayCollection();
     }
 
     /**
@@ -152,5 +160,36 @@ abstract class Thread implements ThreadInterface
     public function getLastMessage()
     {
         return $this->messages->last();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getThreadMeta()
+    {
+        return $this->threadMeta;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addThreadMeta(ThreadMetaInterface $threadMeta)
+    {
+        $threadMeta->setThread($this);
+        $this->threadMeta->add($threadMeta);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getThreadMetaForParticipant(ParticipantInterface $participant)
+    {
+        foreach ($this->threadMeta as $meta) {
+            if ($meta->getParticipant()->getParticipantId() == $participant->getParticipantId()) {
+                return $meta;
+            }
+        }
+
+        return null;
     }
 }

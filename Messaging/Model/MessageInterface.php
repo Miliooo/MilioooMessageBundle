@@ -81,7 +81,7 @@ interface MessageInterface
     /**
      * Returns an array collection with message meta
      *
-     * @return ArrayCollection collection of messageMeta
+     * @return ArrayCollection An ArrayCollection of messageMeta
      */
     public function getMessageMeta();
 
