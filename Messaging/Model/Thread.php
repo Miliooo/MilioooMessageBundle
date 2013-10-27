@@ -11,6 +11,8 @@
 namespace Miliooo\Messaging\Model;
 
 use Miliooo\Messaging\Model\ParticipantInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Miliooo\Messaging\Model\MessageInterface;
 
 /**
  * The thread model
@@ -46,6 +48,22 @@ abstract class Thread implements ThreadInterface
      * @var \DateTime
      */
     protected $createdAt;
+
+    /**
+     * An array collection of messages who belong to this thread
+     * 
+     * @var ArrayCollection
+     */
+    protected $messages;
+
+    /**
+     * Constructor.
+     * 
+     */
+    public function __construct()
+    {
+        $this->messages = new ArrayCollection();
+    }
 
     /**
      * {@inheritdoc}
@@ -101,5 +119,38 @@ abstract class Thread implements ThreadInterface
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addMessage(MessageInterface $message)
+    {
+        $message->setThread($this);
+        $this->messages->add($message);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMessages()
+    {
+        return $this->messages;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFirstMessage()
+    {
+        return $this->messages->first();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLastMessage()
+    {
+        return $this->messages->last();
     }
 }

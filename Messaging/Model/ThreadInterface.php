@@ -11,6 +11,8 @@
 namespace Miliooo\Messaging\Model;
 
 use Miliooo\Messaging\Model\ParticipantInterface;
+use Miliooo\Messaging\Model\MessageInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * The interface class used by the thread model
@@ -63,4 +65,32 @@ interface ThreadInterface
      * Gets the datetime when the thread was created
      */
     public function getCreatedAt();
+
+    /**
+     * Adds a message to the thread
+     *
+     * @param MessageInterface $message
+     */
+    public function addMessage(MessageInterface $message);
+
+    /**
+     * Gets all the messages contained in the thread
+     *
+     * @return ArrayCollection
+     */
+    public function getMessages();
+
+    /**
+     * Gets the first message of the thread
+     *
+     * @return MessageInterface The first message of the thread
+     */
+    public function getFirstMessage();
+
+    /**
+     * Gets the last message of the thread
+     *
+     * @return MessageInterface The last message of the thread
+     */
+    public function getLastMessage();
 }
