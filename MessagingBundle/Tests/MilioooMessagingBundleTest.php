@@ -35,7 +35,7 @@ class MilioooMessagingBundleTest extends \PHPUnit_Framework_TestCase
     public function testBuild()
     {
         $container = $this->getMock('\Symfony\Component\DependencyInjection\ContainerBuilder');
-        $container->expects($this->never())>method('addCompilerPass');
+        $container->expects($this->never())->method('addCompilerPass');
         $bundle = new MilioooMessagingBundle();
         $bundle->build($container);
     }
