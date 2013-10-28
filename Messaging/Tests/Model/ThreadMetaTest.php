@@ -55,7 +55,7 @@ class ThreadMetaTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->threadMeta->getIsArchived());
     }
 
-    public function testIsDeletedWorks()
+    public function testIsArchivedWorks()
     {
         $this->threadMeta->setIsArchived(true);
         $this->assertTrue($this->threadMeta->getIsArchived());
