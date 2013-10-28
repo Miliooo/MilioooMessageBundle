@@ -10,6 +10,8 @@
 
 namespace Miliooo\Messaging\Builder;
 
+use Miliooo\Messaging\Model\ParticipantInterface;
+
 /**
  * AbstractNewMessageBuilder.
  * 
@@ -20,6 +22,28 @@ namespace Miliooo\Messaging\Builder;
  */
 abstract class AbstractNewMessageBuilder
 {
+    /**
+     * The sender of a new message
+     *
+     * @var ParticipantInterface
+     */
+    protected $sender;
+
+    /**
+     * The body of the message
+     *
+     * @var type
+     */
+    protected $body;
+
+    /**
+     * The creation date of the message
+     * If we build a new thread also the creation date of the new thread
+     *
+     * @var \DateTime
+     */
+    protected $createdAt;
+
     /**
      * Fully qualified namespace of the custom message class
      *
@@ -86,5 +110,36 @@ abstract class AbstractNewMessageBuilder
     public function setThreadMetaClass($threadMetaClass)
     {
         $this->threadMetaClass = $threadMetaClass;
+    }
+
+    /**
+     * Sets the sender of the thread and message
+     *
+     * @param ParticipantInterface $sender
+     */
+    public function setSender(ParticipantInterface $sender)
+    {
+        $this->sender = $sender;
+    }
+
+    /**
+     * Sets the body of the message
+     *
+     * @param string $body
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+    }
+
+    /**
+     * Sets the creation date and time of the message
+     * If a new thread this is also the creation date and time of the new thread
+     *
+     * @param \Datetime $dateTime
+     */
+    public function setCreatedAt(\Datetime $dateTime)
+    {
+        $this->createdAt = $dateTime;
     }
 }

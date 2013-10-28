@@ -65,7 +65,6 @@ abstract class Thread implements ThreadInterface
 
     /**
      * Constructor.
-     * 
      */
     public function __construct()
     {

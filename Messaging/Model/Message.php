@@ -65,8 +65,7 @@ abstract class Message implements MessageInterface
     protected $thread;
 
     /**
-     * Constructor.
-     * 
+     * Constructor. 
      */
     public function __construct()
     {

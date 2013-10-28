@@ -31,7 +31,6 @@ class AbstractNewMessageBuilderTest extends \PHPUnit_Framework_TestCase
         $this->abstractNewMessageBuilder = $this->getMockForAbstractClass('Miliooo\Messaging\Builder\AbstractNewMessageBuilder');
     }
 
-
     public function testSetMessageClassWorks()
     {
         $this->abstractNewMessageBuilder->setMessageClass('\Acme\Demo\Domain\Model\Message');
@@ -54,5 +53,26 @@ class AbstractNewMessageBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $this->abstractNewMessageBuilder->setThreadMetaClass('\Acme\Demo\Domain\Model\ThreadMeta');
         $this->assertAttributeEquals('\Acme\Demo\Domain\Model\ThreadMeta', 'threadMetaClass', $this->abstractNewMessageBuilder);
+    }
+
+    public function testSetSenderWorks()
+    {
+        $sender = $this->getMock('Miliooo\Messaging\Model\ParticipantInterface');
+        $this->abstractNewMessageBuilder->setSender($sender);
+        $this->assertAttributeEquals($sender, 'sender', $this->abstractNewMessageBuilder);
+    }
+
+    public function testSetBodyWorks()
+    {
+        $body = 'message body';
+        $this->abstractNewMessageBuilder->setBody($body);
+        $this->assertAttributeEquals($body, 'body', $this->abstractNewMessageBuilder);
+    }
+
+    public function testSetCreatedAtWorks()
+    {
+        $createdAt = new \DateTime('2013-10-09 23:22:11');
+        $this->abstractNewMessageBuilder->setCreatedAt($createdAt);
+        $this->assertAttributeEquals($createdAt, 'createdAt', $this->abstractNewMessageBuilder);
     }
 }
