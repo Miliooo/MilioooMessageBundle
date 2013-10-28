@@ -71,14 +71,19 @@ class MilioooMessagingExtensionTest extends \PHPUnit_Framework_TestCase
     public function testMessagingLoadModelClassesWithDefaults()
     {
         $this->createEmptyConfiguration();
-
         $this->assertParameter('\Acme\MyBundle\Entity\Message', 'miliooo_messaging.message_class');
         $this->assertParameter('\Acme\MyBundle\Entity\MessageMeta', 'miliooo_messaging.message_meta_class');
         $this->assertParameter('\Acme\MyBundle\Entity\Thread', 'miliooo_messaging.thread_class');
         $this->assertParameter('\Acme\MyBundle\Entity\ThreadMeta', 'miliooo_messaging.thread_meta_class');
     }
 
-    protected function createEmptyConfiguration()
+    public function testMessagingLoadsDefinitionsFromBuildersXml()
+    {
+        $this->createEmptyConfiguration();
+        $this->assertHasDefinition('miliooo_messaging.abstract_new_message_builder');
+    }
+
+protected function createEmptyConfiguration()
     {
         $this->containerBuilder = new ContainerBuilder();
         $loader = new MilioooMessagingExtension();
@@ -124,15 +129,5 @@ EOF;
     private function assertHasDefinition($id)
     {
         $this->assertTrue(($this->containerBuilder->hasDefinition($id) || $this->containerBuilder->hasAlias($id)));
-    }
-
-    /**
-     * Asserts that a definition does not exist
-     *
-     * @param string $id
-     */
-    private function assertNotHasDefinition($id)
-    {
-        $this->assertFalse(($this->containerBuilder->hasDefinition($id) || $this->containerBuilder->hasAlias($id)));
     }
 }
