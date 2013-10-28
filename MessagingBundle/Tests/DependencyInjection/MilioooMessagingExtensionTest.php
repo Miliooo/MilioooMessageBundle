@@ -83,7 +83,7 @@ class MilioooMessagingExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertHasDefinition('miliooo_messaging.abstract_new_message_builder');
     }
 
-protected function createEmptyConfiguration()
+    protected function createEmptyConfiguration()
     {
         $this->containerBuilder = new ContainerBuilder();
         $loader = new MilioooMessagingExtension();
@@ -118,7 +118,7 @@ EOF;
      */
     private function assertParameter($value, $key)
     {
-        $this->assertEquals($value, $this->containerBuilder->getParameter($key), sprintf('%s parameter is correct', $key));
+        $this->assertEquals($value, $this->containerBuilder->getParameter($key));
     }
 
     /**
