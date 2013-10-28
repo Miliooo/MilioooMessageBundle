@@ -28,9 +28,13 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('miliooo_messaging');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->scalarNode('thread_class')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('thread_meta_class')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('message_class')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('message_meta_class')->isRequired()->cannotBeEmpty()->end()
+            ->end();
 
         return $treeBuilder;
     }
