@@ -23,7 +23,6 @@ class MilioooMessagingBundleTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-
         $this->MilioooMessagingBundle = new MilioooMessagingBundle;
     }
 
@@ -34,7 +33,7 @@ class MilioooMessagingBundleTest extends \PHPUnit_Framework_TestCase
 
     //useless test but we'll know if we add a compilerpass to update this
     public function testBuild()
-    {        
+    {
         $container = $this->getMock('\Symfony\Component\DependencyInjection\ContainerBuilder');
         $container->expects($this->never())
             ->method('addCompilerPass');
