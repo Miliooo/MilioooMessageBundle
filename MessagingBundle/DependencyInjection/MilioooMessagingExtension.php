@@ -32,5 +32,10 @@ class MilioooMessagingExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('builders.xml');
+
+        $container->setParameter('miliooo_messaging.thread_class', $config['thread_class']);
+        $container->setParameter('miliooo_messaging.thread_meta_class', $config['thread_meta_class']);
+        $container->setParameter('miliooo_messaging.message_class', $config['message_class']);
+        $container->setParameter('miliooo_messaging.message_meta_class', $config['message_meta_class']);
     }
 }
