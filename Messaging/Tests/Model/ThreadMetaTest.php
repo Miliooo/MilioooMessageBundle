@@ -49,18 +49,18 @@ class ThreadMetaTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($participant, $this->threadMeta->getParticipant());
     }
 
-    public function testIsDeletedDefaultsToFalse()
+    public function testIsArchivedDefaultsToFalse()
     {
-        $this->AssertAttributeEquals(false, 'isDeleted', $this->threadMeta);
-        $this->assertFalse($this->threadMeta->getIsDeleted());
+        $this->AssertAttributeEquals(false, 'isArchived', $this->threadMeta);
+        $this->assertFalse($this->threadMeta->getIsArchived());
     }
 
     public function testIsDeletedWorks()
     {
-        $this->threadMeta->setIsDeleted(true);
-        $this->assertTrue($this->threadMeta->getIsDeleted());
-        $this->threadMeta->setIsDeleted(false);
-        $this->assertFalse($this->threadMeta->getIsDeleted());
+        $this->threadMeta->setIsArchived(true);
+        $this->assertTrue($this->threadMeta->getIsArchived());
+        $this->threadMeta->setIsArchived(false);
+        $this->assertFalse($this->threadMeta->getIsArchived());
     }
 
     public function testLastParticipantMessageDateWorks()

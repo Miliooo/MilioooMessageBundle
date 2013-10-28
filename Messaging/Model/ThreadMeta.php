@@ -42,11 +42,11 @@ abstract class ThreadMeta implements ThreadMetaInterface
     protected $participant;
 
     /**
-     * The deleted value of the thread for the given participant
+     * The archived status of the thread for the given participant
      * 
      * @var boolean
      */
-    protected $isDeleted = false;
+    protected $isArchived = false;
 
     /**
      * Datetime of the last message written by the participant
@@ -107,17 +107,17 @@ abstract class ThreadMeta implements ThreadMetaInterface
     /**
      * {@inheritdoc}
      */
-    public function getIsDeleted()
+    public function getIsArchived()
     {
-        return $this->isDeleted;
+        return $this->isArchived;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setIsDeleted($boolean)
+    public function setIsArchived($boolean)
     {
-        $this->isDeleted = (bool) $boolean;
+        $this->isArchived = (bool) $boolean;
     }
 
     /**

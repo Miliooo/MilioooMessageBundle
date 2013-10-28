@@ -56,24 +56,24 @@ interface ThreadMetaInterface
     public function getThread();
 
     /**
-     * Gets if the thread is deleted by the participant.
+     * Gets if the thread is archived by the participant.
      *
-     * It returns true if the thread is deleted by the participant,
-     * false if the thread is not deleted by the participant
+     * It returns true if the thread is archived by the participant,
+     * false if the thread is not archived by the participant
      *
-     * return boolean true if thread deleted for the participant, false otherwise
+     * return boolean true if thread is archived for the participant, false otherwise
      */
-    public function getIsDeleted();
+    public function getIsArchived();
 
     /**
-     * Sets the delete status of the thread for the given participant.
+     * Sets the archived status of the thread for the given participant.
      *
-     * True marks this thread as deleted for the participant
-     * False marks this thread as not deleted for the participant
+     * True marks this thread as archived for the participant
+     * False marks this thread as not archived for the participant
      *
-     * @param boolean $boolean true if deleted for participant, false otherwise
+     * @param boolean $boolean true if archived for participant, false otherwise
      */
-    public function setIsDeleted($boolean);
+    public function setIsArchived($boolean);
 
     /**
      * Gets the datetime when the participant has written his last message for
