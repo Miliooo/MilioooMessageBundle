@@ -13,7 +13,9 @@ namespace Miliooo\MessagingBundle\Entity;
 use Miliooo\Messaging\Model\MessageMeta as ModelMessageMeta;
 
 /**
- * Abstract class messagemeta
+ * Abstract class MessageMeta.
+ *
+ * This class is needed for doctrine xml mapping
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */

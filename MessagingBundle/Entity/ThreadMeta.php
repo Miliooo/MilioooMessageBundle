@@ -13,7 +13,9 @@ namespace Miliooo\MessagingBundle\Entity;
 use Miliooo\Messaging\Model\ThreadMeta as ModelThreadMeta;
 
 /**
- * Description of ThreadMeta
+ * Abstract class ThreadMeta.
+ *
+ * This class is needed for doctrine xml mapping
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */

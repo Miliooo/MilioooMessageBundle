@@ -13,7 +13,9 @@ namespace Miliooo\MessagingBundle\Entity;
 use Miliooo\Messaging\Model\Message as ModelMessage;
 
 /**
- * Abstract Message class
+ * Abstract class Message.
+ *
+ * This class is needed for doctrine xml mapping
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */

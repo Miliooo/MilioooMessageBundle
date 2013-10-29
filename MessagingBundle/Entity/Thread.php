@@ -13,7 +13,9 @@ namespace Miliooo\MessagingBundle\Entity;
 use Miliooo\Messaging\Model\Thread as ModelThread;
 
 /**
- * Description of Thread
+ * Abstract class Thread.
+ *
+ * This class is needed for doctrine xml mapping
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
