@@ -2,7 +2,7 @@
 
 /*
  * This file is part of the MilioooMessageBundle package.
- * 
+ *
  * (c) Michiel boeckaert <boeckaert@gmail.com>
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -23,14 +23,14 @@ abstract class Thread implements ThreadInterface
 {
     /**
      * The unique id of the thread
-     * 
+     *
      * @var integer
      */
     protected $id;
 
     /**
      * The subject of the thread
-     * 
+     *
      * @var string
      */
     protected $subject;
@@ -51,7 +51,7 @@ abstract class Thread implements ThreadInterface
 
     /**
      * An array collection of messages for this thread
-     * 
+     *
      * @var ArrayCollection
      */
     protected $messages;
@@ -64,12 +64,20 @@ abstract class Thread implements ThreadInterface
     protected $threadMeta;
 
     /**
+     * An array collection with participants
+     *
+     * @var ArrayCollection
+     */
+    protected $participants;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
         $this->messages = new ArrayCollection();
         $this->threadMeta = new ArrayCollection();
+        $this->participants = new ArrayCollection();
     }
 
     /**
@@ -190,5 +198,17 @@ abstract class Thread implements ThreadInterface
         }
 
         return null;
+    }
+
+    public function addParticipant(ParticipantInterface $participant)
+    {
+        if (!$this->participants->contains($participant)) {
+           $this->participants->add($participant);
+        }
+    }
+
+    public function getParticipants()
+    {
+        return $this->participants();
     }
 }

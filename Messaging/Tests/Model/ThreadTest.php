@@ -2,7 +2,7 @@
 
 /*
  * This file is part of the MilioooMessageBundle package.
- * 
+ *
  * (c) Michiel boeckaert <boeckaert@gmail.com>
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -72,6 +72,11 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
     }
 
     public function testThreadMetaIsAnArrayCollection()
+    {
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $this->thread->getThreadMeta());
+    }
+
+    public function testParticipantsIsAnArrayCollection()
     {
         $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $this->thread->getThreadMeta());
     }
@@ -180,7 +185,7 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Helper function to get a new message instance from an abstract class
-     * 
+     *
      * @return Message
      */
     protected function getNewMessage()
@@ -190,7 +195,7 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Helper function to get a new thread meta from an abstract class
-     * 
+     *
      * @return ThreadMeta
      */
     protected function getNewThreadMeta()

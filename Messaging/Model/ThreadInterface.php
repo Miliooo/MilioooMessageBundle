@@ -2,7 +2,7 @@
 
 /*
  * This file is part of the MilioooMessageBundle package.
- * 
+ *
  * (c) Michiel boeckaert <boeckaert@gmail.com>
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -117,4 +117,19 @@ interface ThreadInterface
      * @return ThreadMetaInterface
      */
     public function getThreadMetaForParticipant(ParticipantInterface $participant);
+
+    /**
+     * Adds an participant to the thread.
+     *
+     * Adds an participant to the thread. If the participant is allready part
+     * of the participants of the thread nothing happens
+     *
+     * @param ParticipantInterface $participant The participant who we add
+     */
+    public function addParticipant(ParticipantInterface $participant);
+
+    /**
+     * Gets all the participants for the current thread
+     */
+    public function getParticipants();
 }
