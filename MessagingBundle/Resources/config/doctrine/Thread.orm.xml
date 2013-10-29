@@ -4,7 +4,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                   http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <mapped-superclass name="Miliooo\Messaging\Model\Thread">
+    <mapped-superclass name="Miliooo\MessagingBundle\Entity\Thread">
 
         <field name="subject" column="subject" type="string" />
 

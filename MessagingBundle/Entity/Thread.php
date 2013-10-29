@@ -10,7 +10,7 @@
 
 namespace Miliooo\MessagingBundle\Entity;
 
-use Miliooo\Messaging\Model\Thread as BaseThread;
+use Miliooo\Messaging\Model\Thread as ModelThread;
 
 /**
  * Description of Thread
