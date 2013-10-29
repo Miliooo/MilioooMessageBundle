@@ -202,8 +202,9 @@ abstract class Thread implements ThreadInterface
 
     public function addParticipant(ParticipantInterface $participant)
     {
+
         if (!$this->participants->contains($participant)) {
-           $this->participants->add($participant);
+            $this->participants->add($participant);
         }
     }
 
