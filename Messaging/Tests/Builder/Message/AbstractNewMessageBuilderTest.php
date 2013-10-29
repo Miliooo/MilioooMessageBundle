@@ -2,7 +2,7 @@
 
 /*
  * This file is part of the MilioooMessageBundle package.
- * 
+ *
  * (c) Michiel boeckaert <boeckaert@gmail.com>
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -11,6 +11,7 @@
 namespace Miliooo\Messaging\Tests\Builder\Message;
 
 use Miliooo\Messaging\Builder\AbstractNewMessageBuilder;
+use Miliooo\Messaging\Tests\TestHelpers\ParticipantTestHelper;
 
 /**
  * Test file for the abstract new message builder
@@ -57,7 +58,7 @@ class AbstractNewMessageBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testSetSenderWorks()
     {
-        $sender = $this->getMock('Miliooo\Messaging\Model\ParticipantInterface');
+        $sender = new ParticipantTestHelper('sender');
         $this->abstractNewMessageBuilder->setSender($sender);
         $this->assertAttributeEquals($sender, 'sender', $this->abstractNewMessageBuilder);
     }

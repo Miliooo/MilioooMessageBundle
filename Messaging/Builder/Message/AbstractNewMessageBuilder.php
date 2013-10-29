@@ -2,7 +2,7 @@
 
 /*
  * This file is part of the MilioooMessageBundle package.
- * 
+ *
  * (c) Michiel boeckaert <boeckaert@gmail.com>
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -10,11 +10,11 @@
 
 namespace Miliooo\Messaging\Builder\Message;
 
-use Miliooo\Messaging\Model\ParticipantInterface;
+use Miliooo\Messaging\User\ParticipantInterface;
 
 /**
  * AbstractNewMessageBuilder.
- * 
+ *
  * The AbstractNewMessagebuilder is responsible for helping to build new thread
  * and reply messages.
  *

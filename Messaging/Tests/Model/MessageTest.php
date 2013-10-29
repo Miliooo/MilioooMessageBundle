@@ -23,7 +23,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * The class under test
-     * 
+     *
      * @var Message
      */
     private $message;
@@ -59,7 +59,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
     public function testSenderWorks()
     {
-        $sender = $this->getMock('Miliooo\Messaging\Model\ParticipantInterface');
+        $sender = new ParticipantTestHelper('sender');
         $this->message->setSender($sender);
         $this->assertSame($sender, $this->message->getSender());
     }
@@ -114,7 +114,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Helper function
-     * 
+     *
      * @return MessageMeta
      */
     protected function getNewMessageMeta()

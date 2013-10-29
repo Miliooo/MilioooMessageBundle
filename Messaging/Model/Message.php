@@ -10,7 +10,7 @@
 
 namespace Miliooo\Messaging\Model;
 
-use Miliooo\Messaging\Model\ParticipantInterface;
+use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\Messaging\Model\MessageMetaInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Miliooo\Messaging\Model\ThreadInterface;
@@ -24,7 +24,7 @@ abstract class Message implements MessageInterface
 {
     /**
      * The unique id of the message
-     * 
+     *
      * @var integer The unique id of the message
      */
     protected $id;
@@ -45,14 +45,14 @@ abstract class Message implements MessageInterface
 
     /**
      * The body of the message
-     * 
+     *
      * @var string
      */
     protected $body;
 
     /**
      * A collection of message metas
-     * 
+     *
      * @var ArrayCollection
      */
     protected $messageMeta;
@@ -65,7 +65,7 @@ abstract class Message implements MessageInterface
     protected $thread;
 
     /**
-     * Constructor. 
+     * Constructor.
      */
     public function __construct()
     {

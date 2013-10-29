@@ -10,7 +10,7 @@
 
 namespace Miliooo\Messaging\Model;
 
-use Miliooo\Messaging\Model\ParticipantInterface;
+use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\Messaging\Model\MessageMetaInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Miliooo\Messaging\Model\ThreadInterface;
@@ -24,7 +24,7 @@ interface MessageInterface
 {
     /**
      * Gets the unique id of the message
-     * 
+     *
      * @return integer The unique id of the message
      */
     public function getId();
@@ -74,7 +74,7 @@ interface MessageInterface
     /**
      * Adds message meta to the messageMeta collection
      *
-     * @param MessageMetaInterface $messageMeta 
+     * @param MessageMetaInterface $messageMeta
      */
     public function addMessageMeta(MessageMetaInterface $messageMeta);
 

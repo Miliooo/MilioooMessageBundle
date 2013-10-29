@@ -54,7 +54,7 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatedByWorks()
     {
-        $participant = $this->getMock('Miliooo\Messaging\Model\ParticipantInterface');
+        $participant = new ParticipantTestHelper('participant');
         $this->thread->setCreatedBy($participant);
         $this->assertEquals($participant, $this->thread->getCreatedBy());
     }

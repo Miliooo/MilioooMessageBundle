@@ -2,7 +2,7 @@
 
 /*
  * This file is part of the MilioooMessageBundle package.
- * 
+ *
  * (c) Michiel boeckaert <boeckaert@gmail.com>
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -10,7 +10,7 @@
 
 namespace Miliooo\Messaging\Model;
 
-use Miliooo\Messaging\Model\ParticipantInterface;
+use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\Messaging\Model\MessageInterface;
 
 /**
@@ -22,14 +22,14 @@ abstract class MessageMeta implements MessageMetaInterface
 {
     /**
      * The participant from the message meta
-     * 
+     *
      * @var ParticipantInterface
      */
     protected $participant;
 
     /**
      * Sets the read status of the message for the given participant
-     * 
+     *
      * @var boolean true if it's read by the given participant, false otherwise
      */
     protected $isRead = false;

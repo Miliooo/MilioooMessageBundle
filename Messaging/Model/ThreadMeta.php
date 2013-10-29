@@ -2,7 +2,7 @@
 
 /*
  * This file is part of the MilioooMessageBundle package.
- * 
+ *
  * (c) Michiel boeckaert <boeckaert@gmail.com>
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -10,7 +10,7 @@
 
 namespace Miliooo\Messaging\Model;
 
-use Miliooo\Messaging\Model\ParticipantInterface;
+use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
@@ -22,7 +22,7 @@ abstract class ThreadMeta implements ThreadMetaInterface
 {
     /**
      * The unique id of the thread
-     * 
+     *
      * @var integer
      */
     protected $id;
@@ -43,28 +43,28 @@ abstract class ThreadMeta implements ThreadMetaInterface
 
     /**
      * The archived status of the thread for the given participant
-     * 
+     *
      * @var boolean
      */
     protected $isArchived = false;
 
     /**
      * Datetime of the last message written by the participant
-     * 
+     *
      * @var \DateTime
      */
     protected $lastParticipantMessageDate;
 
     /**
      * Datetime of the last message written by another participant
-     * 
-     * @var \DateTime 
+     *
+     * @var \DateTime
      */
     protected $lastMessageDate;
 
     /**
      * Gets the unique id
-     * 
+     *
      * @return integer|null
      */
     public function getId()

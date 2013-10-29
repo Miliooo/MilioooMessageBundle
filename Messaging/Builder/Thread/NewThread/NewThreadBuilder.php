@@ -11,7 +11,7 @@
 namespace Miliooo\Messaging\Builder\Thread\NewThread;
 
 use Miliooo\Messaging\Builder\Message\AbstractNewMessageBuilder;
-use Miliooo\Messaging\Model\ParticipantInterface;
+use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\Messaging\Model\ThreadInterface;
 
 /**

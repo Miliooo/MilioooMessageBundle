@@ -10,7 +10,7 @@
 
 namespace Miliooo\Messaging\Model;
 
-use Miliooo\Messaging\Model\ParticipantInterface;
+use Miliooo\Messaging\User\ParticipantInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Miliooo\Messaging\Model\MessageInterface;
 
