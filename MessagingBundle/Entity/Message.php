@@ -21,5 +21,4 @@ use Miliooo\Messaging\Model\Message as ModelMessage;
  */
 abstract class Message extends ModelMessage
 {
-
 }

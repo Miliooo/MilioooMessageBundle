@@ -21,5 +21,4 @@ use Miliooo\Messaging\Model\MessageMeta as ModelMessageMeta;
  */
 abstract class MessageMeta extends ModelMessageMeta
 {
-
 }

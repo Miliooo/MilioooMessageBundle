@@ -21,5 +21,4 @@ use Miliooo\Messaging\Model\Thread as ModelThread;
  */
 abstract class Thread extends ModelThread
 {
-
 }

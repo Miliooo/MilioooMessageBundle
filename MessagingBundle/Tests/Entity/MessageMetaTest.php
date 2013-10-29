@@ -20,7 +20,7 @@ namespace Miliooo\MessagingBundle\Tests\Entity;
  */
 class MessageMetaTest extends \PHPUnit_Framework_TestCase
 {
-    public function testInterface()
+    public function testInstanceOfModel()
     {
         $messageMeta = $this->getMockForAbstractClass('Miliooo\MessagingBundle\Entity\MessageMeta');
         $this->assertInstanceOf('Miliooo\Messaging\Model\MessageMeta', $messageMeta);

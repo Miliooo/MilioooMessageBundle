@@ -21,5 +21,4 @@ use Miliooo\Messaging\Model\ThreadMeta as ModelThreadMeta;
  */
 abstract class ThreadMeta extends ModelThreadMeta
 {
-
 }
