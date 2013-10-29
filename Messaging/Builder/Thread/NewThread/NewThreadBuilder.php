@@ -13,6 +13,7 @@ namespace Miliooo\Messaging\Builder\Thread\NewThread;
 use Miliooo\Messaging\Builder\Message\AbstractNewMessageBuilder;
 use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\Messaging\Model\ThreadInterface;
+use Miliooo\Messaging\Model\ThreadMetaInterface;
 
 /**
  * The builder for a new thread.
@@ -28,7 +29,6 @@ use Miliooo\Messaging\Model\ThreadInterface;
  */
 abstract class NewThreadBuilder extends AbstractNewMessageBuilder
 {
-
     /**
      * The recipients
      *
@@ -87,16 +87,25 @@ abstract class NewThreadBuilder extends AbstractNewMessageBuilder
     public function build()
     {
         $thread = $this->buildNewThreadWithRequiredValues();
-        $this->addParticipantsToThread($thread);
 
         return $thread;
     }
 
+    /**
+     * Creates a new thread object from the config (user specified) thread class
+     *
+     * @return ThreadInterface
+     */
     protected function createThread()
     {
         return new $this->threadClass();
     }
 
+    /**
+     * Creates a new thread meta object from the config (user specified) thread meta class
+     *
+     * @return ThreadMetaInterface
+     */
     protected function createThreadMeta()
     {
         return new $this->threadMetaClass();
@@ -115,18 +124,5 @@ abstract class NewThreadBuilder extends AbstractNewMessageBuilder
         $thread->setSubject($this->subject);
 
         return $thread;
-    }
-
-    /**
-     * Adds participants to a thread
-     *
-     * @param ThreadInterface $thread The thread where we add the participants
-     */
-    private function addParticipantsToThread(ThreadInterface $thread)
-    {
-        $thread->addParticipant($this->sender);
-        foreach ($this->recipients as $recipient) {
-            $thread->addParticipant($recipient);
-        }
     }
 }

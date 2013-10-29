@@ -200,16 +200,54 @@ abstract class Thread implements ThreadInterface
         return null;
     }
 
-    public function addParticipant(ParticipantInterface $participant)
-    {
-
-        if (!$this->participants->contains($participant)) {
-            $this->participants->add($participant);
-        }
-    }
-
+    /**
+     * {@inheritdoc}
+     */
     public function getParticipants()
     {
-        return $this->participants();
+        return $this->getParticipantsCollection()->toArray();
+    }
+
+     /**
+     * {@inheritdoc}
+     */
+    public function isParticipant(ParticipantInterface $participant)
+    {
+        return $this->getParticipantsCollection()->contains($participant);
+    }
+
+    /**
+     * Returns an array collection of participants for the given thread.
+     *
+     * We do not map the participantscollection because the thread meta allready
+     * gives us all the information needed. It contains the thread AND the participant
+     *
+     * So in order to get the participants we need to loop over the threadmeta
+     * Get the participant and add it to the collection.
+     *
+     * if we want to add a participant to the thread collection we need to create that threadmeta.
+     *
+     * @return ArrayCollection
+     */
+    protected function getParticipantsCollection()
+    {
+        //returns an empty array collection
+        if (!$this->threadMeta->count() > 0) {
+            return $this->participants;
+        }
+        //there is thread meta in the collection so let's loop over it
+        foreach ($this->threadMeta as $threadMeta) {
+            $this->addParticipantFromThreadMeta($threadMeta);
+        }
+
+        return $this->participants;
+    }
+
+    private function addParticipantFromThreadMeta(ThreadMetaInterface $threadMeta)
+    {
+        $participant = $threadMeta->getParticipant();
+        if (is_object($participant) && $participant instanceof ParticipantInterface) {
+            $this->participants->add($participant);
+        }
     }
 }

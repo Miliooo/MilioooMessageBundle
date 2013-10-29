@@ -119,17 +119,24 @@ interface ThreadInterface
     public function getThreadMetaForParticipant(ParticipantInterface $participant);
 
     /**
-     * Adds an participant to the thread.
-     *
-     * Adds an participant to the thread. If the participant is allready part
-     * of the participants of the thread nothing happens
-     *
-     * @param ParticipantInterface $participant The participant who we add
-     */
-    public function addParticipant(ParticipantInterface $participant);
-
-    /**
      * Gets all the participants for the current thread
+     *
+     * This loops over the threadmetas and collects all the participants.
+     * There is no method to add an participant because we don't map this in the database
+     *
+     * If we want to add a participant we need to create the threadmeta
+     * and add the participant there.
+     *
+     * @return ParticipantInterface[] An array with participants
      */
     public function getParticipants();
+
+    /**
+     * Checks if the given participant is a participant of the thread
+     *
+     * @param ParticipantInterface $participant The participant we check
+     *
+     * @return boolean true if participant, false otherwise
+     */
+    public function isParticipant(ParticipantInterface $participant);
 }

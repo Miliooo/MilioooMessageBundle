@@ -111,6 +111,46 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
         $this->thread->addThreadMeta($threadMeta);
     }
 
+    public function testGetParticipants()
+    {
+        $participant = new ParticipantTestHelper(1);
+        $threadMeta = $this->getNewThreadMeta();
+        $threadMeta->setParticipant($participant);
+        $threadMeta->setThread($this->thread);
+        $this->assertEmpty($this->thread->getParticipants());
+        $this->thread->addThreadMeta($threadMeta);
+        $this->assertCount(1, $this->thread->getParticipants());
+        $this->assertEquals($participant, $this->thread->getParticipants()[0]);
+    }
+
+    public function testIsParticipantWithNotParticipantReturnsFalse()
+    {
+        //add some dummie participants first
+        $participant = new ParticipantTestHelper(1);
+        $threadMeta = $this->getNewThreadMeta();
+        $threadMeta->setParticipant($participant);
+        $this->thread->addThreadMeta($threadMeta);
+
+        $participant2 = new ParticipantTestHelper(2);
+        $threadMeta2 = $this->getNewThreadMeta();
+        $threadMeta2->setParticipant($participant2);
+        $this->thread->addThreadMeta($threadMeta2);
+
+        $participant3 = new ParticipantTestHelper(3);
+        $this->assertCount(2, $this->thread->getParticipants());
+
+        $this->assertFalse($this->thread->isParticipant($participant3));
+    }
+
+    public function testIsParticipantWithParticipantReturnsTrue()
+    {
+        $participant = new ParticipantTestHelper(1);
+        $threadMeta = $this->getNewThreadMeta();
+        $threadMeta->setParticipant($participant);
+        $this->thread->addThreadMeta($threadMeta);
+        $this->assertTrue($this->thread->isParticipant($participant));
+    }
+
     public function testGetMessagesReturnsRightAmountOfmessages()
     {
         $message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');
