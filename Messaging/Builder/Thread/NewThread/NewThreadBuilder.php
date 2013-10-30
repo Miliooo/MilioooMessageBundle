@@ -94,7 +94,6 @@ abstract class NewThreadBuilder extends AbstractNewMessageBuilder
         }
 
         $this->buildNewMessage($thread);
-        var_dump($thread);
 
         return $thread;
     }
