@@ -8,7 +8,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Miliooo\Messaging\Tests\TestHelpers\Model;
+namespace Miliooo\Messaging\TestHelpers\Model;
 
 use Miliooo\Messaging\Model\Thread as ModelThread;
 

@@ -10,7 +10,7 @@
 namespace Miliooo\Messaging\Tests\Builder\Thread\NewThread;
 
 use Miliooo\Messaging\Builder\Thread\NewThread\NewThreadBuilder;
-use Miliooo\Messaging\Tests\TestHelpers\ParticipantTestHelper;
+use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
 use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
@@ -32,10 +32,10 @@ class NewThreadBuilderTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->builder = $this->getMockForAbstractClass('Miliooo\Messaging\Builder\Thread\NewThread\NewThreadBuilder');
-        $this->builder->setMessageClass('Miliooo\Messaging\Tests\TestHelpers\Model\Message');
-        $this->builder->setThreadClass('Miliooo\Messaging\Tests\TestHelpers\Model\Thread');
-        $this->builder->setMessageMetaClass('Miliooo\Messaging\Tests\TestHelpers\Model\MessageMeta');
-        $this->builder->setThreadMetaClass('Miliooo\Messaging\Tests\TestHelpers\Model\ThreadMeta');
+        $this->builder->setMessageClass('Miliooo\Messaging\TestHelpers\Model\Message');
+        $this->builder->setThreadClass('Miliooo\Messaging\TestHelpers\Model\Thread');
+        $this->builder->setMessageMetaClass('Miliooo\Messaging\TestHelpers\Model\MessageMeta');
+        $this->builder->setThreadMetaClass('Miliooo\Messaging\TestHelpers\Model\ThreadMeta');
     }
 
     public function testInstanceOfAbstractNewMessageBuilder()

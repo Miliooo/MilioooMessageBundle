@@ -12,7 +12,7 @@ namespace Miliooo\Messaging\Tests\Model;
 
 use Miliooo\Messaging\Model\Thread;
 use Miliooo\Messaging\Model\Message;
-use Miliooo\Messaging\Tests\TestHelpers\ParticipantTestHelper;
+use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
 use Miliooo\Messaging\Model\ThreadMeta;
 
 /**

@@ -8,15 +8,15 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Miliooo\Messaging\Tests\TestHelpers\Model;
+namespace Miliooo\Messaging\TestHelpers\Model;
 
-use Miliooo\Messaging\Model\MessageMeta as ModelMessageMeta;
+use Miliooo\Messaging\Model\ThreadMeta as ModelThreadMeta;
 
 /**
- * Test class for the abstract messagemeta model
+ * Test class for the abstract threadmeta model
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class MessageMeta extends ModelMessageMeta
+class ThreadMeta extends ModelThreadMeta
 {
 }

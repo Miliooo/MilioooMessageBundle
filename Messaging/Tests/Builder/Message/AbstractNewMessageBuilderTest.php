@@ -11,7 +11,7 @@
 namespace Miliooo\Messaging\Tests\Builder\Message;
 
 use Miliooo\Messaging\Builder\AbstractNewMessageBuilder;
-use Miliooo\Messaging\Tests\TestHelpers\ParticipantTestHelper;
+use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
 
 /**
  * Test file for the abstract new message builder

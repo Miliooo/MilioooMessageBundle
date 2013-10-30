@@ -11,7 +11,7 @@
 namespace Milioo\Messaging\Tests\Model;
 
 use Miliooo\Messaging\Model\MessageMeta;
-use Miliooo\Messaging\Tests\TestHelpers\ParticipantTestHelper;
+use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
 
 /**
  * Test file for the message meta model

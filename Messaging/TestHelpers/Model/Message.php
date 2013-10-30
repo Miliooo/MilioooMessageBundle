@@ -7,16 +7,15 @@
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
+namespace Miliooo\Messaging\TestHelpers\Model;
 
-namespace Miliooo\Messaging\Tests\TestHelpers\Model;
-
-use Miliooo\Messaging\Model\ThreadMeta as ModelThreadMeta;
+use Miliooo\Messaging\Model\Message as ModelMessage;
 
 /**
- * Test class for the abstract threadmeta model
+ * Test class for the abstract message model
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class ThreadMeta extends ModelThreadMeta
+class Message extends ModelMessage
 {
 }

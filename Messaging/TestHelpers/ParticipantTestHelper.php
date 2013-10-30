@@ -8,7 +8,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Miliooo\Messaging\Tests\TestHelpers;
+namespace Miliooo\Messaging\TestHelpers;
 
 use Miliooo\Messaging\User\ParticipantInterface;
 

@@ -11,7 +11,7 @@
 namespace Miliooo\Messaging\Tests\Model;
 
 use Miliooo\Messaging\Model\ThreadMeta;
-use Miliooo\Messaging\Tests\TestHelpers\ParticipantTestHelper;
+use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
 
 /**
  * Description of ThreadMetaTest
