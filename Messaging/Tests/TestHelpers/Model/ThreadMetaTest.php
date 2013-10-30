@@ -13,13 +13,12 @@ namespace Miliooo\Messaging\Tests\TestHelpers\Model;
 use Miliooo\Messaging\TestHelpers\Model\ThreadMeta;
 
 /**
- * Test file for Miliooo\Messaging\TestHelpers\Model\ThreadMeta.
+ * The test file for Miliooo\Messaging\TestHelpers\Model\ThreadMeta.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
 class ThreadMetaTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testClassInstanceOfModelClass()
     {
         $class = new ThreadMeta;

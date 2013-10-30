@@ -13,7 +13,7 @@ namespace Miliooo\Messaging\Tests\TestHelpers;
 use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
 
 /**
- * Test file for Miliooo\Messaging\TestHelpers\ParticipantTestHelper
+ * The test file for Miliooo\Messaging\TestHelpers\ParticipantTestHelper
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */

@@ -13,13 +13,12 @@ namespace Miliooo\Messaging\Tests\TestHelpers\Model;
 use Miliooo\Messaging\TestHelpers\Model\MessageMeta;
 
 /**
- * Test file for Miliooo\Messaging\TestHelpers\Model\MessageMeta.
+ * The Test file for Miliooo\Messaging\TestHelpers\Model\MessageMeta.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
 class MessageMetaTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testClassInstanceOfModelClass()
     {
         $class = new MessageMeta;

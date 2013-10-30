@@ -13,13 +13,12 @@ namespace Miliooo\Messaging\Tests\TestHelpers\Model;
 use Miliooo\Messaging\TestHelpers\Model\Thread;
 
 /**
- * Test file for Miliooo\Messaging\TestHelpers\Model\Thread.
+ * The test file for Miliooo\Messaging\TestHelpers\Model\Thread.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
 class ThreadTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testClassInstanceOfModelClass()
     {
         $class = new Thread;
