@@ -11,6 +11,7 @@ namespace Miliooo\Messaging\Tests\Builder\Thread\NewThread;
 
 use Miliooo\Messaging\Builder\Thread\NewThread\NewThreadBuilder;
 use Miliooo\Messaging\Tests\TestHelpers\ParticipantTestHelper;
+use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
  * NewThreadBuilder test.
@@ -87,5 +88,77 @@ class NewThreadBuilderTest extends \PHPUnit_Framework_TestCase
         $this->builder->setCreatedAt(new \DateTime(2013 - 10 - 10));
         $this->builder->setSubject($subject);
         $this->assertInstanceOf('Miliooo\Messaging\Model\ThreadInterface', $this->builder->build());
+    }
+
+    /*
+     * --------------------------
+     * thread object validation
+     * --------------------------
+     */
+
+    public function testThreadHasCorrectSubject()
+    {
+        $thread = $this->buildModelThread();
+        $this->assertEquals('the subject', $thread->getSubject());
+    }
+
+    public function testThreadHasCorrectCreatedAt()
+    {
+        $thread = $this->buildModelThread();
+        $created = new \DateTime(2013 - 10 - 10);
+        $this->assertEquals($created, $thread->getCreatedAt());
+    }
+
+    public function testThreadHasCorrectCreatedBy()
+    {
+        $thread = $this->buildModelThread();
+        $this->assertEquals('sender', $thread->getCreatedBy()->getParticipantId());
+    }
+
+
+    /*
+     * --------------------------
+     * thread meta object validation
+     * --------------------------
+     */
+    public function testGetThreadMeta()
+    {
+        $thread = $this->buildModelThread();
+        $threadMetas = $thread->getThreadMeta();
+        $this->assertCount(2, $threadMetas);
+    }
+
+    public function testGetThreadMetaForSenderReturnsCorrectValues()
+    {
+        $thread = $this->buildModelThread();
+        $sender = new ParticipantTestHelper('sender');
+        $created = new \DateTime(2013 - 10 - 10);
+        $threadMetaSender = $thread->getThreadMetaForParticipant($sender);
+        $this->assertFalse($threadMetaSender->getIsArchived());
+        $this->assertEquals($created, $threadMetaSender->getLastParticipantMessageDate());
+        $this->assertNull($threadMetaSender->getLastMessageDate());
+    }
+
+    public function testANewThreadContainsOneMessage()
+    {
+        $thread = $this->buildModelThread();
+        $this->assertCount(1, $thread->getMessages());
+    }
+
+    /**
+     *
+     * @return ThreadInterface
+     */
+    protected function buildModelThread()
+    {
+        $sender = new ParticipantTestHelper('sender');
+        $subject = 'the subject';
+        $recipient = new ParticipantTestHelper('recipient');
+        $this->builder->setRecipients(array($recipient));
+        $this->builder->setSender($sender);
+        $this->builder->setCreatedAt(new \DateTime(2013 - 10 - 10));
+        $this->builder->setSubject($subject);
+
+        return $this->builder->build();
     }
 }

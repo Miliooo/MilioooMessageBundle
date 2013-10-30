@@ -11,6 +11,10 @@
 namespace Miliooo\Messaging\Builder\Message;
 
 use Miliooo\Messaging\User\ParticipantInterface;
+use Miliooo\Messaging\Model\ThreadMetaInterface;
+use Miliooo\Messaging\Model\MessageMetaInterface;
+use Miliooo\Messaging\Model\MessageInterface;
+use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
  * AbstractNewMessageBuilder.
@@ -141,5 +145,105 @@ abstract class AbstractNewMessageBuilder
     public function setCreatedAt(\Datetime $dateTime)
     {
         $this->createdAt = $dateTime;
+    }
+
+    /**
+     * Updates the thread meta with settings specific for the sender
+     *
+     * @param ThreadMetadata $threadMeta
+     */
+    protected function updateThreadMetaForSender(ThreadMetaInterface $threadMeta)
+    {
+        //we set the last message date for the sender, this makes it an inbox thread
+        $threadMeta->setLastParticipantMessageDate($this->createdAt);
+        $threadMeta->setIsArchived(false);
+    }
+
+    /**
+     * Updates the thread meta with the settings specific for the recipient
+     *
+     * @param ThreadMetadata $threadMeta
+     */
+    protected function updateThreadMetaForRecipient(ThreadMetaInterface $threadMeta)
+    {
+        //we set the deleted to false this is debatable but else they don't see the new message appear in their inbox
+        // but then again this is probably what some users would want
+        $threadMeta->setIsArchived(false);
+        //we set the last message date for the receivers, this makes those threads go to the top of their inbox
+        $threadMeta->setLastMessageDate($this->createdAt);
+    }
+
+    /**
+     * Builds a new message and adds it to the thread
+     *
+     * @param ThreadInterface $thread
+     */
+    final protected function buildNewMessage(ThreadInterface $thread)
+    {
+        $message = $this->createMessage();
+        $message->setBody($this->body);
+        $message->setThread($thread);
+        $message->setCreatedAt($this->createdAt);
+        $message->setSender($this->sender);
+
+        $messageMeta = $this->createNewMessageMetaForParticipant($message, $this->sender);
+        $this->updateMessageMetaForSender($messageMeta);
+
+        foreach ($this->recipients as $recipient) {
+            //setup the meta data for recipients
+            $messageMeta = $this->createNewMessageMetaForParticipant($message, $recipient);
+            $this->updateMessageMetaForRecipient($messageMeta);
+        }
+
+        $thread->addMessage($message);
+    }
+
+    /**
+     * creates a new message object
+     *
+     * @return MessageInterface
+     */
+    protected function createMessage()
+    {
+        return new $this->messageClass;
+    }
+
+    /**
+     * creates a new message meta object
+     *
+     * @return MessageMetaInterface
+     */
+    protected function createMessageMeta()
+    {
+        return new $this->messageMetaClass;
+    }
+
+    protected function updateMessageMetaForSender(MessageMetaInterface $messageMeta)
+    {
+       $messageMeta->setIsRead(true);
+    }
+
+    protected function updateMessageMetaForRecipient(MessageMetaInterface $messageMeta)
+    {
+        $messageMeta->setIsRead(false);
+    }
+
+    /**
+     * Creates new message meta for the participant
+     *
+     * @param MessageInterface     $message     The message the meta belongs
+     * @param ParticipantInterface $participant The participant in the thread this message belongs to
+     *
+     * @return MessageMetadata
+     */
+    private function createNewMessageMetaForParticipant(MessageInterface $message, ParticipantInterface $participant)
+    {
+        //set message meta data for sender
+        $messageMeta = $this->createMessageMeta();
+        $messageMeta->setMessage($message);
+        $messageMeta->setParticipant($participant);
+        $message->addMessageMeta($messageMeta);
+
+        return $messageMeta;
     }
 }

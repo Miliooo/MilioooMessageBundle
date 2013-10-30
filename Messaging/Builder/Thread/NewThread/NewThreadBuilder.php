@@ -87,6 +87,14 @@ abstract class NewThreadBuilder extends AbstractNewMessageBuilder
     public function build()
     {
         $thread = $this->buildNewThreadWithRequiredValues();
+        $this->buildThreadMetaForSender($thread);
+
+        foreach ($this->recipients as $recipient) {
+            $this->buildThreadMetaForRecipient($thread, $recipient);
+        }
+
+        $this->buildNewMessage($thread);
+        var_dump($thread);
 
         return $thread;
     }
@@ -124,5 +132,52 @@ abstract class NewThreadBuilder extends AbstractNewMessageBuilder
         $thread->setSubject($this->subject);
 
         return $thread;
+    }
+
+    /**
+     * Creates new threadmeta for the participant
+     *
+     * This creates new thread meta for the participant with the required settings set
+     * It sets the
+     * participant
+     * current thread
+     *
+     * @param ThreadInterface      $thread
+     * @param ParticipantInterface $participant
+     *
+     * @return ThreadMeta
+     */
+    private function createThreadMetaForParticipant(ThreadInterface $thread, ParticipantInterface $participant)
+    {
+        //creation of the thread meta
+        $threadMeta = $this->createThreadMeta();
+        $threadMeta->setParticipant($participant);
+        $threadMeta->setThread($thread);
+        $thread->addThreadMeta($threadMeta);
+
+        return $threadMeta;
+    }
+
+    /**
+     * Builds the thread meta for the sender
+     *
+     * @param ThreadInterface $thread
+     */
+    private function buildThreadMetaForSender(ThreadInterface $thread)
+    {
+        $threadMeta = $this->createThreadMetaForParticipant($thread, $this->sender);
+        $this->updateThreadMetaForSender($threadMeta);
+    }
+
+    /**
+     * Builds the thread meta for the recipient
+     *
+     * @param ThreadInterface      $thread
+     * @param ParticipantInterface $recipient
+     */
+    private function buildThreadMetaForRecipient(ThreadInterface $thread, ParticipantInterface $recipient)
+    {
+        $threadMeta = $this->createThreadMetaForParticipant($thread, $recipient);
+        $this->updateThreadMetaForRecipient($threadMeta);
     }
 }
