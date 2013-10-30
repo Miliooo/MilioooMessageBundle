@@ -220,7 +220,7 @@ abstract class AbstractNewMessageBuilder
 
     protected function updateMessageMetaForSender(MessageMetaInterface $messageMeta)
     {
-       $messageMeta->setIsRead(true);
+        $messageMeta->setIsRead(true);
     }
 
     protected function updateMessageMetaForRecipient(MessageMetaInterface $messageMeta)
