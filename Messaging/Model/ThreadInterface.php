@@ -52,6 +52,8 @@ interface ThreadInterface
 
     /**
      * Gets the participant who created the thread
+     *
+     * @return ParticipantInterface The participant who created the thread
      */
     public function getCreatedBy();
 
