@@ -8,6 +8,10 @@
  * with this source code in the file LICENSE.
  */
 
+namespace Miliooo\Messaging\Form\FormModel;
+
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Description of NewSingleThreadFormModel
  *
@@ -23,7 +27,7 @@ class NewThreadFormModel
 
     public function __construct()
     {
-
+        $this->recipients = new ArrayCollection();
     }
 
     public function getBody()
