@@ -10,7 +10,7 @@
 
 namespace Miliooo\Messaging\Tests\Form\FormModel;
 
-use Miliooo\Messaging\Form\FormModel\NewThreadFormModel;
+use Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipientModel;
 use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
 
 /**
@@ -22,13 +22,13 @@ class NewThreadFormModelTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Class under test     *
-     * @var NewThreadFormModel
+     * @var NewThreadSingleRecipientModel
      */
     private $model;
 
     public function setUp()
     {
-        $this->model = new NewThreadFormModel();
+        $this->model = new NewThreadSingleRecipientModel();
     }
 
     public function testBodyWorks()

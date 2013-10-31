@@ -12,6 +12,7 @@ namespace Miliooo\Messaging\Form\FormHandler;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipientModel;
 
 /**
  * Description of NewThreadSingleRecipientFormHandler
@@ -20,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class NewSingleThreadFormHandler
 {
-      /**
+    /**
      * The request the form will process
      *
      * @var Request
@@ -57,11 +58,11 @@ class NewSingleThreadFormHandler
             return false;
         }
 
-        $form->bind($this->request);
+        $form->handleRequest($this->request);
 
         if ($form->isValid()) {
-            exit('valid');
-
+            $data = $this->getFormData($form);
+            $data->setCreatedAt(new \DateTime('now'));
 
             /*
              * At this point we created the form model and know it's valid...
@@ -85,7 +86,19 @@ class NewSingleThreadFormHandler
             //$this->persistThread($thread);
             //return $thread->getLastMessage();
         }
+    }
 
-        exit('invalid');
+    /**
+     * Gets the form data
+     *
+     * Helper function to get autocompletion
+     *
+     * @param Form $form
+     *
+     * @return NewThreadSingleRecipientModel
+     */
+    protected function getFormData(Form $form)
+    {
+        return $form->getData();
     }
 }

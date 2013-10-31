@@ -13,11 +13,19 @@ namespace Miliooo\Messaging\Form\FormModel;
 use Miliooo\Messaging\User\ParticipantInterface;
 
 /**
- * Description of NewSingleThreadFormModel
+ * Model for a new thread with a single recipient.
+ *
+ * This is the model for a new thread with a single recipient.
+ *
+ * This contains all the data needed to let the builder create a new thread object
+ *
+ * Because it contains all the data needed, it makes it possible to delay the creation
+ * of that new thread object. It's the job of the formModel processer now to see what we do
+ * with this object. 
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class NewThreadFormModel
+class NewThreadSingleRecipientModel
 {
     /**
      * Body of the message
