@@ -14,11 +14,11 @@ use Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipientModel;
 use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
 
 /**
- * Test file for Miliooo\Messaging\Form\FormModel\NewThreadFormModel
+ * Test file for Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipientModel
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class NewThreadFormModelTest extends \PHPUnit_Framework_TestCase
+class NewThreadSingleRecipientModelTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Class under test     *

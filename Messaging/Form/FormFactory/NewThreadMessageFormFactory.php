@@ -17,7 +17,6 @@ use Symfony\Component\Form\Form;
 /**
  * The form factory for new thread messages
  *
- * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
 class NewThreadMessageFormFactory extends AbstractMessageFormFactory

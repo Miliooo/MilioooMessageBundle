@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormFactoryInterface;
 /**
  * Instanciates message forms
  *
- * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
 abstract class AbstractMessageFormFactory
