@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="miliooo_message.new_thread_form.type" class="Miliooo\Messaging\Form\FormType\NewThreadFormType" public="false" />
+
+        <service id="miliooo_messaging.new_thread_form.factory" class="Miliooo\Messaging\Form\FormFactory\NewThreadMessageFormFactory">
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="miliooo_message.new_thread_form.type" />
+            <argument>Message</argument>
+            <argument>Miliooo\Messaging\Form\FormModel\NewThreadFormModel</argument>
+        </service>
+
+        <service id="miliooo_messaging.new_thread_form.handler" class="Miliooo\Messaging\Form\FormHandler\NewSingleThreadFormHandler" scope="request" public="false">
+            <argument type="service" id="request" />
+        </service>
+
+    </services>
+
+</container>

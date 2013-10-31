@@ -12,6 +12,7 @@ namespace Miliooo\Messaging\Form\FormFactory;
 
 use Miliooo\Messaging\Form\FormModel\NewThreadFormModel;
 use Miliooo\Messaging\User\ParticipantInterface;
+use Symfony\Component\Form\Form;
 
 /**
  * The form factory for new thread messages

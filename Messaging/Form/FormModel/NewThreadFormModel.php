@@ -45,11 +45,6 @@ class NewThreadFormModel
         return $this->sender;
     }
 
-    public function getRecipients()
-    {
-        return $this->recipients;
-    }
-
     public function getSubject()
     {
         return $this->subject;
@@ -68,6 +63,41 @@ class NewThreadFormModel
     public function setSender($sender)
     {
         $this->sender = $sender;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getRecipients()
+    {
+        return $this->recipients;
+    }
+
+    /**
+     * Adds single recipient to collection
+     *
+     * @param ParticipantInterface $recipient
+     *
+     * @return null
+     */
+    public function addRecipient(ParticipantInterface $recipient)
+    {
+        if (!$this->recipients->contains($recipient)) {
+            $this->recipients->add($recipient);
+        }
+    }
+
+    /**
+     * Removes recipient from collection
+     *
+     * @param ParticipantInterface $recipient
+     *
+     * @return null
+     *
+     */
+    public function removeRecipient(ParticipantInterface $recipient)
+    {
+        $this->recipients->removeElement($recipient);
     }
 
     public function setRecipients($recipients)

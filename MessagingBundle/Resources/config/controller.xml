@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="miliooo_messaging.controller.new_thread_controller" class="Miliooo\MessagingBundle\Controller\NewThreadController" scope="request">
+            <argument type="service" id="miliooo_messaging.new_thread_form.factory" />
+            <argument type="service" id="miliooo_messaging.new_thread_form.handler" />
+            <argument type="service" id="security.token" />
+            <argument type="service" id="templating" />
+        </service>
+
+        <service id="security.token"
+                 class="Symfony\Component\Security\Core\Authentication\Token\TokenInterface"
+                 factory-service="security.context"
+                 factory-method="getToken"
+        />
+
+    </services>
+
+</container>

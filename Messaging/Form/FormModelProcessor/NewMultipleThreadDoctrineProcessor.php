@@ -15,7 +15,8 @@
  */
 class NewMultipleThreadDoctrineProcessor
 {
-    public function processFormModel(NewThreadFormModel $formModel) {
+    public function processFormModel(NewThreadFormModel $formModel)
+    {
 
     }
 }

@@ -13,7 +13,6 @@ namespace Miliooo\Messaging\Form\FormFactory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryInterface;
 
-
 /**
  * Instanciates message forms
  *

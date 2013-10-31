@@ -8,6 +8,8 @@
  * with this source code in the file LICENSE.
  */
 
+namespace Miliooo\Messaging\Form\FormHandler;
+
 /**
  * Description of NewMultipleThreadFormHandler
  *

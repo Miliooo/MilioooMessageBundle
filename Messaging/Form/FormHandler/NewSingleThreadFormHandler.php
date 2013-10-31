@@ -8,6 +8,11 @@
  * with this source code in the file LICENSE.
  */
 
+namespace Miliooo\Messaging\Form\FormHandler;
+
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * Description of NewThreadSingleRecipientFormHandler
  *
@@ -33,12 +38,10 @@ class NewSingleThreadFormHandler
      * Constructor.
      *
      * @param Request $request The request the form will process
-     * @param ParticipantProvider $participantProvider A participantprovider instance
      */
-    public function __construct(Request $request, ParticipantProviderInterface $participantProvider)
+    public function __construct(Request $request)
     {
         $this->request = $request;
-        $this->participantProvider = $participantProvider;
     }
 
     /**
@@ -57,6 +60,7 @@ class NewSingleThreadFormHandler
         $form->bind($this->request);
 
         if ($form->isValid()) {
+            exit('valid');
 
 
             /*
@@ -77,14 +81,11 @@ class NewSingleThreadFormHandler
              *
              *
              */
-            $thread = $this->createThreadObjectFromFormData($form);
-            $this->persistThread($thread);
-
-            return $thread->getLastMessage();
+            //$thread = $this->createThreadObjectFromFormData($form);
+            //$this->persistThread($thread);
+            //return $thread->getLastMessage();
         }
 
-        return false;
+        exit('invalid');
     }
-
-
 }
