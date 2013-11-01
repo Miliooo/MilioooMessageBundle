@@ -27,7 +27,7 @@ use Miliooo\Messaging\Model\ThreadMetaInterface;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-abstract class NewThreadBuilder extends AbstractNewMessageBuilder
+class NewThreadBuilder extends AbstractNewMessageBuilder
 {
     /**
      * The recipients
