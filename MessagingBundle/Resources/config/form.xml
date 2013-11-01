@@ -5,17 +5,24 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+
         <service id="miliooo_message.new_thread_form.type" class="Miliooo\Messaging\Form\FormType\NewThreadFormType" public="false" />
 
         <service id="miliooo_messaging.new_thread_form.factory" class="Miliooo\Messaging\Form\FormFactory\NewThreadMessageFormFactory">
             <argument type="service" id="form.factory" />
             <argument type="service" id="miliooo_message.new_thread_form.type" />
             <argument>Message</argument>
-            <argument>Miliooo\Messaging\Form\FormModel\NewThreadFormModel</argument>
+            <argument>Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipientModel</argument>
+        </service>
+
+        <service id="miliooo_message.new_single_thread_default_processor" class="Miliooo\Messaging\Form\FormModelProcessor\NewSingleThreadDefaultProcesser">
+            <argument type="service" id="miliooo_messaging.new_thread_builder" />
+            <argument type="service" id="miliooo_messaging.new_message_manager" />
         </service>
 
         <service id="miliooo_messaging.new_thread_form.handler" class="Miliooo\Messaging\Form\FormHandler\NewSingleThreadFormHandler" scope="request" public="false">
             <argument type="service" id="request" />
+            <argument type="service" id="miliooo_message.new_single_thread_default_processor" />
         </service>
 
     </services>

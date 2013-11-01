@@ -5,6 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+
         <service id="miliooo_messaging.abstract_new_message_builder" class="Miliooo\Messaging\Builder\AbstractNewMessageBuilder" abstract="true">
             <call method="setMessageClass">
                 <argument>%miliooo_messaging.message_class%</argument>
@@ -19,5 +20,9 @@
                 <argument>%miliooo_messaging.thread_meta_class%</argument>
             </call>
         </service>
+
+        <service id="miliooo_messaging.new_thread_builder" class="Miliooo\Messaging\Builder\Thread\NewThread\NewThreadBuilder" parent="miliooo_messaging.abstract_new_message_builder" />
+
     </services>
+
 </container>
