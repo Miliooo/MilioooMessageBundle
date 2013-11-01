@@ -10,6 +10,7 @@
 
 namespace Miliooo\Messaging\Manager;
 
+use Doctrine\ORM\EntityManager;
 use Miliooo\Messaging\Model\MessageInterface;
 use Miliooo\Messaging\Model\ThreadInterface;
 
@@ -30,14 +31,18 @@ use Miliooo\Messaging\Model\ThreadInterface;
  */
 class NewMessageManager
 {
-    public function __construct()
-    {
+    protected $entityManager;
 
+    public function __construct(EntityManager $entityManager)
+    {
+        $this->entityManager = $entityManager;
     }
 
     public function saveNewThread(MessageInterface $message, ThreadInterface $thread)
     {
-        //todo
+        $this->entityManager->persist($message);
+        $this->entityManager->persist($thread);
+        $this->entityManager->flush();
     }
 
     public function saveNewReply(MessageInterface $message, threadInterface $thread)
