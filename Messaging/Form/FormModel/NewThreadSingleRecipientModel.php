@@ -49,7 +49,7 @@ class NewThreadSingleRecipientModel implements NewThreadFormModelInterface
      * Recipient of the message
      * @var ParticipantInterface
      */
-    protected $recipient;
+    protected $recipients;
 
     /**
      * Subject of the message
