@@ -19,8 +19,9 @@ use Miliooo\Messaging\Form\FormModel\NewThreadFormModelInterface;
  */
 interface NewThreadFormProcessorInterface
 {
-
     /**
+     * Processes a NewThreadFormModel instance
+     *
      * @param NewThreadFormModelInterface $formModel The form model we process
      */
     public function process(NewThreadFormModelInterface $formModel);
