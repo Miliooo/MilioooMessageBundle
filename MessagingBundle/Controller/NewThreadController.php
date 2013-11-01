@@ -15,6 +15,7 @@ use Miliooo\Messaging\Form\FormFactory\NewThreadMessageFormFactory;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Miliooo\Messaging\Form\FormHandler\NewSingleThreadFormHandler;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Description of NewThreadController
@@ -23,14 +24,18 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
  */
 class NewThreadController
 {
-    protected $formFactory;
-    protected $securityToken;
-    protected $formHandler;
-    protected $templating;
+    private $formFactory;
+    private $securityToken;
+    private $formHandler;
+    private $templating;
 
     /**
      * Constructor.
      *
+     * @param NewThreadMessageFormFactory $formFactory   A formfactory instance for a new thread
+     * @param NewSingleThreadFormHandler  $formHandler   A new single thread formhandler instance
+     * @param TokenInterface              $securityToken A security token instance
+     * @param EngineInterface             $templating    A templating engine instance
      */
     public function __construct(NewThreadMessageFormFactory $formFactory, NewSingleThreadFormHandler $formHandler, TokenInterface $securityToken, EngineInterface $templating)
     {
@@ -40,12 +45,22 @@ class NewThreadController
         $this->templating = $templating;
     }
 
+    /**
+     * Create a new thread
+     *
+     * This method is responsible for showing the form for creating a new thread
+     * When the form is submitted it has to process the creation of that thread
+     * and return an response.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
     public function createAction(Request $request)
     {
         $sender = $this->securityToken->getUser();
-        //the form new_thread_form.factory')->create();
         $form = $this->formFactory->create($sender);
-        $processed = $this->formHandler->process($form);
+        $this->formHandler->process($form);
 
         return $this->templating->renderResponse('MilioooMessagingBundle:NewThread:new_thread.html.twig', array('form' => $form->createView()));
     }
