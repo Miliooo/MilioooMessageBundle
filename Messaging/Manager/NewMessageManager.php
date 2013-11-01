@@ -11,6 +11,7 @@
 namespace Miliooo\Messaging\Manager;
 
 use Miliooo\Messaging\Model\MessageInterface;
+use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
  * The new message manager is responsible for handling new messages
@@ -29,7 +30,6 @@ use Miliooo\Messaging\Model\MessageInterface;
  */
 class NewMessageManager
 {
-
     public function __construct()
     {
 
