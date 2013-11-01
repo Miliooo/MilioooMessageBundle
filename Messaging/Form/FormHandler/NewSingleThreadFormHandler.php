@@ -13,6 +13,8 @@ namespace Miliooo\Messaging\Form\FormHandler;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipientModel;
+use Miliooo\Messaging\Form\FormModel\NewThreadFormModelInterface;
+use Miliooo\Messaging\Form\FormModelProcessor\NewThreadFormProcessorInterface;
 
 /**
  * Description of NewThreadSingleRecipientFormHandler
@@ -29,20 +31,24 @@ class NewSingleThreadFormHandler
     protected $request;
 
     /**
-     * A participant provider instance
+     * A processor instance.
      *
-     * @var ParticipantProvider
+     * The processor is responsible for processing the valid form model
+     *
+     * @var NewThreadFormProcessorInterface
      */
-    protected $participantProvider;
+    protected $processor;
 
     /**
      * Constructor.
      *
-     * @param Request $request The request the form will process
+     * @param Request                         $request   The request the form will process
+     * @param NewThreadFormProcessorInterface $processor A form model processor instance
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, NewThreadFormProcessorInterface $processor)
     {
         $this->request = $request;
+        $this->processor = $processor;
     }
 
     /**
@@ -61,10 +67,11 @@ class NewSingleThreadFormHandler
         $form->handleRequest($this->request);
 
         if ($form->isValid()) {
-            $data = $this->getFormData($form);
-            $data->setCreatedAt(new \DateTime('now'));
+            $newThreadFormModel = $this->getFormData($form);
+            //we want the creation date to be the same as the submit date..
+            $newThreadFormModel->setCreatedAt(new \DateTime('now'));
 
-
+            $this->processor->process($newThreadFormModel);
         }
 
         return false;
@@ -81,6 +88,12 @@ class NewSingleThreadFormHandler
      */
     protected function getFormData(Form $form)
     {
-        return $form->getData();
+        $data = $form->getData();
+
+        if (!$data instanceof NewThreadFormModelInterface) {
+            throw new \InvalidArgumentException('Form data needs to implement NewThreadFormModelInterface');
+        }
+
+        return $data;
     }
 }

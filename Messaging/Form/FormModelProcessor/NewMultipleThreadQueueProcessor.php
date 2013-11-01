@@ -11,9 +11,9 @@
 /**
  * Description of NewMultipleThreadQueueProcessor
  *
- * @author michiel
+ * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
 class NewMultipleThreadQueueProcessor
 {
-    //put your code here
+    //todo
 }

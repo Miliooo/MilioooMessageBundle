@@ -21,11 +21,11 @@ use Miliooo\Messaging\User\ParticipantInterface;
  *
  * Because it contains all the data needed, it makes it possible to delay the creation
  * of that new thread object. It's the job of the formModel processer now to see what we do
- * with this object. 
+ * with this object.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class NewThreadSingleRecipientModel
+class NewThreadSingleRecipientModel implements NewThreadFormModelInterface
 {
     /**
      * Body of the message
@@ -133,13 +133,13 @@ class NewThreadSingleRecipientModel
     }
 
     /**
-     * Gets the recipient of the message
+     * Gets the recipients of the message
      *
-     * @return ParticipantInterface the recipient
+     * @return ParticipantInterface[]
      */
-    public function getRecipient()
+    public function getRecipients()
     {
-        return $this->recipients;
+        return array($this->recipients);
     }
 
     /**

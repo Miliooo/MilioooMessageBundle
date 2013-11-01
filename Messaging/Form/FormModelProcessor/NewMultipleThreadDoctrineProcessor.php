@@ -15,8 +15,5 @@
  */
 class NewMultipleThreadDoctrineProcessor
 {
-    public function processFormModel(NewThreadSingleRecipientModel $formModel)
-    {
-
-    }
+    //todo
 }
