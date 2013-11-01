@@ -66,6 +66,8 @@ class NewSingleThreadFormHandler
 
 
         }
+
+        return false;
     }
 
     /**
