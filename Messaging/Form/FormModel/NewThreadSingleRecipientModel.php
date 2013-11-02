@@ -147,7 +147,7 @@ class NewThreadSingleRecipientModel implements NewThreadFormModelInterface
      *
      * @param ParticipantInterface $recipient
      */
-    public function setRecipient(ParticipantInterface $recipient)
+    public function setRecipients(ParticipantInterface $recipient)
     {
         $this->recipients = $recipient;
     }
