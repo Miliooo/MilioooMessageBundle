@@ -231,6 +231,10 @@ abstract class Thread implements ThreadInterface
      */
     protected function getParticipantsCollection()
     {
+        //doctrine skips constructor
+        if ($this->participants == null) {
+            $this->participants = new ArrayCollection();
+        }
         //returns an empty array collection
         if (!$this->threadMeta->count() > 0) {
             return $this->participants;
@@ -243,7 +247,7 @@ abstract class Thread implements ThreadInterface
         return $this->participants;
     }
 
-    private function addParticipantFromThreadMeta(ThreadMetaInterface $threadMeta)
+    protected function addParticipantFromThreadMeta(ThreadMetaInterface $threadMeta)
     {
         $participant = $threadMeta->getParticipant();
         if (is_object($participant) && $participant instanceof ParticipantInterface) {
