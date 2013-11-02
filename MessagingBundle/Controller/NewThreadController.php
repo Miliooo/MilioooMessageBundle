@@ -26,10 +26,10 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class NewThreadController
 {
-    private $formFactory;
-    private $securityToken;
-    private $formHandler;
-    private $templating;
+    protected $formFactory;
+    protected $securityToken;
+    protected $formHandler;
+    protected $templating;
 
     /**
      * Constructor.
@@ -63,7 +63,8 @@ class NewThreadController
         $sender = $this->securityToken->getUser();
         $form = $this->formFactory->create($sender);
         $this->formHandler->process($form);
+        $twig = 'MilioooMessagingBundle:NewThread:new_thread.html.twig';
 
-        return $this->templating->renderResponse('MilioooMessagingBundle:NewThread:new_thread.html.twig', array('form' => $form->createView()));
+        return $this->templating->renderResponse($twig, array('form' => $form->createView()));
     }
 }

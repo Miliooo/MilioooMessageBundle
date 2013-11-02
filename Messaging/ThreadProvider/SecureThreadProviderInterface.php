@@ -29,8 +29,8 @@ interface SecureThreadProviderInterface
      * Symfony\Component\Security\Core\Exception\AccessDeniedException should be
      * thrown.
      *
-     * @param ParticipantInterface $participant
-     * @param integer              $threadId
+     * @param ParticipantInterface $participant The current user
+     * @param integer              $threadId    The threadId of the thread the user wants to see
      *
      * @return ThreadInterface|null
      *
