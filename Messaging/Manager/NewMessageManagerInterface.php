@@ -32,12 +32,7 @@ use Miliooo\Messaging\Model\MessageInterface;
 interface NewMessageManagerInterface
 {
     /**
-     * Saves a new thread to the storage engine
-     *
-     * We use the message as a parameter since the threadinfo can be extracted
-     * from the message. In a way we are just storing messages.
-     * But a message can't live without a thread. That's also why the messagebuilder is an
-     * abstract class.
+     * Saves a new thread to the storage engine.
      *
      * @param MessageInterface $message
      */
