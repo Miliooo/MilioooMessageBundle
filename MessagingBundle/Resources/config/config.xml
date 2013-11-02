@@ -6,7 +6,7 @@
 
     <services>
 
-        <service id="miliooo.messaging.thread_provider" class="Miliooo\Messaging\ThreadProvider\ThreadProvider">
+        <service id="miliooo_messaging.thread_provider" class="Miliooo\Messaging\ThreadProvider\ThreadProvider">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument>%miliooo_messaging.thread_class%</argument>
         </service>
