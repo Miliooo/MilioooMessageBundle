@@ -55,7 +55,7 @@ class NewThreadSingleRecipientModelTest extends \PHPUnit_Framework_TestCase
     public function testRecipientWorks()
     {
         $recipient = new ParticipantTestHelper(1);
-        $this->model->setRecipient($recipient);
+        $this->model->setRecipients($recipient);
         $this->assertSame(array($recipient), $this->model->getRecipients());
     }
 
