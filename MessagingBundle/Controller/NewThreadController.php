@@ -18,7 +18,9 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Description of NewThreadController
+ * Controller for adding new threads.
+ *
+ * This controller is responsible for creating new threads for the logged in user
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */

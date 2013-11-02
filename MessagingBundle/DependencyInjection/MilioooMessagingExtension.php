@@ -32,6 +32,7 @@ class MilioooMessagingExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('builders.xml');
+        $loader->load('config.xml');
         $loader->load('controller.xml');
         $loader->load('form.xml');
         $loader->load('managers.xml');

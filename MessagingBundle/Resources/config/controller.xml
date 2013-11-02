@@ -9,11 +9,16 @@
         <service id="miliooo_messaging.controller.new_thread_controller" class="Miliooo\MessagingBundle\Controller\NewThreadController" scope="request">
             <argument type="service" id="miliooo_messaging.new_thread_form.factory" />
             <argument type="service" id="miliooo_messaging.new_thread_form.handler" />
-            <argument type="service" id="security.token" />
+            <argument type="service" id="miliooo_messaging.security.token" />
             <argument type="service" id="templating" />
         </service>
 
-        <service id="security.token"
+        <service id="miliooo_messaging.controller.show_thread_controller" class="Miliooo\MessagingBundle\Controller\ShowThreadController" scope="request">
+            <argument type="service" id="miliooo_messaging.thread_provider" />
+            <argument type="service" id="templating" />
+        </service>
+
+        <service id="miliooo_messaging.security.token"
                  class="Symfony\Component\Security\Core\Authentication\Token\TokenInterface"
                  factory-service="security.context"
                  factory-method="getToken"
