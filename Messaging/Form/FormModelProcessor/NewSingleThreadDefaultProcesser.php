@@ -12,7 +12,7 @@ namespace Miliooo\Messaging\Form\FormModelProcessor;
 
 use Miliooo\Messaging\Form\FormModel\NewThreadFormModelInterface;
 use Miliooo\Messaging\Builder\Thread\NewThread\NewThreadBuilder;
-use Miliooo\Messaging\Manager\NewMessageManager;
+use Miliooo\Messaging\Manager\NewMessageManagerInterface;
 use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
@@ -28,10 +28,10 @@ class NewSingleThreadDefaultProcesser implements NewThreadFormProcessorInterface
     /**
      * Constructor.
      *
-     * @param NewThreadBuilder  $newThreadBuilder  A new thread builder instance
-     * @param NewMessageManager $newMessageManager A new message manager instance
+     * @param NewThreadBuilder           $newThreadBuilder  A new thread builder instance
+     * @param NewMessageManagerInterface $newMessageManager A new message manager instance
      */
-    public function __construct(NewThreadBuilder $newThreadBuilder, NewMessageManager $newMessageManager)
+    public function __construct(NewThreadBuilder $newThreadBuilder, NewMessageManagerInterface $newMessageManager)
     {
         $this->newThreadBuilder = $newThreadBuilder;
         $this->newMessageManager = $newMessageManager;
@@ -44,7 +44,7 @@ class NewSingleThreadDefaultProcesser implements NewThreadFormProcessorInterface
     {
         $thread = $this->buildNewThreadFromFormModel($formModel);
         $message = $thread->getLastMessage();
-        $this->newMessageManager->saveNewThread($message, $thread);
+        $this->newMessageManager->saveNewThread($message);
     }
 
     /**

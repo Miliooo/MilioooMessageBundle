@@ -12,41 +12,45 @@ namespace Miliooo\Messaging\Manager;
 
 use Doctrine\ORM\EntityManager;
 use Miliooo\Messaging\Model\MessageInterface;
-use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
- * The new message manager is responsible for handling new messages
+ * The new message manager is responsible for saving new messages
  *
- * Since messages are always part of a thread a new message is either a
- *
- * New thread with a new message
- * Reply to a thread
- *
- * In both cases updates are needed to the thread object that's why we need both
- * The message manager and the thread manager to update this object
- *
- * This would not be the case if we did persist all on the thread object, but that's
- * a performance cost I don't want to create.
- *
+ * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class NewMessageManager
+class NewMessageManager implements NewMessageManagerInterface
 {
     protected $entityManager;
 
+    /**
+     * Constructor.
+     *
+     * @param EntityManager $entityManager An entity manager instance
+     */
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
     }
 
-    public function saveNewThread(MessageInterface $message, ThreadInterface $thread)
+    /**
+     * {@inheritdoc}
+     */
+    public function saveNewThread(MessageInterface $message)
     {
+        $thread = $message->getThread();
         $this->entityManager->persist($message);
         $this->entityManager->persist($thread);
         $this->entityManager->flush();
     }
 
-    public function saveNewReply(MessageInterface $message, threadInterface $thread)
+    /**
+     * {@inheritdoc}
+     */
+    public function saveNewReply(MessageInterface $message)
     {
-        //todo
+        $thread = $message->getThread();
+        $this->entityManager->persist($message);
+        $this->entityManager->persist($thread);
+        $this->entityManager->flush();
     }
 }

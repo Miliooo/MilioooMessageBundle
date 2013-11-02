@@ -67,7 +67,7 @@ class NewSingleThreadDefaultProcessorTest extends \PHPUnit_Framework_TestCase
         $message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');
         $newThread->expects($this->once())->method('getLastMessage')->will($this->returnValue($message));
 
-        $this->newMessageManager->expects($this->once())->method('saveNewThread')->with($message, $newThread);
+        $this->newMessageManager->expects($this->once())->method('saveNewThread')->with($message);
         $this->processor->process($this->formModel);
     }
 }
