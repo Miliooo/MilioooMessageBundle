@@ -22,7 +22,7 @@ class ThreadProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * The class under test
      *
-     * @var type
+     * @var ThreadProvider
      */
     protected $provider;
     protected $em;
@@ -70,7 +70,6 @@ class ThreadProviderTest extends \PHPUnit_Framework_TestCase
 
     protected function expectsRepository()
     {
-
         $this->em
             ->expects($this->once())
             ->method('getRepository')
