@@ -13,11 +13,12 @@ namespace Miliooo\Messaging\Form\FormModel;
 use Miliooo\Messaging\User\ParticipantInterface;
 
 /**
- * Description of NewThreadFormModelInterface
+ * Interface for form models which create a new thread.
  *
+ * @todo solve the problem how we will set recipients
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-interface NewThreadFormModelInterface extends MessageFormModelInterface
+interface NewThreadInterface extends NewMessageInterface
 {
     /**
      * Sets the subject
@@ -34,6 +35,8 @@ interface NewThreadFormModelInterface extends MessageFormModelInterface
     public function getSubject();
 
     /**
+     * Gets the recipients of the thread
+     *
      * @return ParticipantInterface[] An array of participant Interfaces
      */
     public function getRecipients();

@@ -39,7 +39,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('factory')->defaultValue('miliooo_messaging.new_thread_form.factory.default')->cannotBeEmpty()->end()
-                        ->scalarNode('model')->defaultValue('Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipientModel')->cannotBeEmpty()->end()
+                        ->scalarNode('model')->defaultValue('Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipient')->cannotBeEmpty()->end()
                     ->end()
             ->end();
 

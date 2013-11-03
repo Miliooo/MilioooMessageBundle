@@ -25,6 +25,10 @@
             <argument type="service" id="miliooo_message.new_single_thread_default_processor" />
         </service>
 
+        <service id="miliooo_message.reply_form.factory.default" class="Miliooo\Messaging\Form\FormFactory\ReplyMessageFormFactory" >
+            
+        </service>
+
     </services>
 
 </container>

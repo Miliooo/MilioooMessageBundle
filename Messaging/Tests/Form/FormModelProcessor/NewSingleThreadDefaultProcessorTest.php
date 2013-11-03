@@ -35,7 +35,7 @@ class NewSingleThreadDefaultProcessorTest extends \PHPUnit_Framework_TestCase
         $this->newThreadBuilder = $this->getMockBuilder('Miliooo\Messaging\Builder\Thread\NewThread\NewThreadBuilder')->disableOriginalConstructor()->getMock();
         $this->newMessageManager = $this->getMockBuilder('Miliooo\Messaging\Manager\NewMessageManager')->disableOriginalConstructor()->getMock();
 
-        $this->formModel = $this->getMock('Miliooo\Messaging\Form\FormModel\NewThreadFormModelInterface');
+        $this->formModel = $this->getMock('Miliooo\Messaging\Form\FormModel\NewThreadInterface');
 
         $this->processor = new NewSingleThreadDefaultProcesser($this->newThreadBuilder, $this->newMessageManager);
     }

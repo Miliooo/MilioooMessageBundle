@@ -10,7 +10,7 @@
 
 namespace Miliooo\Messaging\Form\FormFactory;
 
-use Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipientModel;
+use Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipient;
 use Miliooo\Messaging\User\ParticipantInterface;
 use Symfony\Component\Form\Form;
 
@@ -39,7 +39,7 @@ class NewThreadMessageFormFactory extends AbstractMessageFormFactory
     /**
      * Creates the new form model object we add to the form factory
      *
-     * @return NewThreadSingleRecipientModel
+     * @return NewThreadSingleRecipient
      */
     protected function createNewMessage()
     {

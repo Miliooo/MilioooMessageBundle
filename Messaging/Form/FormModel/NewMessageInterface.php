@@ -13,11 +13,11 @@ namespace Miliooo\Messaging\Form\FormModel;
 use Miliooo\Messaging\User\ParticipantInterface;
 
 /**
- * Description of MessageFormModelInterface
+ * Interface for a new message model.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-interface MessageFormModelInterface
+interface NewMessageInterface
 {
     /**
      * Gets the sender of the message.
@@ -62,7 +62,7 @@ interface MessageFormModelInterface
 
     /**
      * Gets the body of the message
-     * 
+     *
      * @return string
      */
     public function getBody();

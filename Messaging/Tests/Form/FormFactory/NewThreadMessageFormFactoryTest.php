@@ -36,7 +36,7 @@ class NewThreadMessageFormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->formFactory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
         $this->formType = $this->getMockBuilder('Symfony\Component\Form\AbstractType')->disableOriginalConstructor()->getMock();
         $this->formName = 'message';
-        $this->messageClass = '\Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipientModel';
+        $this->messageClass = '\Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipient';
         $this->newThreadFormfactory = new NewThreadMessageFormFactory($this->formFactory, $this->formType, $this->formName, $this->messageClass);
     }
 
@@ -49,7 +49,7 @@ class NewThreadMessageFormFactoryTest extends \PHPUnit_Framework_TestCase
             ->setMethods(array('createNewMessage'))
             ->getMock();
 
-        $messageClass = $this->getMock('Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipientModel');
+        $messageClass = $this->getMock('Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipient');
 
         $newThreadFormFactoryMock->expects($this->once())
             ->method('createNewMessage')

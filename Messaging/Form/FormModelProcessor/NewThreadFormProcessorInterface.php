@@ -10,7 +10,7 @@
 
 namespace Miliooo\Messaging\Form\FormModelProcessor;
 
-use Miliooo\Messaging\Form\FormModel\NewThreadFormModelInterface;
+use Miliooo\Messaging\Form\FormModel\NewThreadInterface;
 
 /**
  * Interface used by Form model processors
@@ -22,7 +22,7 @@ interface NewThreadFormProcessorInterface
     /**
      * Processes a NewThreadFormModel instance
      *
-     * @param NewThreadFormModelInterface $formModel The form model we process
+     * @param NewThreadInterface $formModel The form model we process
      */
-    public function process(NewThreadFormModelInterface $formModel);
+    public function process(NewThreadInterface $formModel);
 }

@@ -12,8 +12,8 @@ namespace Miliooo\Messaging\Form\FormHandler;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
-use Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipientModel;
-use Miliooo\Messaging\Form\FormModel\NewThreadFormModelInterface;
+use Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipient;
+use Miliooo\Messaging\Form\FormModel\NewThreadInterface;
 use Miliooo\Messaging\Form\FormModelProcessor\NewThreadFormProcessorInterface;
 
 /**
@@ -84,14 +84,14 @@ class NewSingleThreadFormHandler
      *
      * @param Form $form
      *
-     * @return NewThreadSingleRecipientModel
+     * @return NewThreadSingleRecipient
      */
     protected function getFormData(Form $form)
     {
         $data = $form->getData();
 
-        if (!$data instanceof NewThreadFormModelInterface) {
-            throw new \InvalidArgumentException('Form data needs to implement NewThreadFormModelInterface');
+        if (!$data instanceof NewThreadInterface) {
+            throw new \InvalidArgumentException('Form data needs to implement NewThreadInterface');
         }
 
         return $data;

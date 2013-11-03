@@ -10,7 +10,7 @@
 
 namespace Miliooo\Messaging\Form\FormModelProcessor;
 
-use Miliooo\Messaging\Form\FormModel\NewThreadFormModelInterface;
+use Miliooo\Messaging\Form\FormModel\NewThreadInterface;
 use Miliooo\Messaging\Builder\Thread\NewThread\NewThreadBuilder;
 use Miliooo\Messaging\Manager\NewMessageManagerInterface;
 use Miliooo\Messaging\Model\ThreadInterface;
@@ -40,7 +40,7 @@ class NewSingleThreadDefaultProcesser implements NewThreadFormProcessorInterface
     /**
      * {@inheritdoc}
      */
-    public function process(NewThreadFormModelInterface $formModel)
+    public function process(NewThreadInterface $formModel)
     {
         $thread = $this->buildNewThreadFromFormModel($formModel);
         $message = $thread->getLastMessage();
@@ -50,11 +50,11 @@ class NewSingleThreadDefaultProcesser implements NewThreadFormProcessorInterface
     /**
      * Builds a new thread from the form model
      *
-     * @param NewThreadFormModelInterface $formModel The form model
+     * @param NewThreadInterface $formModel The form model
      *
      * @return ThreadInterface The new build thread
      */
-    protected function buildNewThreadFromFormModel(NewThreadFormModelInterface $formModel)
+    protected function buildNewThreadFromFormModel(NewThreadInterface $formModel)
     {
         $this->newThreadBuilder->setBody($formModel->getBody());
         $this->newThreadBuilder->setCreatedAt($formModel->getCreatedAt());

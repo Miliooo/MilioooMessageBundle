@@ -11,7 +11,7 @@
 namespace Miliooo\Messaging\Tests\Form\FormHandler;
 
 use Miliooo\Messaging\Form\FormHandler\NewSingleThreadFormHandler;
-use Miliooo\Messaging\Form\FormModel\NewThreadFormModelInterface;
+use Miliooo\Messaging\Form\FormModel\NewThreadInterface;
 
 /**
  * Test file for Miliooo\Messaging\Form\FormHandler\NewSingleThreadFormHandler
@@ -75,7 +75,7 @@ class NewSingleThreadFormHandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Form data needs to implement NewThreadFormModelInterface
+     * @expectedExceptionMessage Form data needs to implement NewThreadInterface
      */
     public function testProcessWithValidFormReturnsInvalidDataThrowsException()
     {
@@ -88,7 +88,7 @@ class NewSingleThreadFormHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testProcessWithValidFormReturnsRightData()
     {
-        $formData = $this->getMock('Miliooo\Messaging\Form\FormModel\NewThreadFormModelInterface');
+        $formData = $this->getMock('Miliooo\Messaging\Form\FormModel\NewThreadInterface');
         $this->expectsMethodPost();
         $this->expectsValidFormData();
         $this->form->expects($this->once())->method('getData')->will($this->returnValue($formData));
