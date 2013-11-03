@@ -46,7 +46,7 @@ abstract class AbstractMessageFormFactory
      *
      * @var string
      */
-    protected $messageClass;
+    protected $modelClassName;
 
     /**
      * Constructor.
@@ -54,25 +54,13 @@ abstract class AbstractMessageFormFactory
      * @param FormFactoryInterface $formFactory  A form factory instance
      * @param AbstractType         $formType     The form type
      * @param string               $formName     Name of the form
-     * @param string               $messageClass FQCN of the form model
+     * @param string               $modelClass FQCN of the form model
      */
-    public function __construct(FormFactoryInterface $formFactory, AbstractType $formType, $formName, $messageClass)
+    public function __construct(FormFactoryInterface $formFactory, AbstractType $formType, $formName, $modelClassName)
     {
         $this->formFactory = $formFactory;
         $this->formType = $formType;
         $this->formName = $formName;
-        $this->messageClass = $messageClass;
-    }
-
-    /**
-     * Creates a new instance of the form model
-     *
-     * @return AbstractMessage
-     */
-    protected function createModelInstance()
-    {
-        $class = $this->messageClass;
-
-        return new $class();
+        $this->modelClassName = $modelClassName;
     }
 }

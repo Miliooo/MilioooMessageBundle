@@ -46,13 +46,13 @@ class NewThreadMessageFormFactoryTest extends \PHPUnit_Framework_TestCase
 
         $newThreadFormFactoryMock = $this->getMockBuilder('Miliooo\Messaging\Form\FormFactory\NewThreadMessageFormFactory')
             ->setConstructorArgs(array($this->formFactory, $this->formType, $this->formName, $this->messageClass))
-            ->setMethods(array('createNewMessage'))
+            ->setMethods(array('createNewFormModel'))
             ->getMock();
 
         $messageClass = $this->getMock('Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipient');
 
         $newThreadFormFactoryMock->expects($this->once())
-            ->method('createNewMessage')
+            ->method('createNewFormModel')
             ->will($this->returnValue($messageClass));
 
         $messageClass->expects($this->once())
