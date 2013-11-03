@@ -35,6 +35,12 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('message_class')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('message_meta_class')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('participant_provider')->defaultValue('miliooo_messaging.participant_provider.default')->cannotBeEmpty()->end()
+                ->arrayNode('new_thread_form')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('factory')->defaultValue('miliooo_messaging.new_thread_form.factory.default')->cannotBeEmpty()->end()
+                        ->scalarNode('model')->defaultValue('Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipientModel')->cannotBeEmpty()->end()
+                    ->end()
             ->end();
 
         return $treeBuilder;

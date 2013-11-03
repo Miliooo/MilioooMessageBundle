@@ -8,11 +8,11 @@
 
         <service id="miliooo_message.new_thread_form.type" class="Miliooo\Messaging\Form\FormType\NewThreadFormType" public="false" />
 
-        <service id="miliooo_messaging.new_thread_form.factory" class="Miliooo\Messaging\Form\FormFactory\NewThreadMessageFormFactory">
+        <service id="miliooo_messaging.new_thread_form.factory.default" class="Miliooo\Messaging\Form\FormFactory\NewThreadMessageFormFactory">
             <argument type="service" id="form.factory" />
             <argument type="service" id="miliooo_message.new_thread_form.type" />
             <argument>Message</argument>
-            <argument>Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipientModel</argument>
+            <argument>%miliooo_messaging.new_thread_form.model%</argument>
         </service>
 
         <service id="miliooo_message.new_single_thread_default_processor" class="Miliooo\Messaging\Form\FormModelProcessor\NewSingleThreadDefaultProcesser">
