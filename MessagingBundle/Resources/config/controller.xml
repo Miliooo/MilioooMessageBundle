@@ -19,12 +19,6 @@
             <argument type="service" id="miliooo_messaging.security.token" />
         </service>
 
-        <service id="miliooo_messaging.security.token"
-                 class="Symfony\Component\Security\Core\Authentication\Token\TokenInterface"
-                 factory-service="security.context"
-                 factory-method="getToken"
-        />
-
     </services>
 
 </container>
