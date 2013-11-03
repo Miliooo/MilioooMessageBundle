@@ -25,7 +25,7 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
      * @var ShowThreadController
      */
     private $controller;
-    private $securityToken;
+    private $participantProvider;
     private $templating;
     private $request;
     private $threadProvider;
@@ -35,10 +35,10 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->disableOriginalConstructor()->getMock();
-        $this->securityToken = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        $this->participantProvider = $this->getMock('Miliooo\Messaging\User\ParticipantProviderInterface');
         $this->templating = $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
         $this->threadProvider = $this->getMock('Miliooo\Messaging\ThreadProvider\SecureThreadProviderInterface');
-        $this->controller = new ShowThreadController($this->threadProvider, $this->templating, $this->securityToken);
+        $this->controller = new ShowThreadController($this->threadProvider, $this->templating, $this->participantProvider);
         $this->user = new ParticipantTestHelper(1);
         $this->thread = $this->getMock('Miliooo\Messaging\Model\ThreadInterface');
     }
@@ -71,8 +71,8 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
 
     protected function expectsUser()
     {
-        $this->securityToken->expects($this->once())
-            ->method('getUser')->will($this->returnValue($this->user));
+        $this->participantProvider->expects($this->once())
+            ->method('getAuthenticatedParticipant')->will($this->returnValue($this->user));
     }
 
     protected function expectsThread()

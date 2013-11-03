@@ -14,34 +14,34 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Miliooo\Messaging\ThreadProvider\SecureThreadProviderInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Miliooo\Messaging\User\ParticipantProviderInterface;
 
 /**
  * Controller for showing a single thread.
  *
  * This controller is responsible for showing a single thread to the user.
- * It can only show the thread if the user has permissions to view that thread.
+ * It should only show the thread if the user has permissions to view that thread.
  *
  */
 class ShowThreadController
 {
     protected $threadProvider;
     protected $templating;
-    protected $securityToken;
+    protected $participantProvider;
 
     /**
      * Constructor.
      *
-     * @param SecureThreadProviderInterface $threadProvider A secure thread provider instance
-     * @param EngineInterface               $templating     A templating engine
-     * @param TokenInterface                $securityToken  A security token instance
+     * @param SecureThreadProviderInterface $threadProvider      A secure thread provider instance
+     * @param EngineInterface               $templating          A templating engine
+     * @param ParticipantProviderInterface  $participantProvider A participant provider
      */
-    public function __construct(SecureThreadProviderInterface $threadProvider, EngineInterface $templating, TokenInterface $securityToken)
+    public function __construct(SecureThreadProviderInterface $threadProvider, EngineInterface $templating, ParticipantProviderInterface $participantProvider)
     {
         $this->threadProvider = $threadProvider;
         $this->templating = $templating;
-        $this->securityToken = $securityToken;
+        $this->participantProvider = $participantProvider;
     }
 
     /**
@@ -56,12 +56,11 @@ class ShowThreadController
      */
     public function showAction(Request $request, $threadId)
     {
-        $loggedInUser = $this->securityToken->getUser();
+        $loggedInUser = $this->participantProvider->getAuthenticatedParticipant();
         $thread = $this->threadProvider->findThreadForParticipant($loggedInUser, $threadId);
         if (!$thread) {
             throw new NotFoundHttpException('Thread not found');
         }
-
         $twig = 'MilioooMessagingBundle:ShowThread:show_thread.html.twig';
 
         return $this->templating->renderResponse($twig, array('thread' => $thread));

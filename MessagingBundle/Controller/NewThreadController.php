@@ -12,10 +12,10 @@ namespace Miliooo\MessagingBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Miliooo\Messaging\Form\FormFactory\NewThreadMessageFormFactory;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Miliooo\Messaging\Form\FormHandler\NewSingleThreadFormHandler;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Miliooo\Messaging\User\ParticipantProviderInterface;
 
 /**
  * Controller for adding new threads.
@@ -27,23 +27,23 @@ use Symfony\Component\HttpFoundation\Response;
 class NewThreadController
 {
     protected $formFactory;
-    protected $securityToken;
+    protected $participantProvider;
     protected $formHandler;
     protected $templating;
 
     /**
      * Constructor.
      *
-     * @param NewThreadMessageFormFactory $formFactory   A formfactory instance for a new thread
-     * @param NewSingleThreadFormHandler  $formHandler   A new single thread formhandler instance
-     * @param TokenInterface              $securityToken A security token instance
-     * @param EngineInterface             $templating    A templating engine instance
+     * @param NewThreadMessageFormFactory  $formFactory         A formfactory instance for a new thread
+     * @param NewSingleThreadFormHandler   $formHandler         A new single thread formhandler instance
+     * @param ParticipantProviderInterface $participantProvider A participant provider
+     * @param EngineInterface              $templating          A templating engine instance
      */
-    public function __construct(NewThreadMessageFormFactory $formFactory, NewSingleThreadFormHandler $formHandler, TokenInterface $securityToken, EngineInterface $templating)
+    public function __construct(NewThreadMessageFormFactory $formFactory, NewSingleThreadFormHandler $formHandler, ParticipantProviderInterface $participantProvider, EngineInterface $templating)
     {
         $this->formFactory = $formFactory;
         $this->formHandler = $formHandler;
-        $this->securityToken = $securityToken;
+        $this->participantProvider = $participantProvider;
         $this->templating = $templating;
     }
 
@@ -60,7 +60,7 @@ class NewThreadController
      */
     public function createAction(Request $request)
     {
-        $sender = $this->securityToken->getUser();
+        $sender = $this->participantProvider->getAuthenticatedParticipant();
         $form = $this->formFactory->create($sender);
         $this->formHandler->process($form);
         $twig = 'MilioooMessagingBundle:NewThread:new_thread.html.twig';

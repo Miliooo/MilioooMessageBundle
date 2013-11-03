@@ -28,16 +28,16 @@ class NewThreadControllerTest extends \PHPUnit_Framework_TestCase
     private $controller;
     private $formFactory;
     private $formHandler;
-    private $securityToken;
+    private $participantProvider;
     private $templating;
 
     public function setUp()
     {
         $this->formFactory = $this->getMockBuilder('Miliooo\Messaging\Form\FormFactory\NewThreadMessageFormFactory')->disableOriginalConstructor()->getMock();
         $this->formHandler = $this->getMockBuilder('Miliooo\Messaging\Form\FormHandler\NewSingleThreadFormHandler')->disableOriginalConstructor()->getMock();
-        $this->securityToken = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        $this->participantProvider = $this->getMock('Miliooo\Messaging\User\ParticipantProviderInterface');
         $this->templating = $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
-        $this->controller = new NewThreadController($this->formFactory, $this->formHandler, $this->securityToken, $this->templating);
+        $this->controller = new NewThreadController($this->formFactory, $this->formHandler, $this->participantProvider, $this->templating);
         $this->request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->disableOriginalConstructor()->getMock();
     }
 
@@ -45,7 +45,10 @@ class NewThreadControllerTest extends \PHPUnit_Framework_TestCase
     {
         $form = $this->getMockBuilder('Symfony\Component\Form\Form')->disableOriginalConstructor()->getMock();
         $sender = new ParticipantTestHelper('sender');
-        $this->securityToken->expects($this->once())->method('getUser')->will($this->returnValue($sender));
+
+        $this->participantProvider->expects($this->once())
+            ->method('getAuthenticatedParticipant')->will($this->returnValue($sender));
+
         $this->formFactory->expects($this->once())
             ->method('create')
             ->with($sender)
