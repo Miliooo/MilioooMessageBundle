@@ -12,7 +12,7 @@
              factory-method="getToken"
         />
 
-        <service id="miliooo_messaging.user.participant_provider_security_token" class="Miliooo\Messaging\User\ParticipantProviderSecurityToken">
+        <service id="miliooo_messaging.participant_provider.default" class="Miliooo\Messaging\User\ParticipantProviderSecurityToken">
             <argument type="service" id="miliooo_messaging.security.token" />
         </service>
 

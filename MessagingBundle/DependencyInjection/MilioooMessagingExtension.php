@@ -43,5 +43,6 @@ class MilioooMessagingExtension extends Extension
         $container->setParameter('miliooo_messaging.thread_meta_class', $config['thread_meta_class']);
         $container->setParameter('miliooo_messaging.message_class', $config['message_class']);
         $container->setParameter('miliooo_messaging.message_meta_class', $config['message_meta_class']);
+        $container->setAlias('miliooo_messaging.participant_provider', $config['participant_provider']);
     }
 }

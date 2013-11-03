@@ -34,6 +34,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('thread_meta_class')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('message_class')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('message_meta_class')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('participant_provider')->defaultValue('Miliooo\Messaging\User\ParticipantProviderSecurityToken')->cannotBeEmpty()->end()
             ->end();
 
         return $treeBuilder;
