@@ -20,7 +20,6 @@ use Miliooo\Messaging\User\ParticipantInterface;
  */
 interface ParticipantProviderInterface
 {
-
     /**
      * Gets the authenticated participant.
      *
