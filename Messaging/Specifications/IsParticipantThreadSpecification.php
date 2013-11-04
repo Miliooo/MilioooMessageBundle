@@ -8,6 +8,8 @@
  * with this source code in the file LICENSE.
  */
 
+namespace Miliooo\Messaging\Specifications;
+
 /**
  * Description of IsParticipantThreadSpecification
  *
@@ -15,5 +17,8 @@
  */
 class IsParticipantThreadSpecification
 {
-    public function isSatisfiedBy();
+    public function isSatisfiedBy()
+    {
+        
+    }
 }
