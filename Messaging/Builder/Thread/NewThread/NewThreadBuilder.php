@@ -103,7 +103,7 @@ class NewThreadBuilder extends AbstractNewMessageBuilder
      *
      * @return ThreadInterface
      */
-    protected function createThread()
+    private function createThread()
     {
         return new $this->threadClass();
     }
@@ -113,7 +113,7 @@ class NewThreadBuilder extends AbstractNewMessageBuilder
      *
      * @return ThreadMetaInterface
      */
-    protected function createThreadMeta()
+    private function createThreadMeta()
     {
         return new $this->threadMetaClass();
     }
