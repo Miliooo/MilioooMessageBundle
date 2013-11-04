@@ -19,7 +19,6 @@ use Miliooo\Messaging\Model\ThreadInterface;
  */
 interface ReplyMessageInterface extends NewMessageInterface
 {
-
     /**
      * Sets the thread where we add the reply
      *
