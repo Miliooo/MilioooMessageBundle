@@ -34,6 +34,11 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
         $this->thread = $this->getMockForAbstractClass('Miliooo\Messaging\Model\Thread');
     }
 
+    public function tearDown()
+    {
+        unset($this->thread);
+    }
+
     public function testInterface()
     {
         $this->assertInstanceOf('Miliooo\Messaging\Model\ThreadInterface', $this->thread);
@@ -140,6 +145,32 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $this->thread->getParticipants());
 
         $this->assertFalse($this->thread->isParticipant($participant3));
+    }
+
+    public function testGetOtherParticipants()
+    {
+        //add some dummie participants first
+        $participant = new ParticipantTestHelper(1);
+        $threadMeta = $this->getNewThreadMeta();
+        $threadMeta->setParticipant($participant);
+        $this->thread->addThreadMeta($threadMeta);
+
+        $participant2 = new ParticipantTestHelper(2);
+        $threadMeta2 = $this->getNewThreadMeta();
+        $threadMeta2->setParticipant($participant2);
+        $this->thread->addThreadMeta($threadMeta2);
+
+        $participant3 = new ParticipantTestHelper(3);
+        $threadMeta3 = $this->getNewThreadMeta();
+        $threadMeta3->setParticipant($participant3);
+        $this->thread->addThreadMeta($threadMeta3);
+
+       // $this->assertCount(2, $this->thread->getOtherParticipants($participant3));
+        $otherParticipants = $this->thread->getOtherParticipants($participant3);
+        foreach ($otherParticipants as $otherParticipant) {
+            $this->assertNotEquals($otherParticipant, $participant3);
+            $this->assertContains($otherParticipant, array($participant2, $participant));
+        }
     }
 
     public function testIsParticipantWithParticipantReturnsTrue()

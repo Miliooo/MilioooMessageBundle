@@ -247,6 +247,21 @@ abstract class Thread implements ThreadInterface
         return $this->participants;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getOtherParticipants(ParticipantInterface $participant)
+    {
+        $otherParticipants = $this->getParticipants();
+        $key = array_search($participant, $otherParticipants, true);
+
+        if (false !== $key) {
+            unset($otherParticipants[$key]);
+        }
+
+        return array_values($otherParticipants);
+    }
+
     protected function addParticipantFromThreadMeta(ThreadMetaInterface $threadMeta)
     {
         $participant = $threadMeta->getParticipant();

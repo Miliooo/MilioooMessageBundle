@@ -141,4 +141,13 @@ interface ThreadInterface
      * @return boolean true if participant, false otherwise
      */
     public function isParticipant(ParticipantInterface $participant);
+
+    /**
+     * Gets th participants besides the given participant
+     *
+     * @param ParticipantInterface $participant The participant to exclude
+     *
+     * @return ParticipantInterface[] Array of participants 
+     */
+    public function getOtherParticipants(ParticipantInterface $participant);
 }
