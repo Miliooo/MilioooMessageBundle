@@ -14,7 +14,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryInterface;
 
 /**
- * Instanciates message forms
+ * Instanciates forms for adding a message
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
@@ -51,10 +51,10 @@ abstract class AbstractMessageFormFactory
     /**
      * Constructor.
      *
-     * @param FormFactoryInterface $formFactory  A form factory instance
-     * @param AbstractType         $formType     The form type
-     * @param string               $formName     Name of the form
-     * @param string               $modelClass FQCN of the form model
+     * @param FormFactoryInterface $formFactory    A form factory instance
+     * @param AbstractType         $formType       The form type
+     * @param string               $formName       Name of the form
+     * @param string               $modelClassName FQCN of the form model
      */
     public function __construct(FormFactoryInterface $formFactory, AbstractType $formType, $formName, $modelClassName)
     {

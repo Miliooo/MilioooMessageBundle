@@ -22,7 +22,7 @@ use Symfony\Component\Form\Form;
 class NewThreadMessageFormFactory extends AbstractMessageFormFactory
 {
     /**
-     * Creates a new thread message
+     * Creates a new thread form from a form type with a form model set.
      *
      * @param ParticipantInterface $sender The sender
      *
@@ -37,7 +37,7 @@ class NewThreadMessageFormFactory extends AbstractMessageFormFactory
     }
 
     /**
-     * Creates the new form model object we add to the form factory
+     * Creates a new form model object from the modelClassName
      *
      * @return NewThreadInterface
      */

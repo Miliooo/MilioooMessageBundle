@@ -12,17 +12,19 @@ namespace Miliooo\Messaging\Form\FormFactory;
 
 use Miliooo\Messaging\Model\ThreadInterface;
 use Miliooo\Messaging\User\ParticipantInterface;
+use Miliooo\Messaging\Form\FormModel\ReplyMessageInterface;
 
 /**
- * Instanciates message forms
+ * The form factory for reply messages.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
- * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
 class ReplyMessageFormFactory extends AbstractMessageFormFactory
 {
     /**
-     * Creates a reply message
+     * Creates a replyform from a form type with a form model set.
+     *
+     * It also sets some values on that form model.
      *
      * @param ThreadInterface      $thread The thread we answer to
      * @param ParticipantInterface $sender The sender of the reply
@@ -31,10 +33,20 @@ class ReplyMessageFormFactory extends AbstractMessageFormFactory
      */
     public function create(ThreadInterface $thread, ParticipantInterface $sender)
     {
-        $message = $this->createModelInstance();
-        $message->setThread($thread);
-        $message->setSender($sender);
+        $formModel = $this->createNewFormModel();
+        $formModel->setThread($thread);
+        $formModel->setSender($sender);
 
-        return $this->formFactory->createNamed($this->formName, $this->formType, $message);
+        return $this->formFactory->createNamed($this->formName, $this->formType, $formModel);
+    }
+
+    /**
+     * Creates a new form model object from the modelClassName
+     *
+     * @return ReplyMessageInterface
+     */
+    protected function createNewFormModel()
+    {
+        return new $this->modelClassName;
     }
 }
