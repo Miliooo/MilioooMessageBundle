@@ -23,10 +23,6 @@ use Miliooo\Messaging\Model\MessageInterface;
  * The reason we did this is the performance cost.
  * But if it wasn't for doctrine and the performance cost we would ofcourse only store our new thread object
  *
- * We use the message as a parameter because we can extract the threadinfo from it.
- * We can also do this from the thread oobject, but relying on the message being the last one in the collection
- * just feels a little bit more unsafe
- *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
 interface NewMessageManagerInterface
@@ -38,5 +34,10 @@ interface NewMessageManagerInterface
      */
     public function saveNewThread(MessageInterface $message);
 
+    /**
+     * Saves a new reply to the storage engine.
+     *
+     * @param MessageInterface $message
+     */
     public function saveNewReply(MessageInterface $message);
 }
