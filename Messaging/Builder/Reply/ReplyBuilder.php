@@ -15,11 +15,13 @@ use Miliooo\Messaging\Model\ThreadInterface;
 use Miliooo\Messaging\User\ParticipantInterface;
 
 /**
- * Description of ReplyBuilder
+ * The builder for a reply message.
+ *
+ * This class is responsable for updating a thread with a new reply message
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class ReplyBuilder extends AbstractNewMessageBuilder implements ReplyBuilderInterface
+class ReplyBuilder extends AbstractNewMessageBuilder
 {
     /**
      * The thread we reply to
@@ -48,7 +50,6 @@ class ReplyBuilder extends AbstractNewMessageBuilder implements ReplyBuilderInte
     {
 
         $this->recipients = $this->getReplyRecipients();
-        //build the message
         $this->buildNewMessage($this->thread);
         $this->updateReplyThreadMeta();
 
