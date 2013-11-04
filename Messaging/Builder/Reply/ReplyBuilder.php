@@ -12,13 +12,14 @@ namespace Miliooo\Messaging\Builder\Reply;
 
 use Miliooo\Messaging\Builder\Message\AbstractNewMessageBuilder;
 use Miliooo\Messaging\Model\ThreadInterface;
+use Miliooo\Messaging\User\ParticipantInterface;
 
 /**
  * Description of ReplyBuilder
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class ReplyBuilder extends AbstractNewMessageBuilder
+class ReplyBuilder extends AbstractNewMessageBuilder implements ReplyBuilderInterface
 {
     /**
      * The thread we reply to
@@ -27,7 +28,6 @@ class ReplyBuilder extends AbstractNewMessageBuilder
      */
     protected $thread;
     protected $recipients;
-
 
     /**
      * Sets the thread where we will reply to
@@ -46,15 +46,35 @@ class ReplyBuilder extends AbstractNewMessageBuilder
      */
     public function build()
     {
-        $this->recipients = $this->thread->getOtherParticipants($this->sender);
+
+        $this->recipients = $this->getReplyRecipients();
+        //build the message
         $this->buildNewMessage($this->thread);
+        $this->updateReplyThreadMeta();
+
+        return $this->thread;
+    }
+
+    /**
+     * Sets the recipients for the reply message
+     *
+     * @return ParticipantInterface[] The recipients of the reply
+     */
+    private function getReplyRecipients()
+    {
+        return $this->thread->getOtherParticipants($this->sender);
+    }
+
+    private function updateReplyThreadMeta()
+    {
+        //update the thread meta for the sender
         $senderThreadMeta = $this->thread->getThreadMetaForParticipant($this->sender);
         $this->updateThreadMetaForSender($senderThreadMeta);
+
+        //update the thread meta for the recipients
         foreach ($this->recipients as $recipient) {
             $recipientThreadMeta = $this->thread->getThreadMetaForParticipant($recipient);
             $this->updateThreadMetaForRecipient($recipientThreadMeta);
         }
-
-        return $this->thread;
     }
 }
