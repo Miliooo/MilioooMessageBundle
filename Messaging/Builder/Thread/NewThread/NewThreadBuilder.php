@@ -18,12 +18,7 @@ use Miliooo\Messaging\Model\ThreadMetaInterface;
 /**
  * The builder for a new thread.
  *
- * This class is responsable for creating a new thread object from the setters.
- *
- * Since this is the last step before saving the object to the database we want
- * to make sure it's a valid thread object.
- *
- * That's why this class is abstract and we use the guarded classes.
+ * This class is responsable for creating a new thread object with the message.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
