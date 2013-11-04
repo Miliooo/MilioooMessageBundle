@@ -34,9 +34,11 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
         $this->thread = $this->getMockForAbstractClass('Miliooo\Messaging\Model\Thread');
     }
 
-    public function tearDown()
+    public function testGettersAndSetters()
     {
-        unset($this->thread);
+        $this->subjectWorks();
+        $this->createdByWorks();
+        $this->createdAtworks();
     }
 
     public function testInterface()
@@ -50,40 +52,11 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->thread->getId());
     }
 
-    public function testSubjectWorks()
-    {
-        $subject = 'this is the subject';
-        $this->thread->setSubject($subject);
-        $this->assertSame($subject, $this->thread->getSubject());
-    }
-
-    public function testCreatedByWorks()
-    {
-        $participant = new ParticipantTestHelper('participant');
-        $this->thread->setCreatedBy($participant);
-        $this->assertEquals($participant, $this->thread->getCreatedBy());
-    }
-
-    public function testCreatedAtWorks()
-    {
-        $createdAt = new \DateTime('2013-10-12 00:00:00');
-        $this->thread->setCreatedAt($createdAt);
-        $this->assertSame($createdAt, $this->thread->getCreatedAt());
-    }
-
-    public function testMessagesIsAnArrayCollection()
+    public function testArrayCollections()
     {
         $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $this->thread->getMessages());
-    }
-
-    public function testThreadMetaIsAnArrayCollection()
-    {
         $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $this->thread->getThreadMeta());
-    }
-
-    public function testParticipantsIsAnArrayCollection()
-    {
-        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $this->thread->getThreadMeta());
+        $this->assertAttributeInstanceOf('Doctrine\Common\Collections\ArrayCollection', 'participants', $this->thread);
     }
 
     public function testAddMessageWorksByCheckingItIsPartOfTheGetMessages()
@@ -165,7 +138,6 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
         $threadMeta3->setParticipant($participant3);
         $this->thread->addThreadMeta($threadMeta3);
 
-       // $this->assertCount(2, $this->thread->getOtherParticipants($participant3));
         $otherParticipants = $this->thread->getOtherParticipants($participant3);
         foreach ($otherParticipants as $otherParticipant) {
             $this->assertNotEquals($otherParticipant, $participant3);
@@ -252,6 +224,27 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
 
         $participant2 = new ParticipantTestHelper(2);
         $this->assertNull($this->thread->getThreadMetaForParticipant($participant2));
+    }
+
+    protected function subjectWorks()
+    {
+        $subject = 'this is the subject';
+        $this->thread->setSubject($subject);
+        $this->assertSame($subject, $this->thread->getSubject());
+    }
+
+    protected function createdByWorks()
+    {
+        $participant = new ParticipantTestHelper('participant');
+        $this->thread->setCreatedBy($participant);
+        $this->assertEquals($participant, $this->thread->getCreatedBy());
+    }
+
+    protected function createdAtWorks()
+    {
+        $createdAt = new \DateTime('2013-10-12 00:00:00');
+        $this->thread->setCreatedAt($createdAt);
+        $this->assertSame($createdAt, $this->thread->getCreatedAt());
     }
 
     /**
