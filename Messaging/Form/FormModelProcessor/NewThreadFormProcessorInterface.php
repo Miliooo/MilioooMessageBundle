@@ -13,7 +13,7 @@ namespace Miliooo\Messaging\Form\FormModelProcessor;
 use Miliooo\Messaging\Form\FormModel\NewThreadInterface;
 
 /**
- * Interface used by Form model processors
+ * Interface used by new thread form processors.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
