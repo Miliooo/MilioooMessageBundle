@@ -29,7 +29,6 @@ use Miliooo\Messaging\Model\ThreadInterface;
  */
 class CanSeeThreadSpecification
 {
-
     /**
      * Checks if the given participant can see the given thread
      *
@@ -42,8 +41,8 @@ class CanSeeThreadSpecification
     {
         if ($thread->isParticipant($participant)) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 }
