@@ -14,12 +14,17 @@ use Miliooo\Messaging\Builder\Thread\NewThread\NewThreadBuilderFromFormModel;
 use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
 
 /**
- * Description of NewThreadBuilderFromFormModelTest
+ * Test file for NewThreadBuilderFromFormModel
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
 class NewThreadBuilderFromFormModelTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * The class under test
+     *
+     * @var NewThreadBuilderFromFormModel
+     */
     private $builder;
     private $newThreadModel;
     private $sender;
@@ -37,7 +42,7 @@ class NewThreadBuilderFromFormModelTest extends \PHPUnit_Framework_TestCase
         $this->recipients = new ParticipantTesthelper('recipient');
     }
 
-    public function testBuild()
+    public function testBuildThread()
     {
         $this->newThreadModel->expects($this->once())
             ->method('getSender')
