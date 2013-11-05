@@ -27,8 +27,8 @@ use Miliooo\Messaging\User\ParticipantProviderInterface;
 class NewThreadController
 {
     protected $formFactory;
-    protected $participantProvider;
     protected $formHandler;
+    protected $participantProvider;
     protected $templating;
 
     /**
@@ -39,7 +39,11 @@ class NewThreadController
      * @param ParticipantProviderInterface $participantProvider A participant provider
      * @param EngineInterface              $templating          A templating engine instance
      */
-    public function __construct(NewThreadMessageFormFactory $formFactory, NewSingleThreadFormHandler $formHandler, ParticipantProviderInterface $participantProvider, EngineInterface $templating)
+    public function __construct(
+        NewThreadMessageFormFactory $formFactory,
+        NewSingleThreadFormHandler $formHandler,
+        ParticipantProviderInterface $participantProvider,
+        EngineInterface $templating)
     {
         $this->formFactory = $formFactory;
         $this->formHandler = $formHandler;
