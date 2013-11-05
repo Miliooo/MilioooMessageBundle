@@ -43,8 +43,8 @@ class NewThreadController
         NewThreadMessageFormFactory $formFactory,
         NewSingleThreadFormHandler $formHandler,
         ParticipantProviderInterface $participantProvider,
-        EngineInterface $templating)
-    {
+        EngineInterface $templating
+        ) {
         $this->formFactory = $formFactory;
         $this->formHandler = $formHandler;
         $this->participantProvider = $participantProvider;

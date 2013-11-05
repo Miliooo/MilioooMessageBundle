@@ -39,13 +39,20 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->setConstructorMocks();
-        $this->controller = new ShowThreadController($this->formFactory, $this->formHandler, $this->threadProvider, $this->templating, $this->participantProvider);
+        $this->controller = new ShowThreadController(
+            $this->formFactory,
+            $this->formHandler,
+            $this->threadProvider,
+            $this->templating,
+            $this->participantProvider
+        );
 
         $this->loggedInUser = new ParticipantTestHelper(1);
         $this->thread = $this->getMock('Miliooo\Messaging\Model\ThreadInterface');
         $this->form = $this->getMockBuilder('Symfony\Component\Form\Form')
                 ->disableOriginalConstructor()->getMock();
-        $this->formView = $this->getMockBuilder('Symfony\Component\Form\FormView')->disableOriginalConstructor()->getMock();
+        $this->formView = $this->getMockBuilder('Symfony\Component\Form\FormView')
+                ->disableOriginalConstructor()->getMock();
     }
 
     /**

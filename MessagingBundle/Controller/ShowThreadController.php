@@ -48,8 +48,8 @@ class ShowThreadController
         NewReplyFormHandler $formHandler,
         SecureThreadProviderInterface $threadProvider,
         EngineInterface $templating,
-        ParticipantProviderInterface $participantProvider)
-    {
+        ParticipantProviderInterface $participantProvider
+        ) {
         $this->formFactory = $formFactory;
         $this->formHandler = $formHandler;
         $this->threadProvider = $threadProvider;
