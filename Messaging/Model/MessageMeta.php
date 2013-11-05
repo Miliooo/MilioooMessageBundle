@@ -61,7 +61,7 @@ abstract class MessageMeta implements MessageMetaInterface
     /**
      * {@inheritdoc}
      */
-    public function getIsRead()
+    public function isRead()
     {
         return $this->isRead;
     }

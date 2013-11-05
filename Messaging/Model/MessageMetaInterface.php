@@ -46,7 +46,7 @@ interface MessageMetaInterface
      *
      * @return boolean true if it's read false otherwise
      */
-    public function getIsRead();
+    public function isRead();
 
     /**
      * Sets the message this message meta belongs to

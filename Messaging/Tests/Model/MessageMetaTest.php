@@ -47,9 +47,9 @@ class MessageMetaTest extends \PHPUnit_Framework_TestCase
     public function testIsReadWorks()
     {
         $this->messageMeta->setIsRead(true);
-        $this->assertTrue($this->messageMeta->getIsread());
+        $this->assertTrue($this->messageMeta->isRead());
         $this->messageMeta->setIsRead(false);
-        $this->assertFalse($this->messageMeta->getIsRead());
+        $this->assertFalse($this->messageMeta->isRead());
     }
 
     public function testIsReadDefaultsToFalse()

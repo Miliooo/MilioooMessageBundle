@@ -75,7 +75,7 @@ class ReplyBuilderTest extends \PHPUnit_Framework_TestCase
         $this->builder->setSender($senderOfReply);
         $threadWithReply = $this->builder->build();
         $lastMessage = $threadWithReply->getLastMessage();
-        $isRead = $lastMessage->getMessageMetaForParticipant($senderOfReply)->getIsRead();
+        $isRead = $lastMessage->getMessageMetaForParticipant($senderOfReply)->isRead();
         $this->assertTrue($isRead);
     }
 
@@ -91,7 +91,7 @@ class ReplyBuilderTest extends \PHPUnit_Framework_TestCase
         $threadWithReply = $this->builder->build();
         $lastMessage = $threadWithReply->getLastMessage();
         $messageMetaRecipients = $lastMessage->getMessageMetaForParticipant($recieverOfReply);
-        $this->assertFalse($messageMetaRecipients->getIsRead());
+        $this->assertFalse($messageMetaRecipients->isRead());
     }
 
     /**
