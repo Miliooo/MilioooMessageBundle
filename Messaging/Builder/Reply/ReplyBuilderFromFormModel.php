@@ -20,7 +20,6 @@ use Miliooo\Messaging\Model\ThreadInterface;
  */
 class ReplyBuilderFromFormModel extends ReplyBuilder
 {
-
     /**
      * Builds a reply from a reply message interface instance
      *
