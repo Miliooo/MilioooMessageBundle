@@ -50,8 +50,9 @@ class ReplyBuilderFromFormModelTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('the body of the reply'));
         $this->replyModel->expects($this->once())->method('getCreatedAt')
             ->will($this->returnValue(new \DateTime('now')));
-        $this->assertInstanceOf('Miliooo\Messaging\Model\ThreadInterface', $this->builder->buildReply($this->replyModel));
-        }
+        $thread = $this->builder->buildReply($this->replyModel);
+        $this->assertInstanceOf('Miliooo\Messaging\Model\ThreadInterface', $thread);
+    }
 
     /**
      * Since we create a valid new thread we need a valid thread object with recipients
