@@ -231,12 +231,13 @@ abstract class Thread implements ThreadInterface
      */
     protected function getParticipantsCollection()
     {
-        //doctrine skips constructor
+        //doctrine skips constructor and does not make an array collection
+        //since there is no mapping taking place
         if ($this->participants == null) {
             $this->participants = new ArrayCollection();
         }
 
-        //returns an empty array collection
+        // no point in looping over the threadmeta since there is none
         if ($this->threadMeta->count() === 0) {
             return $this->participants;
         }
@@ -268,10 +269,13 @@ abstract class Thread implements ThreadInterface
      * Adds a participant form the threadmeta
      *
      * @param ThreadMetaInterface $threadMeta The threadmeta we extract the participant from
+     * 
+     * @todo we loop over them quite a lotfix it so we only do this once
      */
     protected function addParticipantFromThreadMeta(ThreadMetaInterface $threadMeta)
     {
         $participant = $threadMeta->getParticipant();
+
         //this should not happen unless you did not delete the messages from deleted users
         //If there is no longer a link between those there could be other problems though...
         // Let's throw an exception here for the moment...
