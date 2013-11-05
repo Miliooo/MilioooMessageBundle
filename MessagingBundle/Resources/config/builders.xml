@@ -23,6 +23,8 @@
 
         <service id="miliooo_messaging.new_thread_builder" class="Miliooo\Messaging\Builder\Thread\NewThread\NewThreadBuilder" parent="miliooo_messaging.abstract_new_message_builder" />
 
+        <service id="miliooo_messaging.reply_builder" class="Miliooo\Messaging\Builder\Reply\ReplyBuilder" parent="miliooo_messaging.abstract_new_message_builder" />
+        
     </services>
 
 </container>

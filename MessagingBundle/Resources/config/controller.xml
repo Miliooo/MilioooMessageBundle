@@ -14,6 +14,8 @@
         </service>
 
         <service id="miliooo_messaging.controller.show_thread_controller" class="Miliooo\MessagingBundle\Controller\ShowThreadController" scope="request">
+            <argument type="service" id="miliooo_messaging.reply_form.factory" />
+            <argument type="service" id="miliooo_messaging.reply_form.handler" />
             <argument type="service" id="miliooo_messaging.specification_aware_thread_provider" />
             <argument type="service" id="templating" />
             <argument type="service" id="miliooo_messaging.participant_provider" />

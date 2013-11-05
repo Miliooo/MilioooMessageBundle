@@ -25,8 +25,23 @@
             <argument type="service" id="miliooo_message.new_single_thread_default_processor" />
         </service>
 
-        <service id="miliooo_message.reply_form.factory.default" class="Miliooo\Messaging\Form\FormFactory\ReplyMessageFormFactory" >
-            
+        <service id="miliooo_message.reply_form.type" class="Miliooo\Messaging\Form\FormType\ReplyThreadFormType" public="false" />
+
+        <service id="miliooo_messaging.reply_form.factory" class="Miliooo\Messaging\Form\FormFactory\ReplyMessageFormFactory" >
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="miliooo_message.reply_form.type" />
+            <argument>Reply</argument>
+            <argument>Miliooo\Messaging\Form\FormModel\ReplyMessage</argument>
+        </service>
+
+        <service id="miliooo_messaging.reply_form.handler" class="Miliooo\Messaging\Form\FormHandler\NewReplyFormHandler">
+            <argument type="service" id="request" />
+            <argument type="service" id="miliooo_messaging.reply_form.processor" />
+        </service>
+
+        <service id="miliooo_messaging.reply_form.processor" class="Miliooo\Messaging\Form\FormModelProcessor\NewReplyDefaultProcessor">
+            <argument type="service" id="miliooo_messaging.reply_builder" />
+            <argument type="service" id="miliooo_messaging.new_message_manager" />
         </service>
 
     </services>
