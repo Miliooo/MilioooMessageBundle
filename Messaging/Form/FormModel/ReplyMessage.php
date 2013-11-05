@@ -21,7 +21,7 @@ class ReplyMessage extends AbstractNewMessage implements ReplyMessageInterface
 {
     /**
      * The thread we reply to
-     * 
+     *
      * @var ThreadInterface
      */
     protected $thread;

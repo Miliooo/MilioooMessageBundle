@@ -147,7 +147,7 @@ interface ThreadInterface
      *
      * @param ParticipantInterface $participant The participant to exclude
      *
-     * @return ParticipantInterface[] Array of participants 
+     * @return ParticipantInterface[] Array of participants
      */
     public function getOtherParticipants(ParticipantInterface $participant);
 }
