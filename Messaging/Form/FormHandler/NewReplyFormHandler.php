@@ -49,9 +49,9 @@ class NewReplyFormHandler extends AbstractFormHandler
      */
     public function doProcess(FormInterface $form)
     {
-            $replyThreadFormModel = $this->getFormData($form);
-            $replyThreadFormModel->setCreatedAt(new \DateTime('now'));
-            $this->replyFormProcessor->process($replyThreadFormModel);
+        $replyThreadFormModel = $this->getFormData($form);
+        $replyThreadFormModel->setCreatedAt(new \DateTime('now'));
+        $this->replyFormProcessor->process($replyThreadFormModel);
     }
 
     /**

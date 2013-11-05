@@ -53,10 +53,10 @@ class NewSingleThreadFormHandler extends AbstractFormHandler
      */
     public function doProcess(FormInterface $form)
     {
-            $newThreadFormModel = $this->getFormData($form);
-            //we want the creation date to be the same as the submit date..
-            $newThreadFormModel->setCreatedAt(new \DateTime('now'));
-            $this->newThreadProcessor->process($newThreadFormModel);
+        $newThreadFormModel = $this->getFormData($form);
+        //we want the creation date to be the same as the submit date..
+        $newThreadFormModel->setCreatedAt(new \DateTime('now'));
+        $this->newThreadProcessor->process($newThreadFormModel);
     }
 
     /**
