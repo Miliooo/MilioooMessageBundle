@@ -45,14 +45,14 @@ class ReplyMessageFormFactoryTest extends \PHPUnit_Framework_TestCase
         $sender = new ParticipantTestHelper('sender');
         $thread = $this->getMock('Miliooo\Messaging\Model\ThreadInterface');
 
-        $ReplyFormFactoryMock = $this->getMockBuilder('Miliooo\Messaging\Form\FormFactory\ReplyMessageFormFactory')
+        $replyFormFactoryMock = $this->getMockBuilder('Miliooo\Messaging\Form\FormFactory\ReplyMessageFormFactory')
             ->setConstructorArgs(array($this->formFactory, $this->formType, $this->formName, $this->modelClassName))
             ->setMethods(array('createNewFormModel'))
             ->getMock();
 
         $formModel = $this->getMock('Miliooo\Messaging\Form\FormModel\ReplyMessageInterface');
 
-        $ReplyFormFactoryMock->expects($this->once())
+        $replyFormFactoryMock->expects($this->once())
             ->method('createNewFormModel')
             ->will($this->returnValue($formModel));
 
@@ -68,7 +68,7 @@ class ReplyMessageFormFactoryTest extends \PHPUnit_Framework_TestCase
             ->with($this->formName, $this->formType, $formModel)
             ->will($this->returnValue($formMock));
 
-        $this->assertInstanceOf('Symfony\Component\Form\Form', $ReplyFormFactoryMock->create($thread, $sender));
+        $this->assertInstanceOf('Symfony\Component\Form\Form', $replyFormFactoryMock->create($thread, $sender));
     }
 
     //a test without mocking that method
