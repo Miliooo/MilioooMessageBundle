@@ -16,7 +16,9 @@ use Miliooo\Messaging\Manager\NewMessageManagerInterface;
 use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
- * Description of NewThreadFormProcessor
+ * Processes a single thread.
+ *
+ * This processor processes a single thread by storing it to the database.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
