@@ -235,10 +235,12 @@ abstract class Thread implements ThreadInterface
         if ($this->participants == null) {
             $this->participants = new ArrayCollection();
         }
+
         //returns an empty array collection
-        if (!$this->threadMeta->count() > 0) {
+        if ($this->threadMeta->count() === 0) {
             return $this->participants;
         }
+
         //there is thread meta in the collection so let's loop over it
         foreach ($this->threadMeta as $threadMeta) {
             $this->addParticipantFromThreadMeta($threadMeta);
@@ -262,10 +264,22 @@ abstract class Thread implements ThreadInterface
         return array_values($otherParticipants);
     }
 
+    /**
+     * Adds a participant form the threadmeta
+     *
+     * @param ThreadMetaInterface $threadMeta The threadmeta we extract the participant from
+     */
     protected function addParticipantFromThreadMeta(ThreadMetaInterface $threadMeta)
     {
         $participant = $threadMeta->getParticipant();
-        if (is_object($participant) && $participant instanceof ParticipantInterface) {
+        //this should not happen unless you did not delete the messages from deleted users
+        //If there is no longer a link between those there could be other problems though...
+        // Let's throw an exception here for the moment...
+        if (!is_object($participant) || !$participant instanceof ParticipantInterface) {
+            throw new \InvalidArgumentException('ThreadMeta contains  participant with no participantinterface');
+        }
+
+        if (!$this->participants->contains($participant)) {
             $this->participants->add($participant);
         }
     }
