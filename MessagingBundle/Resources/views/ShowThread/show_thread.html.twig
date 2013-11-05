@@ -1,1 +1,19 @@
-{{dump(thread)}}
+<table>
+{% for message in thread.messages %}
+    <tr>
+        <td>{{ message.sender|e}}</td>
+    </tr>
+    <tr>
+        <td>{{ message.body }}</td>
+    </tr>
+{% endfor %}
+</table>
+
+<h3>Reply</h3>
+
+<form action="" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+    <p>
+        <button type="submit">Create</button>
+    </p>
+</form>
