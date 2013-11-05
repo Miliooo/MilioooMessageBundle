@@ -269,7 +269,7 @@ abstract class Thread implements ThreadInterface
      * Adds a participant form the threadmeta
      *
      * @param ThreadMetaInterface $threadMeta The threadmeta we extract the participant from
-     * 
+     *
      * @todo we loop over them quite a lotfix it so we only do this once
      */
     protected function addParticipantFromThreadMeta(ThreadMetaInterface $threadMeta)
