@@ -11,6 +11,7 @@
 namespace Miliooo\Messaging\Builder\Thread\NewThread;
 
 use Miliooo\Messaging\Form\FormModel\NewThreadInterface;
+use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
  * New thread builder from form model
@@ -22,13 +23,17 @@ use Miliooo\Messaging\Form\FormModel\NewThreadInterface;
 class NewThreadBuilderFromFormModel extends NewThreadBuilder
 {
     /**
-     * {@inheritdoc}
+     * Builds a thread from a newthreadinterface instance
+     * 
+     * @param NewThreadInterface $newThreadModel
+     *
+     * @return ThreadInterface
      */
-    public function build(NewThreadInterface $newThreadModel)
+    public function buildThread(NewThreadInterface $newThreadModel)
     {
         $this->setBuilderAttributes($newThreadModel);
 
-        return parent::build();
+        return $this->build();
     }
 
     /**

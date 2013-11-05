@@ -55,6 +55,6 @@ class NewThreadBuilderFromFormModelTest extends \PHPUnit_Framework_TestCase
             ->method('getCreatedAt')
             ->will($this->returnValue(new \DateTime('now')));
 
-        $this->assertInstanceOf('Miliooo\Messaging\Model\ThreadInterface', $this->builder->build($this->newThreadModel));
+        $this->assertInstanceOf('Miliooo\Messaging\Model\ThreadInterface', $this->builder->buildThread($this->newThreadModel));
     }
 }

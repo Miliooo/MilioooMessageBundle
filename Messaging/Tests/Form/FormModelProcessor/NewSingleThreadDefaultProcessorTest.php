@@ -42,7 +42,7 @@ class NewSingleThreadDefaultProcessorTest extends \PHPUnit_Framework_TestCase
     {
         $newThread = $this->getMock('Miliooo\Messaging\Model\ThreadInterface');
         $this->newThreadBuilder->expects($this->once())
-            ->method('build')
+            ->method('buildThread')
             ->with($this->newThreadModel)
             ->will($this->returnValue($newThread));
 

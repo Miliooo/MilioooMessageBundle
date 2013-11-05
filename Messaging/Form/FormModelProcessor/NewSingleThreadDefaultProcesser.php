@@ -45,7 +45,7 @@ class NewSingleThreadDefaultProcesser implements NewThreadFormProcessorInterface
      */
     public function process(NewThreadInterface $formModel)
     {
-        $thread = $this->newThreadBuilder->build($formModel);
+        $thread = $this->newThreadBuilder->buildThread($formModel);
         $message = $thread->getLastMessage();
         $this->newMessageManager->saveNewThread($message);
     }

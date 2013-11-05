@@ -45,6 +45,6 @@ class ThreadModelTestHelper
         $newThreadModel->setBody(self::MESSAGE_BODY);
         $newThreadModel->setCreatedAt(new \DateTime(self::DATE_TIME_VALUE));
 
-        return $builder->build($newThreadModel);
+        return $builder->buildThread($newThreadModel);
     }
 }
