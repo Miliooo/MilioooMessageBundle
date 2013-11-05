@@ -69,7 +69,7 @@ abstract class AbstractFormHandler
      *
      * @return MessageInterface the processed message
      */
-    abstract function doProcess(FormInterface $form);
+    abstract public function doProcess(FormInterface $form);
     //abstract function getProcessedMessage();
     //abstract function getProcessedStatus();
 }

@@ -25,7 +25,8 @@ class AbstractFormHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->disableOriginalConstructor()->getMock();
+        $this->request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
+                ->disableOriginalConstructor()->getMock();
         $this->abstractFormHandler = $this->getMockForAbstractClass('Miliooo\Messaging\Form\FormHandler\AbstractFormHandler', array($this->request));
         $this->form = $this->getMockBuilder('Symfony\Component\Form\Form')->disableOriginalConstructor()->getMock();
     }
