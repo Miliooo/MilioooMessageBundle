@@ -10,15 +10,14 @@
 
 namespace Miliooo\Messaging\Tests\Form\FormHandler;
 
-use Miliooo\Messaging\Form\FormHandler\NewSingleThreadFormHandler;
-use Miliooo\Messaging\Form\FormModel\NewThreadInterface;
+use Miliooo\Messaging\Form\FormHandler\NewReplyFormHandler;
 
 /**
- * Test file for Miliooo\Messaging\Form\FormHandler\NewSingleThreadFormHandler
+ * Test file for Miliooo\Messaging\Form\FormHandler\NewReplyFormHandlerTest
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class NewSingleThreadFormHandlerTest extends \PHPUnit_Framework_TestCase
+class NewReplyFormHandlerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * The class under test
@@ -29,19 +28,21 @@ class NewSingleThreadFormHandlerTest extends \PHPUnit_Framework_TestCase
     private $request;
     private $processor;
     private $form;
+    private $formModel;
 
     public function setUp()
     {
-        $this->processor = $this->getMock('Miliooo\Messaging\Form\FormModelProcessor\NewThreadFormProcessorInterface');
+        $this->processor = $this->getMock('Miliooo\Messaging\Form\FormModelProcessor\NewReplyFormProcessorInterface');
         $this->request = $this->getMock('Symfony\Component\HttpFoundation\Request');
         $this->form = $this->getMockBuilder('Symfony\Component\Form\Form')->disableOriginalConstructor()->getMock();
-        $this->formHandler = new NewSingleThreadFormHandler($this->request, $this->processor);
-        $this->formModel = $this->getMock('Miliooo\Messaging\Form\FormModel\NewThreadInterface');
+        $this->formHandler = new NewReplyFormHandler($this->request, $this->processor);
+
+        $this->formModel = $this->getMock('Miliooo\Messaging\Form\FormModel\ReplyMessageInterface');
     }
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Form data needs to implement NewThreadInterface
+     * @expectedExceptionMessage Form data needs to implement ReplyMessageInterface
      */
     public function testDoProcessThrowsExceptionOnInvalidData()
     {

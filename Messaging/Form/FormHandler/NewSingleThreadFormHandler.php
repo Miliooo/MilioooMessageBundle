@@ -10,26 +10,19 @@
 
 namespace Miliooo\Messaging\Form\FormHandler;
 
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipient;
 use Miliooo\Messaging\Form\FormModel\NewThreadInterface;
 use Miliooo\Messaging\Form\FormModelProcessor\NewThreadFormProcessorInterface;
 
 /**
- * Description of NewThreadSingleRecipientFormHandler
+ * Form handler for single threads.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class NewSingleThreadFormHandler
+class NewSingleThreadFormHandler extends AbstractFormHandler
 {
-    /**
-     * The request the form will process
-     *
-     * @var Request
-     */
-    protected $request;
-
     /**
      * A processor instance.
      *
@@ -37,18 +30,18 @@ class NewSingleThreadFormHandler
      *
      * @var NewThreadFormProcessorInterface
      */
-    protected $processor;
+    protected $newThreadProcessor;
 
     /**
      * Constructor.
      *
      * @param Request                         $request   The request the form will process
-     * @param NewThreadFormProcessorInterface $processor A form model processor instance
+     * @param NewThreadFormProcessorInterface $processor A new thread form model processor
      */
     public function __construct(Request $request, NewThreadFormProcessorInterface $processor)
     {
-        $this->request = $request;
-        $this->processor = $processor;
+        parent::__construct($request);
+        $this->newThreadProcessor = $processor;
     }
 
     /**
@@ -58,23 +51,12 @@ class NewSingleThreadFormHandler
      *
      * @return Message|false the last message if the form is valid, false otherwise
      */
-    public function process(Form $form)
+    public function doProcess(FormInterface $form)
     {
-        if ('POST' !== $this->request->getMethod()) {
-            return false;
-        }
-
-        $form->handleRequest($this->request);
-
-        if ($form->isValid()) {
             $newThreadFormModel = $this->getFormData($form);
             //we want the creation date to be the same as the submit date..
             $newThreadFormModel->setCreatedAt(new \DateTime('now'));
-
-            $this->processor->process($newThreadFormModel);
-        }
-
-        return false;
+            $this->newThreadProcessor->process($newThreadFormModel);
     }
 
     /**
@@ -86,7 +68,7 @@ class NewSingleThreadFormHandler
      *
      * @return NewThreadSingleRecipient
      */
-    protected function getFormData(Form $form)
+    protected function getFormData(FormInterface $form)
     {
         $data = $form->getData();
 
