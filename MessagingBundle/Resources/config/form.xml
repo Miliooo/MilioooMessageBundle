@@ -34,7 +34,7 @@
             <argument>Miliooo\Messaging\Form\FormModel\ReplyMessage</argument>
         </service>
 
-        <service id="miliooo_messaging.reply_form.handler" class="Miliooo\Messaging\Form\FormHandler\NewReplyFormHandler">
+        <service id="miliooo_messaging.reply_form.handler" class="Miliooo\Messaging\Form\FormHandler\NewReplyFormHandler" scope="request" public="false">
             <argument type="service" id="request" />
             <argument type="service" id="miliooo_messaging.reply_form.processor" />
         </service>
