@@ -11,14 +11,15 @@
 namespace Miliooo\Messaging\Form\FormModelProcessor;
 
 use Miliooo\Messaging\Form\FormModel\NewThreadInterface;
-use Miliooo\Messaging\Builder\Thread\NewThread\NewThreadBuilder;
+use Miliooo\Messaging\Builder\Thread\NewThread\NewThreadBuilderFromFormModel;
 use Miliooo\Messaging\Manager\NewMessageManagerInterface;
-use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
  * Processes a single thread.
  *
  * This processor processes a single thread by storing it to the database.
+ * By single thread we mean that only one thread object gets created, it can have
+ * multiple recipients.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
@@ -33,7 +34,7 @@ class NewSingleThreadDefaultProcesser implements NewThreadFormProcessorInterface
      * @param NewThreadBuilder           $newThreadBuilder  A new thread builder instance
      * @param NewMessageManagerInterface $newMessageManager A new message manager instance
      */
-    public function __construct(NewThreadBuilder $newThreadBuilder, NewMessageManagerInterface $newMessageManager)
+    public function __construct(NewThreadBuilderFromFormModel $newThreadBuilder, NewMessageManagerInterface $newMessageManager)
     {
         $this->newThreadBuilder = $newThreadBuilder;
         $this->newMessageManager = $newMessageManager;
@@ -44,26 +45,8 @@ class NewSingleThreadDefaultProcesser implements NewThreadFormProcessorInterface
      */
     public function process(NewThreadInterface $formModel)
     {
-        $thread = $this->buildNewThreadFromFormModel($formModel);
+        $thread = $this->newThreadBuilder->build($formModel);
         $message = $thread->getLastMessage();
         $this->newMessageManager->saveNewThread($message);
-    }
-
-    /**
-     * Builds a new thread from the form model
-     *
-     * @param NewThreadInterface $formModel The form model
-     *
-     * @return ThreadInterface The new build thread
-     */
-    protected function buildNewThreadFromFormModel(NewThreadInterface $formModel)
-    {
-        $this->newThreadBuilder->setBody($formModel->getBody());
-        $this->newThreadBuilder->setCreatedAt($formModel->getCreatedAt());
-        $this->newThreadBuilder->setRecipients($formModel->getRecipients());
-        $this->newThreadBuilder->setSender($formModel->getSender());
-        $this->newThreadBuilder->setSubject($formModel->getSubject());
-
-        return $this->newThreadBuilder->build();
     }
 }
