@@ -22,7 +22,7 @@ use Miliooo\Messaging\Model\ThreadMetaInterface;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class NewThreadBuilder extends AbstractNewMessageBuilder
+abstract class NewThreadBuilder extends AbstractNewMessageBuilder
 {
     /**
      * The recipients

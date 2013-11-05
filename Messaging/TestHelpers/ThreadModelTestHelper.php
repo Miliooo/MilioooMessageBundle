@@ -11,7 +11,8 @@
 namespace Miliooo\Messaging\TestHelpers;
 
 use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
-use Miliooo\Messaging\Builder\Thread\NewThread\NewThreadBuilder;
+use Miliooo\Messaging\Builder\Thread\NewThread\NewThreadBuilderFromFormModel;
+use Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipient;
 
 /**
  * Description of ThreadModelTestHelper
@@ -30,18 +31,20 @@ class ThreadModelTestHelper
     {
         $sender = new ParticipantTestHelper(self::SENDER_ID);
         $recipient = new ParticipantTestHelper(self::RECIPIENT_ID);
-        $builder = new NewThreadBuilder();
+
+        $builder = new NewThreadBuilderFromFormModel();
         $builder->setMessageClass('\Miliooo\Messaging\TestHelpers\Model\Message');
         $builder->setThreadClass('\Miliooo\Messaging\TestHelpers\Model\Thread');
         $builder->setMessageMetaClass('\Miliooo\Messaging\TestHelpers\Model\MessageMeta');
         $builder->setThreadMetaClass('\Miliooo\Messaging\TestHelpers\Model\ThreadMeta');
 
-        $builder->setCreatedAt(new \DateTime(self::DATE_TIME_VALUE));
-        $builder->setBody(self::MESSAGE_BODY);
-        $builder->setSender($sender);
-        $builder->setRecipients(array($recipient));
-        $builder->setSubject(self::THREAD_SUBJECT);
+        $newThreadModel = new NewThreadSingleRecipient();
+        $newThreadModel->setSender($sender);
+        $newThreadModel->setRecipients($recipient);
+        $newThreadModel->setSubject(self::THREAD_SUBJECT);
+        $newThreadModel->setBody(self::MESSAGE_BODY);
+        $newThreadModel->setCreatedAt(new \DateTime(self::DATE_TIME_VALUE));
 
-        return $builder->build();
+        return $builder->build($newThreadModel);
     }
 }
