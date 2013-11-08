@@ -16,7 +16,7 @@
         </service>
 
         <service id="miliooo_message.new_single_thread_default_processor" class="Miliooo\Messaging\Form\FormModelProcessor\NewSingleThreadDefaultProcesser">
-            <argument type="service" id="miliooo_messaging.new_thread_builder_form_model" />
+            <argument type="service" id="miliooo_messaging.new_thread_builder" />
             <argument type="service" id="miliooo_messaging.new_message_manager" />
         </service>
 
