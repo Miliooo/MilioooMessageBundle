@@ -27,7 +27,6 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
     private $controller;
     private $participantProvider;
     private $templating;
-    private $request;
     private $threadProvider;
     private $loggedInUser;
     private $thread;
@@ -67,7 +66,7 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
             ->with($this->loggedInUser, 1)
             ->will($this->returnValue(null));
 
-        $this->controller->showAction($this->request, 1);
+        $this->controller->showAction(1);
     }
 
     public function testShowActionReturnsResponse()
@@ -78,7 +77,7 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
         $this->expectsFormHandlerProcessesForm();
         $this->expectsFormCreatesAView();
         $this->expectsTemplatingRendersResponse();
-        $this->controller->showAction($this->request, 1);
+        $this->controller->showAction(1);
     }
 
     protected function expectsFormFactoryCreatesForm()
@@ -115,9 +114,6 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
                 ->disableOriginalConstructor()->getMock();
 
         $this->formHandler = $this->getMockBuilder('Miliooo\Messaging\Form\FormHandler\NewReplyFormHandler')
-                ->disableOriginalConstructor()->getMock();
-
-        $this->request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                 ->disableOriginalConstructor()->getMock();
 
         $this->participantProvider = $this->getMock('Miliooo\Messaging\User\ParticipantProviderInterface');

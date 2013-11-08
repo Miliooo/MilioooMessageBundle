@@ -10,7 +10,6 @@
 
 namespace Miliooo\MessagingBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Miliooo\Messaging\ThreadProvider\SecureThreadProviderInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -60,14 +59,13 @@ class ShowThreadController
     /**
      * Shows a single thread and allows the user to reply on it
      *
-     * @param Request $request  The current request
      * @param integer $threadId The unique thread id
      *
      * @throws NotFoundHttpException
      *
      * @return Response
      */
-    public function showAction(Request $request, $threadId)
+    public function showAction($threadId)
     {
         $loggedInUser = $this->participantProvider->getAuthenticatedParticipant();
         $thread = $this->threadProvider->findThreadForParticipant($loggedInUser, $threadId);
