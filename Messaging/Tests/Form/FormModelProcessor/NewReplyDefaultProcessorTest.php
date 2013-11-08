@@ -32,7 +32,7 @@ class NewReplyDefaultProcessorTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->replyBuilder = $this->getMockBuilder('Miliooo\Messaging\Builder\Reply\ReplyBuilder')
+        $this->replyBuilder = $this->getMockBuilder('Miliooo\Messaging\Builder\Message\ReplyBuilder')
                 ->disableOriginalConstructor()->getMock();
         $this->newMessageManager = $this->getMock('Miliooo\Messaging\Manager\NewMessageManagerInterface');
         $this->replyMessageModel = $this->getMock('Miliooo\Messaging\Form\FormModel\ReplyMessageInterface');
@@ -46,30 +46,12 @@ class NewReplyDefaultProcessorTest extends \PHPUnit_Framework_TestCase
 
     public function testProcess()
     {
-        $this->expectsReplyBuilderSettersCalled();
         $newThread = $this->expectsNewThreadCreated();
         $this->expectsNewMessageManagerCall($newThread);
         $this->processor->process($this->replyMessageModel);
     }
 
-    /**
-     * expects calling of getters and setters from builder and model
-     * (will refactor this)
-     */
-    protected function expectsReplyBuilderSettersCalled()
-    {
-        $thread = $this->getMock('Miliooo\Messaging\Model\ThreadInterface');
-        $this->replyMessageModel->expects($this->once())->method('getThread')->will($this->returnValue($thread));
-        $this->replyBuilder->expects($this->once())->method('setThread')->with($thread);
-        $this->replyMessageModel->expects($this->once())->method('getBody')->will($this->returnValue('the body'));
-        $this->replyBuilder->expects($this->once())->method('setBody')->with('the body');
-        $createdAt = new \DateTime('now');
-        $this->replyMessageModel->expects($this->once())->method('getCreatedAt')->will($this->returnValue($createdAt));
-        $this->replyBuilder->expects($this->once())->method('setCreatedAt')->with($createdAt);
-        $sender = new ParticipantTestHelper(1);
-        $this->replyMessageModel->expects($this->once())->method('getSender')->will($this->returnValue($sender));
-        $this->replyBuilder->expects($this->once())->method('setSender')->with($sender);
-    }
+
 
     /**
      * Expects creation of thread by replybuilder.

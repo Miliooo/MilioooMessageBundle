@@ -12,7 +12,8 @@ namespace Miliooo\Messaging\Form\FormModelProcessor;
 
 use Miliooo\Messaging\Form\FormModel\ReplyMessageInterface;
 use Miliooo\Messaging\Manager\NewMessageManagerInterface;
-use Miliooo\Messaging\Builder\Reply\ReplyBuilder;
+use Miliooo\Messaging\Builder\Message\ReplyBuilder;
+use Miliooo\Messaging\Builder\Model\ReplyBuilderModel;
 
 /**
  * Description of NewReplyDefaultProcessor
@@ -41,22 +42,9 @@ class NewReplyDefaultProcessor implements NewReplyFormProcessorInterface
      */
     public function process(ReplyMessageInterface $formModel)
     {
-        $this->callSettersForTheBuilderFromFormModel($formModel);
-        $thread = $this->replyBuilder->build();
+        $replyBuilderModel = new ReplyBuilderModel($formModel);
+        $thread = $this->replyBuilder->build($replyBuilderModel);
         $message = $thread->getLastMessage();
         $this->newMessageManager->saveNewReply($message);
-    }
-
-    /**
-     * Populates the builder setters with the form model
-     *
-     * @param ReplyMessageInterface $formModel
-     */
-    protected function callSettersForTheBuilderFromFormModel($formModel)
-    {
-        $this->replyBuilder->setThread($formModel->getThread());
-        $this->replyBuilder->setSender($formModel->getSender());
-        $this->replyBuilder->setBody($formModel->getBody());
-        $this->replyBuilder->setCreatedAt($formModel->getCreatedAt());
     }
 }

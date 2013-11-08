@@ -11,7 +11,7 @@
 namespace Miliooo\Messaging\Tests\Form\FormModelProcessor;
 
 use Miliooo\Messaging\Form\FormModelProcessor\NewSingleThreadDefaultProcesser;
-use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
+
 
 /**
  * Test file for Miliooo\Messaging\Form\FormModelProcessor\NewSingleThreadDefaultProcesser
@@ -32,7 +32,7 @@ class NewSingleThreadDefaultProcessorTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->newThreadBuilder = $this->getMockBuilder('Miliooo\Messaging\Builder\Thread\NewThread\NewThreadBuilderFromFormModel')->disableOriginalConstructor()->getMock();
+        $this->newThreadBuilder = $this->getMockBuilder('Miliooo\Messaging\Builder\Message\NewThreadBuilder')->disableOriginalConstructor()->getMock();
         $this->newMessageManager = $this->getMock('Miliooo\Messaging\Manager\NewMessageManagerInterface');
         $this->newThreadModel = $this->getMock('Miliooo\Messaging\Form\FormModel\NewThreadInterface');
         $this->processor = new NewSingleThreadDefaultProcesser($this->newThreadBuilder, $this->newMessageManager);
@@ -42,8 +42,7 @@ class NewSingleThreadDefaultProcessorTest extends \PHPUnit_Framework_TestCase
     {
         $newThread = $this->getMock('Miliooo\Messaging\Model\ThreadInterface');
         $this->newThreadBuilder->expects($this->once())
-            ->method('buildThread')
-            ->with($this->newThreadModel)
+            ->method('build')
             ->will($this->returnValue($newThread));
 
         $message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');

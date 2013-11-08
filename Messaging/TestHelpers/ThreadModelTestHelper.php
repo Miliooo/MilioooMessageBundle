@@ -11,8 +11,9 @@
 namespace Miliooo\Messaging\TestHelpers;
 
 use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
-use Miliooo\Messaging\Builder\Thread\NewThread\NewThreadBuilderFromFormModel;
+use Miliooo\Messaging\Builder\Message\NewThreadBuilder;
 use Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipient;
+use Miliooo\Messaging\Builder\Model\ThreadBuilderModel;
 
 /**
  * Description of ThreadModelTestHelper
@@ -21,6 +22,9 @@ use Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipient;
  */
 class ThreadModelTestHelper
 {
+    protected $sender;
+    protected $recipient;
+
     const MESSAGE_BODY = "the body of the message";
     const SENDER_ID = "sender";
     const RECIPIENT_ID = "recipient";
@@ -29,22 +33,34 @@ class ThreadModelTestHelper
 
     public function getModelThread()
     {
-        $sender = new ParticipantTestHelper(self::SENDER_ID);
-        $recipient = new ParticipantTestHelper(self::RECIPIENT_ID);
+        $this->sender = new ParticipantTestHelper(self::SENDER_ID);
+        $this->recipient = new ParticipantTestHelper(self::RECIPIENT_ID);
 
-        $builder = new NewThreadBuilderFromFormModel();
+        $builder = new NewThreadBuilder();
         $builder->setMessageClass('\Miliooo\Messaging\TestHelpers\Model\Message');
         $builder->setThreadClass('\Miliooo\Messaging\TestHelpers\Model\Thread');
         $builder->setMessageMetaClass('\Miliooo\Messaging\TestHelpers\Model\MessageMeta');
         $builder->setThreadMetaClass('\Miliooo\Messaging\TestHelpers\Model\ThreadMeta');
 
         $newThreadModel = new NewThreadSingleRecipient();
-        $newThreadModel->setSender($sender);
-        $newThreadModel->setRecipients($recipient);
+        $newThreadModel->setSender($this->sender);
+        $newThreadModel->setRecipients($this->recipient);
         $newThreadModel->setSubject(self::THREAD_SUBJECT);
         $newThreadModel->setBody(self::MESSAGE_BODY);
         $newThreadModel->setCreatedAt(new \DateTime(self::DATE_TIME_VALUE));
 
-        return $builder->buildThread($newThreadModel);
+        $builderModel = new ThreadBuilderModel($newThreadModel);
+
+        return $builder->build($builderModel);
+    }
+
+    public function getSender()
+    {
+        return $this->sender;
+    }
+
+    public function getRecipient()
+    {
+        return $this->recipient;
     }
 }
