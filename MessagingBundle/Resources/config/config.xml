@@ -6,15 +6,6 @@
 
     <services>
 
-        <service id="miliooo_messaging.thread_provider" class="Miliooo\Messaging\ThreadProvider\ThreadProvider">
-            <argument type="service" id="miliooo_messaging.repository.thread" />
-        </service>
-
-        <service id="miliooo_messaging.specification_aware_thread_provider" class="Miliooo\Messaging\ThreadProvider\SpecificationAwareThreadProvider">
-            <argument type="service" id="miliooo_messaging.thread_provider" />
-            <argument type="service" id="milioo_messaging.specification.can_see_thread" />
-        </service>
-
         <service id="miliooo_messaging.repository.thread"
                   class="Doctrine\Common\Persistence\ObjectRepository"
                   factory-service="doctrine.orm.entity_manager"
