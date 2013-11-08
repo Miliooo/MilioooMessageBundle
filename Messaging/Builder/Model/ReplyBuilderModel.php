@@ -30,7 +30,7 @@ class ReplyBuilderModel extends AbstractMessageBuilderModel
 
     /**
      * Gets the thread where we reply on
-     * 
+     *
      * @return ThreadInterface
      */
     public function getThread()
@@ -38,7 +38,8 @@ class ReplyBuilderModel extends AbstractMessageBuilderModel
         return $this->replyModel->getThread();
     }
 
-    protected function processExtra() {
+    protected function processExtra()
+    {
 
     }
 }

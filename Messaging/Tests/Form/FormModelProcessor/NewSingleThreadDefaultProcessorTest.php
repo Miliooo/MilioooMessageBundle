@@ -12,7 +12,6 @@ namespace Miliooo\Messaging\Tests\Form\FormModelProcessor;
 
 use Miliooo\Messaging\Form\FormModelProcessor\NewSingleThreadDefaultProcesser;
 
-
 /**
  * Test file for Miliooo\Messaging\Form\FormModelProcessor\NewSingleThreadDefaultProcesser
  *
