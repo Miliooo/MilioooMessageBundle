@@ -8,12 +8,24 @@
  * with this source code in the file LICENSE.
  */
 
+namespace Miliooo\Messaging\ThreadProvider\Folder;
+
+use Miliooo\Messaging\User\ParticipantInterface;
+use Miliooo\Messaging\Model\ThreadInterface;
+
 /**
- * Description of InboxProviderInterface
+ * Interface for inboxprovider instances.
  *
- * @author michiel
+ * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class InboxProviderInterface
+interface InboxProviderInterface
 {
-    //put your code here
+    /**
+     * Gets the inbox threads for a given participant
+     *
+     * @param ParticipantInterface $participant The participant
+     *
+     * @return ThreadInterface[]|null Array of threadinterfaces or null when no threads
+     */
+    public function getInboxThreads(ParticipantInterface $participant);
 }

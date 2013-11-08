@@ -14,20 +14,35 @@ use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\Messaging\Repository\ThreadRepositoryInterface;
 
 /**
- * Description of InboxProvider
+ * The inbox  provider provides inbox threads for a given participant.
+ *
+ * This is an extra layer between the repository
+ * If you need more logic or alter the logic in the repository you can override this servie
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class InboxProvider
+class InboxProvider implements InboxProviderInterface
 {
+    /**
+     * A thread repository instance.
+     * @var threadRepository
+     */
     protected $threadRepository;
 
+    /**
+     * Constructor.
+     *
+     * @param ThreadRepositoryInterface $threadRepository A threadRepository instance
+     */
     public function __construct(ThreadRepositoryInterface $threadRepository)
     {
         $this->threadRepository = $threadRepository;
     }
 
-    public function getInboxThreadsForParticipant(ParticipantInterface $participant)
+    /**
+     * {@inheritdoc}
+     */
+    public function getInboxThreads(ParticipantInterface $participant)
     {
        return $this->threadRepository->getInboxThreadsForParticipant($participant);
     }
