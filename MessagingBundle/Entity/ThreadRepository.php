@@ -13,7 +13,6 @@ namespace Miliooo\MessagingBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 use Miliooo\Messaging\Repository\ThreadRepositoryInterface;
 use Miliooo\Messaging\User\ParticipantInterface;
-use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
  * Repository class for threads
