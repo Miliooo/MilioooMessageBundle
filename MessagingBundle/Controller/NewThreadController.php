@@ -10,7 +10,6 @@
 
 namespace Miliooo\MessagingBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Miliooo\Messaging\Form\FormFactory\NewThreadMessageFormFactory;
 use Miliooo\Messaging\Form\FormHandler\NewSingleThreadFormHandler;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
@@ -58,11 +57,9 @@ class NewThreadController
      * When the form is submitted it has to process the creation of that thread
      * and return an response.
      *
-     * @param Request $request
-     *
      * @return Response
      */
-    public function createAction(Request $request)
+    public function createAction()
     {
         $sender = $this->participantProvider->getAuthenticatedParticipant();
         $form = $this->formFactory->create($sender);

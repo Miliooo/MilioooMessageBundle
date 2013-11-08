@@ -38,7 +38,6 @@ class NewThreadControllerTest extends \PHPUnit_Framework_TestCase
         $this->participantProvider = $this->getMock('Miliooo\Messaging\User\ParticipantProviderInterface');
         $this->templating = $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
         $this->controller = new NewThreadController($this->formFactory, $this->formHandler, $this->participantProvider, $this->templating);
-        $this->request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->disableOriginalConstructor()->getMock();
     }
 
     public function testCreateAction()
@@ -62,6 +61,6 @@ class NewThreadControllerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('renderResponse')
             ->with('MilioooMessagingBundle:NewThread:new_thread.html.twig', array('form' => $formView));
-        $this->controller->createAction($this->request);
+        $this->controller->createAction();
     }
 }
