@@ -10,7 +10,7 @@
 
 namespace Miliooo\Messaging\ThreadProvider;
 
-use Doctrine\ORM\EntityManager;
+use Miliooo\Messaging\Repository\ThreadRepositoryInterface;
 
 /**
  * The thread provider is responsible for providing threads
@@ -19,19 +19,16 @@ use Doctrine\ORM\EntityManager;
  */
 class ThreadProvider implements ThreadProviderInterface
 {
-    protected $entityManager;
-    protected $threadClass;
+    protected $threadRepository;
 
     /**
      * Constructor.
      *
-     * @param EntityManager $entityManager The entity manager
-     * @param string        $threadClass   The FQCN of the thread model
+     * @param ThreadRepositoryInterface $threadRepository
      */
-    public function __construct(EntityManager $entityManager, $threadClass)
+    public function __construct(ThreadRepositoryInterface $threadRepository)
     {
-        $this->entityManager = $entityManager;
-        $this->threadClass = $threadClass;
+        $this->threadRepository = $threadRepository;
     }
 
     /**
@@ -39,9 +36,7 @@ class ThreadProvider implements ThreadProviderInterface
      */
     public function findThreadById($id)
     {
-        $repository = $this->entityManager->getRepository($this->threadClass);
-
-        $thread = $repository->find($id);
+        $thread = $this->threadRepository->find($id);
 
         return is_object($thread) ? $thread : null;
     }

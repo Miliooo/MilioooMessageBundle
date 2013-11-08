@@ -1,0 +1,26 @@
+<?php
+
+/*
+ * This file is part of the MilioooMessageBundle package.
+ *
+ * (c) Michiel boeckaert <boeckaert@gmail.com>
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
+namespace Miliooo\Messaging\Repository;
+
+use Miliooo\Messaging\User\ParticipantInterface;
+use Doctrine\Common\Persistence\ObjectRepository;
+
+/**
+ * Description of ThreadRepositoryInterface
+ *
+ * @author michiel
+ */
+interface ThreadRepositoryInterface extends ObjectRepository
+{
+    public function getInboxThreadsForParticipant(ParticipantInterface $participant);
+
+    public function find($id);
+}

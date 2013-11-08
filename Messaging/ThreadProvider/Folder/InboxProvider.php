@@ -8,21 +8,27 @@
  * with this source code in the file LICENSE.
  */
 
+namespace Miliooo\Messaging\ThreadProvider\Folder;
 
-namespace Miliooo\MessagingBundle\Entity;
-
-use Doctrine\ORM\EntityRepository;
+use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\Messaging\Repository\ThreadRepositoryInterface;
 
 /**
- * Description of ThreadRepository
+ * Description of InboxProvider
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class ThreadRepository extends EntityRepository implements ThreadRepositoryInterface
+class InboxProvider
 {
+    protected $threadRepository;
+
+    public function __construct(ThreadRepositoryInterface $threadRepository)
+    {
+        $this->threadRepository = $threadRepository;
+    }
+
     public function getInboxThreadsForParticipant(ParticipantInterface $participant)
     {
-        
+       return $this->threadRepository->getInboxThreadsForParticipant($participant);
     }
 }
