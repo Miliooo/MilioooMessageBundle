@@ -20,7 +20,6 @@ use Doctrine\Common\Persistence\ObjectRepository;
  */
 interface ThreadRepositoryInterface extends ObjectRepository
 {
-
     /**
      * Gets the inbox threads for a given participant
      *
