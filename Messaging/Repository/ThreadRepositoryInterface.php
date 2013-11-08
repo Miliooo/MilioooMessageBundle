@@ -16,11 +16,26 @@ use Doctrine\Common\Persistence\ObjectRepository;
 /**
  * Description of ThreadRepositoryInterface
  *
- * @author michiel
+ * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
 interface ThreadRepositoryInterface extends ObjectRepository
 {
+
+    /**
+     * Gets the inbox threads for a given participant
+     *
+     * @param ParticipantInterface $participant The participant
+     *
+     * @return ThreadInterface[]|null Array of threadinterfaces or null when no threads
+     */
     public function getInboxThreadsForParticipant(ParticipantInterface $participant);
 
-    public function find($id);
+    /**
+     * Finds a thread by it's unique id
+     *
+     * @param integer $id The unique id
+     *
+     * @return ThreadInterface|null
+     */
+    public function findThread($id);
 }

@@ -19,6 +19,10 @@ use Miliooo\Messaging\Repository\ThreadRepositoryInterface;
  */
 class ThreadProvider implements ThreadProviderInterface
 {
+    /**
+     * A thread repository instance
+     * @var ThreadRepositoryInterface
+     */
     protected $threadRepository;
 
     /**
@@ -36,7 +40,7 @@ class ThreadProvider implements ThreadProviderInterface
      */
     public function findThreadById($id)
     {
-        $thread = $this->threadRepository->find($id);
+        $thread = $this->threadRepository->findThread($id);
 
         return is_object($thread) ? $thread : null;
     }

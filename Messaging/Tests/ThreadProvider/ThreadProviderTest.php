@@ -25,16 +25,12 @@ class ThreadProviderTest extends \PHPUnit_Framework_TestCase
      * @var ThreadProvider
      */
     protected $provider;
-    protected $em;
-    protected $threadClass;
-    protected $entityRepository;
+    protected $threadRepository;
 
     public function setUp()
     {
-        $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')->disableOriginalConstructor()->getMock();
-        $this->threadClass = 'Miliooo\Messaging\TestHelpers\Model\Thread';
-        $this->provider = new ThreadProvider($this->em, $this->threadClass);
-        $this->entityRepository = $this->getMockBuilder('Doctrine\ORM\EntityRepository')->disableOriginalConstructor()->getMock();
+        $this->threadRepository = $this->getMock('Miliooo\Messaging\Repository\ThreadRepositoryInterface');
+        $this->provider = new ThreadProvider($this->threadRepository);
     }
 
     public function testInterface()
@@ -44,11 +40,10 @@ class ThreadProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testFindThreadByIdWithExistingThreadReturnsThread()
     {
-        $this->expectsRepository();
         $threadMock = $this->getMock('Miliooo\Messaging\Model\ThreadInterface');
-        $this->entityRepository
+        $this->threadRepository
             ->expects($this->once())
-            ->method('find')
+            ->method('findThread')
             ->with(1)
             ->will($this->returnValue($threadMock));
 
@@ -57,23 +52,12 @@ class ThreadProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testFindThreadByIdWithNonExistingThreadReturnsNull()
     {
-        $this->expectsRepository();
-
-        $this->entityRepository
+        $this->threadRepository
             ->expects($this->once())
-            ->method('find')
+            ->method('findThread')
             ->with(1)
             ->will($this->returnValue(null));
 
         $this->assertNull($this->provider->findThreadById(1));
-    }
-
-    protected function expectsRepository()
-    {
-        $this->em
-            ->expects($this->once())
-            ->method('getRepository')
-            ->with($this->threadClass)
-            ->will($this->returnValue($this->entityRepository));
     }
 }
