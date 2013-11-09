@@ -16,7 +16,7 @@ use Miliooo\Messaging\User\ParticipantProviderInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class OutboxController
+ * The outbox controller is responsible for showing outbox threads for the logged in user.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
