@@ -26,8 +26,20 @@ class InboxControllerTest extends \PHPUnit_Framework_TestCase
      * @var InboxController
      */
     private $controller;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $participantProvider;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $templating;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $inboxProvider;
     private $loggedInUser;
     private $threads;
@@ -40,7 +52,9 @@ class InboxControllerTest extends \PHPUnit_Framework_TestCase
         $this->participantProvider = $this->getMock('Miliooo\Messaging\User\ParticipantProviderInterface');
         $this->templating = $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
         $this->controller = new InboxController(
-            $this->participantProvider, $this->inboxProvider, $this->templating
+            $this->participantProvider,
+            $this->inboxProvider,
+            $this->templating
         );
     }
 
