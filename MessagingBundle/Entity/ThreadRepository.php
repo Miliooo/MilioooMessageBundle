@@ -40,6 +40,14 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
     /**
      * {@inheritdoc}
      */
+    public function getOutboxThreadsForParticipant(ParticipantInterface $participant)
+    {
+
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function findThread($id)
     {
         $thread = $this->find($id);

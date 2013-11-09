@@ -12,6 +12,7 @@ namespace Miliooo\Messaging\Repository;
 
 use Miliooo\Messaging\User\ParticipantInterface;
 use Doctrine\Common\Persistence\ObjectRepository;
+use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
  * Description of ThreadRepositoryInterface
@@ -25,9 +26,18 @@ interface ThreadRepositoryInterface extends ObjectRepository
      *
      * @param ParticipantInterface $participant The participant
      *
-     * @return ThreadInterface[]|null Array of threadinterfaces or null when no threads
+     * @return ThreadInterface[]|null Array of thread interfaces or null when no threads found
      */
     public function getInboxThreadsForParticipant(ParticipantInterface $participant);
+
+    /**
+     * Gets the outbox threads for a given participant
+     *
+     * @param ParticipantInterface $participant
+     *
+     * @return ThreadInterface[]|null Array of thread interfaces or null when no threads found
+     */
+    public function getOutboxThreadsForParticipant(ParticipantInterface $participant);
 
     /**
      * Finds a thread by it's unique id
