@@ -26,5 +26,4 @@ interface MessageRepositoryInterface
      * @param bool $flush Whether to flush or not defaults to true
      */
     public function save(MessageInterface $message, $flush = true);
-
 }
