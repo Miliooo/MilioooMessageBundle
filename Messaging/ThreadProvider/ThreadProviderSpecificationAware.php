@@ -10,8 +10,7 @@
 
 namespace Miliooo\Messaging\ThreadProvider;
 
-use Miliooo\Messaging\ThreadProvider\ThreadProviderInterface;
-use Miliooo\Messaging\Specifications\CanSeeThreadSpecification as specification;
+use Miliooo\Messaging\Specifications\CanSeeThreadSpecification;
 use Miliooo\Messaging\User\ParticipantInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -23,7 +22,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class SpecificationAwareThreadProvider implements SecureThreadProviderInterface
+class ThreadProviderSpecificationAware implements SecureThreadProviderInterface
 {
     protected $threadProvider;
     protected $canSeeThread;
@@ -31,10 +30,10 @@ class SpecificationAwareThreadProvider implements SecureThreadProviderInterface
     /**
      * Constructor.
      *
-     * @param ThreadProviderInterface   $threadProvider A thread provider instance
-     * @param CanSeeThreadSpecification $canSeeThread   A canseethreadspecification
+     * @param ThreadProviderInterface $threadProvider A thread provider instance
+     * @param CanSeeThreadSpecification $canSeeThread A canseethreadspecification
      */
-    public function __construct(ThreadProviderInterface $threadProvider, specification $canSeeThread)
+    public function __construct(ThreadProviderInterface $threadProvider, CanSeeThreadSpecification $canSeeThread)
     {
         $this->threadProvider = $threadProvider;
         $this->canSeeThread = $canSeeThread;
