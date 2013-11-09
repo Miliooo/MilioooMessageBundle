@@ -22,6 +22,11 @@
             <argument type="service" id="miliooo_messaging.repository.thread"/>
         </service>
 
+        <service id="miliooo_messaging.thread_provider.outbox"
+                 class="Miliooo\Messaging\ThreadProvider\Folder\OutboxProvider">
+            <argument type="service" id="miliooo_messaging.repository.thread"/>
+        </service>
+
     </services>
 
 </container>
