@@ -42,7 +42,14 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
      */
     public function getOutboxThreadsForParticipant(ParticipantInterface $participant)
     {
-
+        return $this->createQueryBuilder('t')
+            ->select('t', 'tm')
+            ->innerJoin('t.threadMeta', 'tm', Join::WITH, 'tm.participant_id = :participant')
+            ->setParameter('participant', $participant)
+            ->andWhere('tm.lastParticipantMessageDate IS NOT NULL')
+            ->orderBy('tm.lastParticipantMessageDate', 'DESC')
+            ->getQuery()
+            ->execute();
     }
 
     /**
