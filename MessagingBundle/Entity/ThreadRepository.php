@@ -13,6 +13,7 @@ namespace Miliooo\MessagingBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 use Miliooo\Messaging\Repository\ThreadRepositoryInterface;
 use Miliooo\Messaging\User\ParticipantInterface;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * Repository class for threads
@@ -26,7 +27,14 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
      */
     public function getInboxThreadsForParticipant(ParticipantInterface $participant)
     {
-
+        return $this->createQueryBuilder('t')
+                ->select('t', 'tm')
+                ->innerJoin('t.threadMeta', 'tm', Join::WITH, 'tm.participant_id = :participant')
+                ->setParameter('participant', $participant)
+                ->andWhere('tm.lastMessageDate IS NOT NULL')
+                ->orderBy('tm.lastMessageDate', 'DESC')
+                ->getQuery()
+                ->execute();
     }
 
     /**
