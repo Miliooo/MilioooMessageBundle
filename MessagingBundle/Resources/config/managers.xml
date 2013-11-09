@@ -7,7 +7,8 @@
     <services>
 
         <service id="miliooo_messaging.new_message_manager" class="Miliooo\Messaging\Manager\NewMessageManager">
-            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="miliooo_messaging.repository.message"/>
+            <argument type="service" id="miliooo_messaging.repository.thread"/>
         </service>
 
     </services>

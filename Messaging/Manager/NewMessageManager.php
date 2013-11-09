@@ -10,7 +10,8 @@
 
 namespace Miliooo\Messaging\Manager;
 
-use Doctrine\ORM\EntityManager;
+use Miliooo\Messaging\Repository\MessageRepositoryInterface;
+use Miliooo\Messaging\Repository\ThreadRepositoryInterface;
 use Miliooo\Messaging\Model\MessageInterface;
 
 /**
@@ -20,16 +21,32 @@ use Miliooo\Messaging\Model\MessageInterface;
  */
 class NewMessageManager implements NewMessageManagerInterface
 {
-    protected $entityManager;
+    /**
+     * A message repository instance.
+     *
+     * @var MessageRepositoryInterface
+     */
+    protected $messageRepository;
+
+    /**
+     * A thread repository instance.
+     *
+     * @var ThreadRepositoryInterface
+     */
+    protected $threadRepository;
 
     /**
      * Constructor.
      *
-     * @param EntityManager $entityManager An entity manager instance
+     * @param MessageRepositoryInterface $messageRepository
+     * @param ThreadRepositoryInterface $threadRepository
      */
-    public function __construct(EntityManager $entityManager)
-    {
-        $this->entityManager = $entityManager;
+    public function __construct(
+        MessageRepositoryInterface $messageRepository,
+        ThreadRepositoryInterface $threadRepository
+    ) {
+        $this->messageRepository = $messageRepository;
+        $this->threadRepository = $threadRepository;
     }
 
     /**
@@ -37,10 +54,7 @@ class NewMessageManager implements NewMessageManagerInterface
      */
     public function saveNewThread(MessageInterface $message)
     {
-        $thread = $message->getThread();
-        $this->entityManager->persist($message);
-        $this->entityManager->persist($thread);
-        $this->entityManager->flush();
+        $this->saveNewMessage($message);
     }
 
     /**
@@ -48,9 +62,18 @@ class NewMessageManager implements NewMessageManagerInterface
      */
     public function saveNewReply(MessageInterface $message)
     {
+        $this->saveNewMessage($message);
+    }
+
+    /**
+     * Saves a new message to the persistent storage
+     *
+     * @param MessageInterface $message
+     */
+    protected function saveNewMessage(MessageInterface $message)
+    {
         $thread = $message->getThread();
-        $this->entityManager->persist($message);
-        $this->entityManager->persist($thread);
-        $this->entityManager->flush();
+        $this->messageRepository->save($message, false);
+        $this->threadRepository->save($thread, true);
     }
 }

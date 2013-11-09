@@ -11,12 +11,13 @@
 namespace Miliooo\MessagingBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Miliooo\Messaging\Model\ThreadInterface;
 use Miliooo\Messaging\Repository\ThreadRepositoryInterface;
 use Miliooo\Messaging\User\ParticipantInterface;
 use Doctrine\ORM\Query\Expr\Join;
 
 /**
- * Repository class for threads
+ * Doctrine ORM Repository class for threads
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
@@ -28,13 +29,13 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
     public function getInboxThreadsForParticipant(ParticipantInterface $participant)
     {
         return $this->createQueryBuilder('t')
-                ->select('t', 'tm')
-                ->innerJoin('t.threadMeta', 'tm', Join::WITH, 'tm.participant_id = :participant')
-                ->setParameter('participant', $participant)
-                ->andWhere('tm.lastMessageDate IS NOT NULL')
-                ->orderBy('tm.lastMessageDate', 'DESC')
-                ->getQuery()
-                ->execute();
+            ->select('t', 'tm')
+            ->innerJoin('t.threadMeta', 'tm', Join::WITH, 'tm.participant_id = :participant')
+            ->setParameter('participant', $participant)
+            ->andWhere('tm.lastMessageDate IS NOT NULL')
+            ->orderBy('tm.lastMessageDate', 'DESC')
+            ->getQuery()
+            ->execute();
     }
 
     /**
@@ -60,5 +61,18 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
         $thread = $this->find($id);
 
         return is_object($thread) ? $thread : null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function save(ThreadInterface $thread, $flush = true)
+    {
+        $em = $this->getEntityManager();
+        $em->persist($thread);
+
+        if ($flush) {
+            $em->flush();
+        }
     }
 }

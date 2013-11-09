@@ -25,12 +25,22 @@ class NewMessageManagerTest extends \PHPUnit_Framework_TestCase
      * @var NewMessageManager
      */
     private $manager;
-    private $entityManager;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $msgRepo;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $threadRepo;
 
     public function setUp()
     {
-        $this->entityManager = $this->getMockBuilder('Doctrine\ORM\EntityManager')->disableOriginalConstructor()->getMock();
-        $this->manager = new NewMessageManager($this->entityManager);
+        $this->msgRepo = $this->getMock('Miliooo\Messaging\Repository\MessageRepositoryInterface');
+        $this->threadRepo = $this->getMock('Miliooo\Messaging\Repository\ThreadRepositoryInterface');
+        $this->manager = new NewMessageManager($this->msgRepo, $this->threadRepo);
     }
 
     public function testSaveNewThread()
@@ -38,9 +48,10 @@ class NewMessageManagerTest extends \PHPUnit_Framework_TestCase
         $message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');
         $thread = $this->getMock('Miliooo\Messaging\Model\ThreadInterface');
         $message->expects($this->once())->method('getThread')->will($this->returnValue($thread));
-        $this->entityManager->expects($this->at(0))->method('persist')->with($message);
-        $this->entityManager->expects($this->at(1))->method('persist')->with($thread);
-        $this->entityManager->expects($this->once())->method('flush')->with();
+        $this->msgRepo->expects($this->once())->method('save')
+            ->with($message, false);
+        $this->threadRepo->expects($this->once())->method('save')
+            ->with($thread, true);
 
         $this->manager->saveNewThread($message);
     }
@@ -49,6 +60,12 @@ class NewMessageManagerTest extends \PHPUnit_Framework_TestCase
     {
         $message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');
         $thread = $this->getMock('Miliooo\Messaging\Model\ThreadInterface');
+
+        $message->expects($this->once())->method('getThread')->will($this->returnValue($thread));
+        $this->msgRepo->expects($this->once())->method('save')
+            ->with($message, false);
+        $this->threadRepo->expects($this->once())->method('save')
+            ->with($thread, true);
 
         $this->manager->saveNewReply($message, $thread);
     }

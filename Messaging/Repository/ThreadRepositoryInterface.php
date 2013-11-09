@@ -15,7 +15,7 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
- * Description of ThreadRepositoryInterface
+ * Interface for threadRepository instances
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
@@ -47,4 +47,12 @@ interface ThreadRepositoryInterface extends ObjectRepository
      * @return ThreadInterface|null
      */
     public function findThread($id);
+
+    /**
+     * Saves a thread to the storage engine
+     *
+     * @param ThreadInterface $thread The thread we save
+     * @param boolean $flush Whether to flush or not, defaults to true
+     */
+    public function save(ThreadInterface $thread, $flush = true);
 }
