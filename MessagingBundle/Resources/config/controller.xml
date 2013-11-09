@@ -21,6 +21,12 @@
             <argument type="service" id="miliooo_messaging.participant_provider" />
         </service>
 
+        <service id="miliooo_messaging.controller.inbox_controller" class="Miliooo\MessagingBundle\Controller\InboxController" scope="request">
+            <argument type="service" id="miliooo_messaging.participant_provider" />
+            <argument type="service" id="miliooo_messaging.thread_provider.inbox" />
+            <argument type="service" id="templating" />
+        </service>
+
     </services>
 
 </container>
