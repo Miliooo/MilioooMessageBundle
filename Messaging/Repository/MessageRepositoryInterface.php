@@ -26,4 +26,12 @@ interface MessageRepositoryInterface
      * @param bool $flush Whether to flush or not defaults to true
      */
     public function save(MessageInterface $message, $flush = true);
+
+    /**
+     * Calls flush to the entityManager.
+     *
+     * If you want to persist multiple objects but only flush once you can call this method.
+     * This calls flush to the entity manager and all persisted objects will be saved.
+     */
+    public function flush();
 }

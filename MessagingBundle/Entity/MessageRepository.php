@@ -33,4 +33,13 @@ class MessageRepository extends EntityRepository implements MessageRepositoryInt
             $em->flush();
         }
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function flush()
+    {
+        $em = $this->getEntityManager();
+        $em->flush();
+    }
 }
