@@ -29,14 +29,7 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
      */
     public function getInboxThreadsForParticipant(ParticipantInterface $participant)
     {
-        return $this->createQueryBuilder('t')
-            ->select('t', 'tm')
-            ->innerJoin('t.threadMeta', 'tm', Join::WITH, 'tm.participant = :participant')
-            ->setParameter('participant', $participant)
-            ->andWhere('tm.status = :status')
-            ->setParameter('status', ThreadMetaInterface::STATUS_ACTIVE, \PDO::PARAM_INT)
-            ->andWhere('tm.lastMessageDate IS NOT NULL')
-            ->orderBy('tm.lastMessageDate', 'DESC')
+        return $this->getInboxThreadsForParticipantQueryBuilder($participant)
             ->getQuery()
             ->execute();
     }
@@ -46,14 +39,7 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
      */
     public function getOutboxThreadsForParticipant(ParticipantInterface $participant)
     {
-        return $this->createQueryBuilder('t')
-            ->select('t', 'tm')
-            ->innerJoin('t.threadMeta', 'tm', Join::WITH, 'tm.participant = :participant')
-            ->setParameter('participant', $participant)
-            ->andWhere('tm.status = :status')
-            ->setParameter('status', ThreadMetaInterface::STATUS_ACTIVE, \PDO::PARAM_INT)
-            ->andWhere('tm.lastParticipantMessageDate IS NOT NULL')
-            ->orderBy('tm.lastParticipantMessageDate', 'DESC')
+        return $this->getOutboxThreadsForParticipantQueryBuilder($participant)
             ->getQuery()
             ->execute();
     }
@@ -88,5 +74,35 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
     {
         $em = $this->getEntityManager();
         $em->flush();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getInboxThreadsForParticipantQueryBuilder(ParticipantInterface $participant)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t', 'tm')
+            ->innerJoin('t.threadMeta', 'tm', Join::WITH, 'tm.participant = :participant')
+            ->setParameter('participant', $participant)
+            ->andWhere('tm.status = :status')
+            ->setParameter('status', ThreadMetaInterface::STATUS_ACTIVE, \PDO::PARAM_INT)
+            ->andWhere('tm.lastMessageDate IS NOT NULL')
+            ->orderBy('tm.lastMessageDate', 'DESC');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOutboxThreadsForParticipantQueryBuilder(ParticipantInterface $participant)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t', 'tm')
+            ->innerJoin('t.threadMeta', 'tm', Join::WITH, 'tm.participant = :participant')
+            ->setParameter('participant', $participant)
+            ->andWhere('tm.status = :status')
+            ->setParameter('status', ThreadMetaInterface::STATUS_ACTIVE, \PDO::PARAM_INT)
+            ->andWhere('tm.lastParticipantMessageDate IS NOT NULL')
+            ->orderBy('tm.lastParticipantMessageDate', 'DESC');
     }
 }

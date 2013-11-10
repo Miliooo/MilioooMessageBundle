@@ -12,6 +12,7 @@ namespace Miliooo\Messaging\Repository;
 
 use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\Messaging\Model\ThreadInterface;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * Interface for threadRepository instances
@@ -30,6 +31,15 @@ interface ThreadRepositoryInterface
     public function getInboxThreadsForParticipant(ParticipantInterface $participant);
 
     /**
+     * Gets the querybuilder for the inbox threads for a given participant
+     *
+     * @param ParticipantInterface $participant
+     *
+     * @return QueryBuilder
+     */
+    public function getInboxThreadsForParticipantQueryBuilder(ParticipantInterface $participant);
+
+    /**
      * Gets the outbox threads for a given participant
      *
      * @param ParticipantInterface $participant
@@ -37,6 +47,13 @@ interface ThreadRepositoryInterface
      * @return ThreadInterface[]|null Array of thread interfaces or null when no threads found
      */
     public function getOutboxThreadsForParticipant(ParticipantInterface $participant);
+
+    /**
+     * @param ParticipantInterface $participant
+     *
+     * @return QueryBuilder
+     */
+    public function getOutboxThreadsForParticipantQueryBuilder(ParticipantInterface $participant);
 
     /**
      * Finds a thread by it's unique id
