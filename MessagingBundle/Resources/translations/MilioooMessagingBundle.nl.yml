@@ -1,0 +1,19 @@
+# title
+messenger: Berichten
+
+#navigate options
+navigate:
+  inbox:            Ontvangen
+  outbox:           Verzonden
+  send_new_message: Nieuw bericht
+
+#titles
+title:
+  inbox:            Jouw verzonden berichten
+  outbox:           Jouw ontvangen berichten
+  send_new_message: Verstuur een nieuw bericht
+  reply:            Nieuw bericht toevoegen
+
+action:
+  send_reply:        Bericht toevoegen
+  create_new_thread: Bericht versturen

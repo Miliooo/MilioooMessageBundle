@@ -1,0 +1,24 @@
+<table class="table">
+    {% if threads %}
+        {% for thread in threads %}
+            <tr>
+                <td>
+                    <a href="{{ url('miliooo_message_thread_view', {'threadId': thread.id}) }}">
+                        {{ thread.subject }}
+                    </a>
+                </td>
+                <td>
+                    {{ thread.createdBy }}
+                </td>
+                <td>
+                    {{ thread.createdAt|date }}
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="2">No threads found</td>
+        </tr>
+
+    {% endif %}
+</table>

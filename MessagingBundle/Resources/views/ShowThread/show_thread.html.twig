@@ -1,19 +1,25 @@
-<table>
-{% for message in thread.messages %}
-    <tr>
-        <td>{{ message.sender|e}}</td>
-    </tr>
-    <tr>
-        <td>{{ message.body }}</td>
-    </tr>
-{% endfor %}
-</table>
+{% extends 'MilioooMessagingBundle::layout.html.twig' %}
 
-<h3>Reply</h3>
+{% block miliooo_messaging_content %}
+
+ <h2>{{ thread.subject }}</h2>
+
+{% for message in thread.messages %}
+
+    <div class="panel panel-default message-id={{ message.id }}">
+        <div class="panel-heading">{{ message.sender|e}} {{ message.createdAt|date}}</div>
+        <div class="panel-body">
+            {{ message.body }}
+        </div>
+    </div>
+{% endfor %}
+
+<h3>{% trans from 'MilioooMessagingBundle' %}title.reply{% endtrans %}</h3>
 
 <form action="" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
     <p>
-        <button type="submit">Create</button>
+        <button type="submit">{% trans from 'MilioooMessagingBundle' %}action.send_reply{% endtrans %}</button>
     </p>
 </form>
+{% endblock %}

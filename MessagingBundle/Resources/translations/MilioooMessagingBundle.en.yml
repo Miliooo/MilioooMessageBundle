@@ -1,0 +1,20 @@
+# title
+messenger: Messenger
+
+#navigate options
+navigate:
+  inbox:            Inbox
+  outbox:           Outbox
+  send_new_message: Send a new message
+
+#titles
+title:
+  inbox:            Inbox
+  outbox:           Outbox
+  send_new_message: Send a new message
+  reply:            Send a reply message
+
+ action:
+  send_reply: Send reply
+  create_new_thread: Send message
+

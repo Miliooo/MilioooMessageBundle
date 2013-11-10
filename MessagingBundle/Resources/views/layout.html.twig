@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{% trans from 'MilioooMessagingBundle' %}messenger{% endtrans %}</title>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    </head>
+
+    <body>
+        <div class="btn-group">
+            <a href="{{ url('miliooo_message_thread_new' )}}"><button type="button" class="btn btn-default">{% trans from 'MilioooMessagingBundle' %}navigate.send_new_message{% endtrans %}</button></a>
+            <a href="{{ url('miliooo_message_inbox') }}"><button type="button" class="btn btn-default">{% trans from 'MilioooMessagingBundle' %}navigate.inbox{% endtrans %}</button></a>
+            <a href="{{ url('miliooo_message_outbox') }}"><button type="button" class="btn btn-default">{% trans from 'MilioooMessagingBundle' %}navigate.outbox{% endtrans %}</button></a>
+        </div>
+
+        {% block miliooo_messaging_content %}{% endblock %}
+
+    </body>
+</html>
