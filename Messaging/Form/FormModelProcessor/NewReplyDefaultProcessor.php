@@ -10,9 +10,9 @@
 
 namespace Miliooo\Messaging\Form\FormModelProcessor;
 
+use Miliooo\Messaging\Builder\Message\ReplyBuilderInterface;
 use Miliooo\Messaging\Form\FormModel\ReplyMessageInterface;
 use Miliooo\Messaging\Manager\NewMessageManagerInterface;
-use Miliooo\Messaging\Builder\Message\ReplyBuilder;
 use Miliooo\Messaging\Builder\Model\ReplyBuilderModel;
 
 /**
@@ -22,16 +22,26 @@ use Miliooo\Messaging\Builder\Model\ReplyBuilderModel;
  */
 class NewReplyDefaultProcessor implements NewReplyFormProcessorInterface
 {
+    /**
+     * A reply builder instance
+     * @var ReplyBuilderInterface
+     */
     protected $replyBuilder;
+
+    /**
+     * A new message manager instance
+     *
+     * @var NewMessageManagerInterface
+     */
     protected $newMessageManager;
 
     /**
      * Constructor.
      *
-     * @param ReplyBuilder               $replyBuilder
+     * @param ReplyBuilderInterface $replyBuilder
      * @param NewMessageManagerInterface $newMessageManager
      */
-    public function __construct(ReplyBuilder $replyBuilder, NewMessageManagerInterface $newMessageManager)
+    public function __construct(ReplyBuilderInterface $replyBuilder, NewMessageManagerInterface $newMessageManager)
     {
         $this->replyBuilder = $replyBuilder;
         $this->newMessageManager = $newMessageManager;

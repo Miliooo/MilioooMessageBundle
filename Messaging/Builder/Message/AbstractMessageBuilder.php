@@ -91,6 +91,11 @@ abstract class AbstractMessageBuilder
         $this->threadMetaClass = $threadMetaClass;
     }
 
+    /**
+     * Builds a new message
+     *
+     * @param ThreadInterface $thread
+     */
     protected function buildNewMessage(ThreadInterface $thread)
     {
         $message = $this->createMessage();
@@ -106,7 +111,7 @@ abstract class AbstractMessageBuilder
      * @param MessageInterface     $message     The message the meta belongs
      * @param ParticipantInterface $participant The participant in the thread this message belongs to
      *
-     * @return MessageMetadata
+     * @return MessageMetaInterface
      */
     private function createNewMessageMetaForParticipant(MessageInterface $message, ParticipantInterface $participant)
     {
@@ -118,39 +123,80 @@ abstract class AbstractMessageBuilder
         return $messageMeta;
     }
 
+    /**
+     * Updates the message with the message data in the builder model
+     *
+     * @param MessageInterface $message
+     */
     protected function setMessageData(MessageInterface $message)
     {
         $this->processbuilderModel('getMessageData', null, $message);
     }
 
+    /**
+     * Updates the message meta for the sender.
+     *
+     * It processes first the message meta for all participants
+     * Then it processes the message meta specific for the sender
+     *
+     * @param MessageMetaInterface $messageMeta
+     */
     protected function updateMessageMetaForSender(MessageMetaInterface $messageMeta)
     {
         $this->processBuilderModel('getMessageMeta', 'all', $messageMeta);
         $this->processBuilderModel('getMessageMeta', 'sender', $messageMeta);
     }
 
+    /**
+     * Updates the message meta for the recipient.
+     *
+     * It processes first the message meta for all participants
+     * Then it processes the message meta specific for the recipient.
+     *
+     * @param MessageMetaInterface $messageMeta
+     */
     protected function updateMessageMetaForRecipient(MessageMetaInterface $messageMeta)
     {
         $this->processBuilderModel('getMessageMeta', 'all', $messageMeta);
         $this->processBuilderModel('getMessageMeta', 'recipients', $messageMeta);
     }
 
+    /**
+     * Updates the given object with the given methodName and argumentName
+     *
+     * @param string $callMethodName Calls the builder with this methodName
+     * @param string|null $callMethodArgument Calls the builder with this argument for the given methodName
+     * @param object $object The object which gets updated
+     */
     protected function processBuilderModel($callMethodName, $callMethodArgument, $object)
     {
         $data = $this->builderModel->$callMethodName($callMethodArgument);
 
         if (!$data) {
-            return $object;
+            return;
         }
 
         foreach ($data as $key => $value) {
             $setterMethod = $this->getSetter($key, $object);
             $object->$setterMethod($value);
         }
-
-        return $object;
     }
 
+    /**
+     * Gets the setter method for the given key.
+     *
+     * This function tries to find the setter for the given key. By convention this should be setKey.
+     *
+     * It checks the object if there is a method which is named setKey and if that method is callable (is public)
+     * If not it throws an invalidArgumentException
+     *
+     * @param string $key
+     * @param object $object
+     *
+     * @return string The callable setter method
+     *
+     * @throws \InvalidArgumentException If no callable setter found
+     */
     protected function getSetter($key, $object)
     {
         if (!is_string($key)) {
@@ -187,6 +233,10 @@ abstract class AbstractMessageBuilder
         return new $this->messageMetaClass;
     }
 
+    /**
+     * Creates the message meta for a new message.
+     * @param $message
+     */
     private function createMessageMetaForNewMessage($message)
     {
         $messageMeta = $this->createNewMessageMetaForParticipant($message, $this->sender);
@@ -201,7 +251,7 @@ abstract class AbstractMessageBuilder
     /**
      * Updates the thread meta with settings specific for the sender
      *
-     * @param ThreadMetadata $threadMeta
+     * @param ThreadMetaInterface $threadMeta
      */
     protected function updateThreadMetaForSender(ThreadMetaInterface $threadMeta)
     {
@@ -212,7 +262,7 @@ abstract class AbstractMessageBuilder
     /**
      * Updates the thread meta with the settings specific for the recipient
      *
-     * @param ThreadMetadata $threadMeta
+     * @param ThreadMetaInterface $threadMeta
      */
     protected function updateThreadMetaForRecipient(ThreadMetaInterface $threadMeta)
     {

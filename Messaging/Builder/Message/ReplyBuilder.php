@@ -18,11 +18,15 @@ use Miliooo\Messaging\Model\ThreadInterface;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class ReplyBuilder extends AbstractMessageBuilder
+class ReplyBuilder extends AbstractMessageBuilder implements ReplyBuilderInterface
 {
     protected $builderModel;
     protected $sender;
     protected $recipients;
+
+    /**
+     * @var ThreadInterface
+     */
     protected $thread;
 
     /**

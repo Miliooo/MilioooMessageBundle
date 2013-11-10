@@ -24,9 +24,13 @@ class ReplyBuilderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * The class under test
-     * @var type
+     * @var ReplyBuilder
      */
     private $builder;
+
+    /**
+     * @var ThreadModelTestHelper
+     */
     protected $threadModelHelper;
 
     public function setUp()
@@ -37,6 +41,11 @@ class ReplyBuilderTest extends \PHPUnit_Framework_TestCase
         $this->builder->setMessageMetaClass('\Miliooo\Messaging\TestHelpers\Model\MessageMeta');
         $this->builder->setThreadMetaClass('\Miliooo\Messaging\TestHelpers\Model\ThreadMeta');
         $this->threadModelHelper = new ThreadModelTestHelper();
+    }
+
+    public function testInterface()
+    {
+        $this->assertInstanceOf('Miliooo\Messaging\Builder\Message\ReplyBuilderInterface', $this->builder);
     }
 
     public function testBuild()
@@ -57,7 +66,6 @@ class ReplyBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testBuildCallsTheBuilderModel()
     {
-
         $thread = $this->threadModelHelper->getModelThread();
         $sender = $this->threadModelHelper->getSender();
         $replyMessageModel = new ReplyMessage();

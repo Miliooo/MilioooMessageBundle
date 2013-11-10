@@ -24,7 +24,7 @@ class NewThreadBuilder extends AbstractMessageBuilder
 {
     protected $builderModel;
     protected $sender;
-    protected $recipients = array();
+    protected $recipients = [];
 
     /**
      * Builds a new thread object with one new message
@@ -47,26 +47,31 @@ class NewThreadBuilder extends AbstractMessageBuilder
         return $thread;
     }
 
-    protected function setThreadData($thread)
+    /**
+     * We update the thread with the thread data from the builder
+     *
+     * @param ThreadInterface $thread
+     */
+    protected function setThreadData(ThreadInterface $thread)
     {
         $this->processBuilderModel('getThreadData', null, $thread);
     }
 
     /**
-     * Creates new threadmeta for the participant
+     * Creates new thread meta for a single participant
      *
      * @param ThreadInterface      $thread
      * @param ParticipantInterface $participant
      *
-     * @return ThreadMeta
+     * @return ThreadMetaInterface
      */
     private function createThreadMetaForParticipant(ThreadInterface $thread, ParticipantInterface $participant)
     {
-        //those are the required values not depending on the model
         $threadMeta = $this->createThreadMeta();
         $threadMeta->setParticipant($participant);
         $threadMeta->setThread($thread);
         $thread->addThreadMeta($threadMeta);
+
         return $threadMeta;
     }
 
@@ -80,7 +85,14 @@ class NewThreadBuilder extends AbstractMessageBuilder
         return new $this->threadMetaClass();
     }
 
-    private function createThreadMetaForNewThread($thread)
+    /**
+     * Creates thread meta for a new thread.
+     *
+     * We need thread meta for each participant
+     *
+     * @param ThreadInterface $thread The thread we create thread meta for
+     */
+    private function createThreadMetaForNewThread(ThreadInterface $thread)
     {
         $this->buildThreadMetaForSender($thread);
 
