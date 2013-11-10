@@ -30,7 +30,7 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
     {
         return $this->createQueryBuilder('t')
             ->select('t', 'tm')
-            ->innerJoin('t.threadMeta', 'tm', Join::WITH, 'tm.participant_id = :participant')
+            ->innerJoin('t.threadMeta', 'tm', Join::WITH, 'tm.participant = :participant')
             ->setParameter('participant', $participant)
             ->andWhere('tm.lastMessageDate IS NOT NULL')
             ->orderBy('tm.lastMessageDate', 'DESC')
@@ -45,7 +45,7 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
     {
         return $this->createQueryBuilder('t')
             ->select('t', 'tm')
-            ->innerJoin('t.threadMeta', 'tm', Join::WITH, 'tm.participant_id = :participant')
+            ->innerJoin('t.threadMeta', 'tm', Join::WITH, 'tm.participant = :participant')
             ->setParameter('participant', $participant)
             ->andWhere('tm.lastParticipantMessageDate IS NOT NULL')
             ->orderBy('tm.lastParticipantMessageDate', 'DESC')
