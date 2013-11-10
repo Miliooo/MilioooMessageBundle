@@ -92,8 +92,8 @@ abstract class AbstractMessageBuilderModel
     /**
      * Add message data to your message class.
      *
-     * @param string $key The name of your classes attribute, example ip => builder will call setIp
-     * @param mixed $value The value of the attribute you want to set
+     * @param string $key   The name of your classes attribute, example ip => builder will call setIp
+     * @param mixed  $value The value of the attribute you want to set
      */
     public function addMessageData($key, $value)
     {
@@ -116,8 +116,8 @@ abstract class AbstractMessageBuilderModel
     /**
      * Add thread data to your thread class.
      *
-     * @param string $key The name of your thread class attribute
-     * @param mixed $value The value for your attribute
+     * @param string $key   The name of your thread class attribute
+     * @param mixed  $value The value for your attribute
      */
     public function addThreadData($key, $value)
     {
@@ -140,8 +140,8 @@ abstract class AbstractMessageBuilderModel
      * Adds message meta for a given participant group to your message meta class.
      *
      * @param string $participant One of the class constants SENDER ALL RECIPIENTS
-     * @param string $key The name of your message meta class attribute you want to add data for.
-     * @param mixed $value The value for your attribute
+     * @param string $key         The name of your message meta class attribute you want to add data for.
+     * @param mixed  $value       The value for your attribute
      */
     public function addMessageMeta($participant, $key, $value)
     {
@@ -164,8 +164,8 @@ abstract class AbstractMessageBuilderModel
      * Adds thread meta for a given participant group to the thread meta class.
      *
      * @param string $participant One of the class constants SENDER ALL RECIPIENTS
-     * @param string $key The name of your thread meta class attribute
-     * @param mixed $value The value of your thread meta class attribute
+     * @param string $key         The name of your thread meta class attribute
+     * @param mixed  $value       The value of your thread meta class attribute
      */
     public function addThreadMeta($participant, $key, $value)
     {
@@ -187,10 +187,10 @@ abstract class AbstractMessageBuilderModel
     /**
      * Helper function to populate the data array.
      *
-     * @param string $name Name of the meta one of threadMeta, messageMeta
+     * @param string $name        Name of the meta one of threadMeta, messageMeta
      * @param string $participant One of the class constants SENDER ALL RECIPIENTS
-     * @param string $key The name of the class attribute
-     * @param mixed $value The value of the class attribute
+     * @param string $key         The name of the class attribute
+     * @param mixed  $value       The value of the class attribute
      */
     protected function addMeta($name, $participant, $key, $value)
     {
@@ -200,7 +200,7 @@ abstract class AbstractMessageBuilderModel
     /**
      * Helper function to get meta.
      *
-     * @param string $name Name of the meta one of threadMeta, messageMeta
+     * @param string $name        Name of the meta one of threadMeta, messageMeta
      * @param string $participant One of the class constants SENDER ALL RECIPIENTS
      *
      * @return array||null An array where the keys are the names of the attributes and the values the attribute values
@@ -214,9 +214,9 @@ abstract class AbstractMessageBuilderModel
     /**
      * Helper function to add data to the array.
      *
-     * @param string $name One of message, thread
-     * @param string $key Name of the attribute for the given class
-     * @param mixed $value Value for that attribute
+     * @param string $name  One of message, thread
+     * @param string $key   Name of the attribute for the given class
+     * @param mixed  $value Value for that attribute
      */
     protected function addData($name, $key, $value)
     {
