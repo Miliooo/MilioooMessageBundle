@@ -27,6 +27,18 @@
             <argument type="service" id="miliooo_messaging.repository.thread"/>
         </service>
 
+        <service id="miliooo_messaging.thread_provider.inbox_pagerfanta"
+                 class="Miliooo\Messaging\ThreadProvider\Folder\InboxProviderPagerfanta">
+            <argument type="service" id="miliooo_messaging.repository.thread"/>
+            <argument>15</argument>
+         </service>
+
+        <service id="miliooo_messaging.thread_provider.outbox_pagerfanta"
+                 class="Miliooo\Messaging\ThreadProvider\Folder\OutboxProviderPagerfanta">
+            <argument type="service" id="miliooo_messaging.repository.thread"/>
+            <argument>15</argument>
+        </service>
+
     </services>
 
 </container>

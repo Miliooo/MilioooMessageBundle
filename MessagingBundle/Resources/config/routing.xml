@@ -8,12 +8,16 @@
         <default key="_controller">miliooo_messaging.controller.new_thread_controller:CreateAction</default>
     </route>
 
-    <route id="miliooo_message_inbox" pattern="/inbox">
+    <route id="miliooo_message_inbox" pattern="/inbox/{page}">
         <default key="_controller">miliooo_messaging.controller.inbox_controller:ShowAction</default>
+        <default key="page">1</default>
+        <requirement key="page">\d+</requirement>
     </route>
 
-    <route id="miliooo_message_outbox" pattern="/outbox">
+    <route id="miliooo_message_outbox" pattern="/outbox/{page}">
         <default key="_controller">miliooo_messaging.controller.outbox_controller:ShowAction</default>
+        <default key="page">1</default>
+        <requirement key="page">\d+</requirement>
     </route>
 
     <route id="miliooo_message_thread_view" pattern="/{threadId}">
