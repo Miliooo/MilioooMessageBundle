@@ -12,6 +12,7 @@ namespace Miliooo\Messaging\Tests\Model;
 
 use Miliooo\Messaging\Model\ThreadMeta;
 use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
+use Miliooo\Messaging\Model\ThreadMetaInterface;
 
 /**
  * Description of ThreadMetaTest
@@ -50,18 +51,24 @@ class ThreadMetaTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($participant, $this->threadMeta->getParticipant());
     }
 
-    public function testIsArchivedDefaultsToFalse()
+    public function testDefaultStatusIsActive()
     {
-        $this->AssertAttributeEquals(false, 'isArchived', $this->threadMeta);
-        $this->assertFalse($this->threadMeta->getIsArchived());
+        $this->assertEquals(ThreadMetaInterface::STATUS_ACTIVE, $this->threadMeta->getStatus());
     }
 
-    public function testIsArchivedWorks()
+    public function testStatusWorks()
     {
-        $this->threadMeta->setIsArchived(true);
-        $this->assertTrue($this->threadMeta->getIsArchived());
-        $this->threadMeta->setIsArchived(false);
-        $this->assertFalse($this->threadMeta->getIsArchived());
+        $this->threadMeta->setStatus(ThreadMetaInterface::STATUS_ACTIVE);
+        $this->assertEquals(ThreadMetaInterface::STATUS_ACTIVE, $this->threadMeta->getStatus());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Not a valid status
+     */
+    public function testStatusNeedsValidStatus()
+    {
+        $this->threadMeta->setStatus('foo');
     }
 
     public function testLastParticipantMessageDateWorks()

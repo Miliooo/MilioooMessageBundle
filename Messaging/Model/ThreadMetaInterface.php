@@ -11,7 +11,6 @@
 namespace Miliooo\Messaging\Model;
 
 use Miliooo\Messaging\User\ParticipantInterface;
-use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
  * The interface for the threadmeta class
@@ -20,6 +19,9 @@ use Miliooo\Messaging\Model\ThreadInterface;
  */
 interface ThreadMetaInterface
 {
+    const STATUS_ACTIVE = 1;
+    const STATUS_ARCHIVED = 2;
+
     /**
      * Gets the unique id of the thread meta
      *
@@ -56,24 +58,18 @@ interface ThreadMetaInterface
     public function getThread();
 
     /**
-     * Gets if the thread is archived by the participant.
+     * Gets the status of the given thread for the participant of the threadMeta.
      *
-     * It returns true if the thread is archived by the participant,
-     * false if the thread is not archived by the participant
-     *
-     * return boolean true if thread is archived for the participant, false otherwise
+     * @return integer one of the status constants
      */
-    public function getIsArchived();
+    public function getStatus();
 
     /**
-     * Sets the archived status of the thread for the given participant.
+     * Sets the status of the thread for the given participant.
      *
-     * True marks this thread as archived for the participant
-     * False marks this thread as not archived for the participant
-     *
-     * @param boolean $boolean true if archived for participant, false otherwise
+     * @param integer $status
      */
-    public function setIsArchived($boolean);
+    public function setStatus($status);
 
     /**
      * Gets the datetime when the participant has written his last message for

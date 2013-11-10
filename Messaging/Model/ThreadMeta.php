@@ -11,7 +11,6 @@
 namespace Miliooo\Messaging\Model;
 
 use Miliooo\Messaging\User\ParticipantInterface;
-use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
  * The thread meta model
@@ -42,11 +41,11 @@ abstract class ThreadMeta implements ThreadMetaInterface
     protected $participant;
 
     /**
-     * The archived status of the thread for the given participant
+     * The status of the given thread for the participant
      *
-     * @var boolean
+     * @var string
      */
-    protected $isArchived = false;
+    protected $status;
 
     /**
      * Datetime of the last message written by the participant
@@ -61,6 +60,14 @@ abstract class ThreadMeta implements ThreadMetaInterface
      * @var \DateTime
      */
     protected $lastMessageDate;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->status = ThreadMetaInterface::STATUS_ACTIVE;
+    }
 
     /**
      * Gets the unique id
@@ -107,17 +114,22 @@ abstract class ThreadMeta implements ThreadMetaInterface
     /**
      * {@inheritdoc}
      */
-    public function getIsArchived()
+    public function getStatus()
     {
-        return $this->isArchived;
+        return $this->status;
     }
 
     /**
      * {@inheritdoc}
+     * @param $status
      */
-    public function setIsArchived($boolean)
+    public function setStatus($status)
     {
-        $this->isArchived = (bool) $boolean;
+        if (!in_array($status, [ThreadMetaInterface::STATUS_ACTIVE, ThreadMetaInterface::STATUS_ARCHIVED], true)) {
+            throw new \InvalidArgumentException('Not a valid status');
+        }
+
+        $this->status = $status;
     }
 
     /**
