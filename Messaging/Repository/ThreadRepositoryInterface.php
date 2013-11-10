@@ -11,7 +11,6 @@
 namespace Miliooo\Messaging\Repository;
 
 use Miliooo\Messaging\User\ParticipantInterface;
-use Doctrine\Common\Persistence\ObjectRepository;
 use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
@@ -19,7 +18,7 @@ use Miliooo\Messaging\Model\ThreadInterface;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-interface ThreadRepositoryInterface extends ObjectRepository
+interface ThreadRepositoryInterface
 {
     /**
      * Gets the inbox threads for a given participant
@@ -55,4 +54,12 @@ interface ThreadRepositoryInterface extends ObjectRepository
      * @param boolean $flush Whether to flush or not, defaults to true
      */
     public function save(ThreadInterface $thread, $flush = true);
+
+    /**
+     * Calls flush to the entityManager.
+     *
+     * If you want to persist multiple objects but only flush once you can call this method.
+     * This calls flush to the entity manager and all persisted objects will be saved.
+     */
+    public function flush();
 }
