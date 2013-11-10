@@ -11,6 +11,10 @@
             <argument type="service" id="miliooo_messaging.repository.thread"/>
         </service>
 
+        <service id="miliooo_messaging.read_status_manager" class="Miliooo\Messaging\Manager\ReadStatusManager">
+            <argument type="service" id="miliooo_messaging.repository.message"/>
+        </service>
+
     </services>
 
 </container>
