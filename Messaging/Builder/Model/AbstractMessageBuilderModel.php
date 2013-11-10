@@ -61,7 +61,7 @@ abstract class AbstractMessageBuilderModel
      *
      * There we process some more default data. See the threadbuildermodel for an example.
      *
-     * If you want to overwrite this data (not recommended!!) you can do so by calling the same method with the same key.
+     * If you want to overwrite this data (not recommended!!) you can call the same method with the same key.
      * This will overwrite that data in the array with your given value.
      */
     protected function processDefaultMessageData()
