@@ -128,7 +128,6 @@ class ReadStatusManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testMarkMsgCollAsReadCallsRightMethodsOnReadMessage()
     {
-
         $message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');
         $messageMeta = $this->getMock('Miliooo\Messaging\Model\MessageMetaInterface');
 

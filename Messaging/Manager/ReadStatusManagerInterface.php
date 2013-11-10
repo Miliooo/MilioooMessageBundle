@@ -21,7 +21,7 @@ use Miliooo\Messaging\User\ParticipantInterface;
 interface ReadStatusManagerInterface
 {
     /**
-     * Marks a message collection as read.
+     * Marks a message collection as read for a given participant.
      *
      * If the message has been already marked as read nothing happens.
      * We use a messageCollection as argument and not a thread since it's possible to paginate single threads.

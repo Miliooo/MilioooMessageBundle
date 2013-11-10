@@ -74,12 +74,12 @@ class ReadStatusManager implements ReadStatusManagerInterface
      * This function is protected because it does not persist the message.
      * We only want to flush once so this is just a helper function for markMessageCollectionAsRead
      *
-     * @param ParticipantInterface $participant
-     * @param MessageInterface $message
+     * @param ParticipantInterface $participant The participant where we check the read status for
+     * @param MessageInterface $message The message where we check the read status for
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException When no message meta found for given participant
      *
-     * @return boolean true if the message has been marked as read, false otherwise
+     * @return boolean true if the message has been marked as read (updated), false otherwise
      */
     protected function maybeMarkMessageAsRead(ParticipantInterface $participant, MessageInterface $message)
     {
