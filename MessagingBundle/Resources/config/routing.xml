@@ -12,8 +12,12 @@
         <default key="_controller">miliooo_messaging.controller.inbox_controller:ShowAction</default>
     </route>
 
+    <route id="miliooo_message_outbox" pattern="/outbox">
+        <default key="_controller">miliooo_messaging.controller.outbox_controller:ShowAction</default>
+    </route>
+
     <route id="miliooo_message_thread_view" pattern="/{threadId}">
         <default key="_controller">miliooo_messaging.controller.show_thread_controller:ShowAction</default>
     </route>
-    
+
 </routes>
