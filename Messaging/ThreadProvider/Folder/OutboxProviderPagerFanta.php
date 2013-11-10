@@ -10,7 +10,6 @@
 
 namespace Miliooo\Messaging\ThreadProvider\Folder;
 
-use Pagerfanta\Pagerfanta;
 use Miliooo\Messaging\Repository\ThreadRepositoryInterface;
 use Miliooo\Messaging\User\ParticipantInterface;
 
@@ -19,7 +18,7 @@ use Miliooo\Messaging\User\ParticipantInterface;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class OutboxProviderPagerFanta extends AbstractProviderPagerFanta
+class OutboxProviderPagerFanta extends AbstractProviderPagerFanta implements OutboxProviderPagerFantaInterface
 {
     /**
      * A thread repository instance.
@@ -46,12 +45,7 @@ class OutboxProviderPagerFanta extends AbstractProviderPagerFanta
     }
 
     /**
-     * Get paginated outbox threads.
-     *
-     * @param ParticipantInterface $participant The participant for whom we get the outbox threads
-     * @param integer              $currentPage The page we are on
-     *
-     * @return Pagerfanta The pager fanta object with the current page and max per page items set.
+     * {@inheritdoc}
      */
     public function getOutboxThreadsPagerfanta(ParticipantInterface $participant, $currentPage)
     {

@@ -51,6 +51,14 @@ class InboxProviderPagerFantaTest extends \PHPUnit_Framework_TestCase
             ->getMock();
     }
 
+    public function testInterface()
+    {
+        $this->assertInstanceOf(
+            'Miliooo\Messaging\ThreadProvider\Folder\InboxProviderPagerFanta',
+            $this->inboxProviderPf
+        );
+    }
+
     public function testGetOutboxThreadsReturnsPagerFantaObject()
     {
         $this->threadRepository

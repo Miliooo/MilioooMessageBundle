@@ -51,6 +51,14 @@ class OutboxProviderPagerFantaTest extends \PHPUnit_Framework_TestCase
             ->getMock();
     }
 
+    public function testInterface()
+    {
+        $this->assertInstanceOf(
+            'Miliooo\Messaging\ThreadProvider\Folder\OutboxProviderPagerFantaInterface',
+            $this->outboxProviderPf
+        );
+    }
+
     public function testGetOutboxThreadsReturnsPagerFantaObject()
     {
         $this->threadRepository
