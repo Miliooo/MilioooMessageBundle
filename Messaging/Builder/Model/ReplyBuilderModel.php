@@ -14,14 +14,20 @@ use Miliooo\Messaging\Form\FormModel\ReplyMessageInterface;
 use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
- * Description of ReplyBuilderModel
+ * The reply builder model contains all the data needed to build a new reply.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
 class ReplyBuilderModel extends AbstractMessageBuilderModel
 {
+    /**
+     * @var ReplyMessageInterface
+     */
     private $replyModel;
 
+    /**
+     * @param ReplyMessageInterface $replyModel
+     */
     public function __construct(ReplyMessageInterface $replyModel)
     {
         $this->replyModel = $replyModel;
@@ -38,8 +44,11 @@ class ReplyBuilderModel extends AbstractMessageBuilderModel
         return $this->replyModel->getThread();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function processExtra()
     {
-
+        //nothing more to process here
     }
 }

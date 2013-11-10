@@ -11,16 +11,28 @@
 namespace Miliooo\Messaging\Builder\Model;
 
 use Miliooo\Messaging\Form\FormModel\NewThreadInterface;
+use Miliooo\Messaging\Model\ThreadMetaInterface;
+use Miliooo\Messaging\User\ParticipantInterface;
 
 /**
- * Description of ExtendedBuilderModel
+ * ThreadBuilderModel.
+ *
+ * The thread builder model contains all the data needed to build a new thread object.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
 class ThreadBuilderModel extends AbstractMessageBuilderModel
 {
+    /**
+     * @var NewThreadInterface
+     */
     protected $newThreadModel;
 
+    /**
+     * Constructor.
+     *
+     * @param NewThreadInterface $newThreadModel
+     */
     public function __construct(NewThreadInterface $newThreadModel)
     {
         $this->newThreadModel = $newThreadModel;
@@ -28,16 +40,20 @@ class ThreadBuilderModel extends AbstractMessageBuilderModel
         parent::__construct($newThreadModel);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function processExtra()
     {
         $this->addThreadData('subject', $this->newThreadModel->getSubject());
         $this->addThreadData('createdAt', $this->newThreadModel->getCreatedAt());
         $this->addThreadData('createdBy', $this->newThreadModel->getSender());
+        $this->addThreadMeta(self::ALL, 'status', ThreadMetaInterface::STATUS_ACTIVE);
     }
 
     /**
      * Gets the recipients of the new message
-     * 
+     *
      * @return ParticipantInterface[] Array with participants
      */
     public function getRecipients()
