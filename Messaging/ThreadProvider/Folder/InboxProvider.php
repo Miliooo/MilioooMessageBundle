@@ -14,10 +14,10 @@ use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\Messaging\Repository\ThreadRepositoryInterface;
 
 /**
- * The inbox  provider provides inbox threads for a given participant.
+ * The inbox provider provides inbox threads for a given participant.
  *
  * This is an extra layer between the repository
- * If you need more logic or alter the logic in the repository you can override this servie
+ * If you need more logic or alter the logic in the repository you can override this service
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
@@ -25,7 +25,8 @@ class InboxProvider implements InboxProviderInterface
 {
     /**
      * A thread repository instance.
-     * @var threadRepository
+     *
+     * @var ThreadRepositoryInterface
      */
     protected $threadRepository;
 
