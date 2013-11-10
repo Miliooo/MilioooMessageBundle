@@ -63,4 +63,15 @@ class MessageMetaTest extends \PHPUnit_Framework_TestCase
         $this->messageMeta->setMessage($message);
         $this->assertSame($message, $this->messageMeta->getMessage());
     }
+
+    public function testGetNewReadDefaultsToFalse()
+    {
+        $this->assertFalse($this->messageMeta->getNewRead());
+    }
+
+    public function testGetNewReadWorks()
+    {
+        $this->messageMeta->setNewRead(true);
+        $this->assertTrue($this->messageMeta->getNewRead());
+    }
 }

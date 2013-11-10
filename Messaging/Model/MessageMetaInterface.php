@@ -11,7 +11,6 @@
 namespace Miliooo\Messaging\Model;
 
 use Miliooo\Messaging\User\ParticipantInterface;
-use Miliooo\Messaging\Model\MessageInterface;
 
 /**
  * Interface for the message meta
@@ -56,9 +55,27 @@ interface MessageMetaInterface
     public function setMessage(MessageInterface $message);
 
     /**
-     * Gets the message from the messagemeta
+     * Gets the message
      *
      * @return MessageInterface The message this meta belongs to
      */
     public function getMessage();
+
+    /**
+     * Sets the new read status of the message.
+     *
+     * If it's the first time the participant sees a message this should be set to true.
+     *
+     * @param $boolean true if it's the first time the user sees this message, false otherwise.
+     */
+    public function setNewRead($boolean);
+
+    /**
+     * Gets the new read status of the message.
+     *
+     * If it's not the first time the participant sees this message it should return false, else it returns true
+     *
+     * @return $boolean true if it's the first time the participant reads this message, false otherwise
+     */
+    public function getNewRead();
 }

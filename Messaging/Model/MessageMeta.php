@@ -11,7 +11,6 @@
 namespace Miliooo\Messaging\Model;
 
 use Miliooo\Messaging\User\ParticipantInterface;
-use Miliooo\Messaging\Model\MessageInterface;
 
 /**
  * The message meta model class
@@ -33,6 +32,21 @@ abstract class MessageMeta implements MessageMetaInterface
      * @var boolean true if it's read by the given participant, false otherwise
      */
     protected $isRead = false;
+
+    /**
+     * Sets the new read status of the message.
+     *
+     * Since we update the read status just before we show the message to the user, we use this helper
+     * function to check if it's the first time that the user has read this message.
+     *
+     * If the value is true it's the first time that the user sees this message. You could use this to style the message
+     * in a different way.
+     *
+     * @var boolean true if the message has just been read, false otherwise
+     */
+    protected $newRead = false;
+
+    protected $message;
 
     /**
      * {@inheritdoc}
@@ -80,5 +94,21 @@ abstract class MessageMeta implements MessageMetaInterface
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setNewRead($boolean)
+    {
+        $this->newRead = $boolean;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getNewRead()
+    {
+        return $this->newRead;
     }
 }
