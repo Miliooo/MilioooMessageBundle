@@ -15,6 +15,7 @@ use Miliooo\Messaging\Model\ThreadInterface;
 use Miliooo\Messaging\Repository\ThreadRepositoryInterface;
 use Miliooo\Messaging\User\ParticipantInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Miliooo\Messaging\Model\ThreadMetaInterface;
 
 /**
  * Doctrine ORM Repository class for threads
@@ -32,6 +33,8 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
             ->select('t', 'tm')
             ->innerJoin('t.threadMeta', 'tm', Join::WITH, 'tm.participant = :participant')
             ->setParameter('participant', $participant)
+            ->andWhere('tm.status = :status')
+            ->setParameter('status', ThreadMetaInterface::STATUS_ACTIVE, \PDO::PARAM_INT)
             ->andWhere('tm.lastMessageDate IS NOT NULL')
             ->orderBy('tm.lastMessageDate', 'DESC')
             ->getQuery()
@@ -47,6 +50,8 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
             ->select('t', 'tm')
             ->innerJoin('t.threadMeta', 'tm', Join::WITH, 'tm.participant = :participant')
             ->setParameter('participant', $participant)
+            ->andWhere('tm.status = :status')
+            ->setParameter('status', ThreadMetaInterface::STATUS_ACTIVE, \PDO::PARAM_INT)
             ->andWhere('tm.lastParticipantMessageDate IS NOT NULL')
             ->orderBy('tm.lastParticipantMessageDate', 'DESC')
             ->getQuery()
