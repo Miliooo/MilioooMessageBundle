@@ -60,16 +60,23 @@ class NewThreadBuilder extends AbstractMessageBuilder
     /**
      * Creates new thread meta for a single participant
      *
-     * @param ThreadInterface      $thread
-     * @param ParticipantInterface $participant
+     * @param ThreadInterface      $thread      The thread we are building
+     * @param ParticipantInterface $participant The participant whom we create thread meta for
      *
      * @return ThreadMetaInterface
      */
     private function createThreadMetaForParticipant(ThreadInterface $thread, ParticipantInterface $participant)
     {
+        //creates an empty thread meta object
         $threadMeta = $this->createThreadMeta();
+
+        //adds the participant to the threadmeta
         $threadMeta->setParticipant($participant);
+
+        //adds the thread to the thread meta
         $threadMeta->setThread($thread);
+
+        //adds the thread meta to the thread
         $thread->addThreadMeta($threadMeta);
 
         return $threadMeta;

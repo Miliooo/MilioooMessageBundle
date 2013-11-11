@@ -11,9 +11,9 @@
 namespace Miliooo\Messaging\Tests\Model;
 
 use Miliooo\Messaging\Model\Thread;
-use Miliooo\Messaging\Model\Message;
 use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
 use Miliooo\Messaging\Model\ThreadMeta;
+use Miliooo\Messaging\TestHelpers\Model\Message;
 
 /**
  * Test file for the thread model
@@ -61,7 +61,7 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
 
     public function testAddMessageWorksByCheckingItIsPartOfTheGetMessages()
     {
-        $message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');
+        $message = new Message();
         $this->thread->addMessage($message);
         $messages = $this->thread->getMessages();
         $this->assertTrue($messages->contains($message));
@@ -185,17 +185,16 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('the first message', $this->thread->getFirstMessage()->getBody());
     }
 
-    public function testGetLastMessage()
+    public function testLastMessageWorks()
     {
-        $message = $this->getNewMessage();
-        $message->setBody('the first message');
-        $message2 = $this->getNewMessage();
-        $message2->setBody('this is the second message');
-        $this->thread->addMessage($message);
-        $this->thread->addMessage($message2);
+        //assert last message is null by default
+        $this->assertNull($this->thread->getLastMessage());
 
-        $this->assertCount(2, $this->thread->getMessages());
-        $this->assertEquals('this is the second message', $this->thread->getLastMessage()->getBody());
+        $message = new Message();
+        $message->setBody('hoi hoi');
+
+        $this->thread->setLastMessage($message);
+        $this->assertSame($message, $this->thread->getLastMessage());
     }
 
     public function testGetThreadMetaForParticipant()

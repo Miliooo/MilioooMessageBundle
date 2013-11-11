@@ -98,10 +98,22 @@ abstract class AbstractMessageBuilder
      */
     protected function buildNewMessage(ThreadInterface $thread)
     {
+        //creates a blank message
         $message = $this->createMessage();
+
+        //adds data to the message
         $this->setMessageData($message);
+
+        //adds the thread to the message
         $message->setThread($thread);
+
+        //adds the message to the thread
         $thread->addMessage($message);
+
+        //sets the last message
+        $thread->setLastMessage($message);
+
+        //creates message meta
         $this->createMessageMetaForNewMessage($message);
     }
 
@@ -115,11 +127,18 @@ abstract class AbstractMessageBuilder
      */
     private function createNewMessageMetaForParticipant(MessageInterface $message, ParticipantInterface $participant)
     {
-        //set message meta data for sender
+        //creates an empty message meta object
         $messageMeta = $this->createMessageMeta();
+
+        //adds the message to the message meta
         $messageMeta->setMessage($message);
+
+        //adds the participant to the message meta
         $messageMeta->setParticipant($participant);
+
+        //adds the message meta to the message
         $message->addMessageMeta($messageMeta);
+
         return $messageMeta;
     }
 
@@ -157,7 +176,10 @@ abstract class AbstractMessageBuilder
      */
     protected function updateMessageMetaForRecipient(MessageMetaInterface $messageMeta)
     {
+        //process the data for all participants
         $this->processBuilderModel('getMessageMeta', 'all', $messageMeta);
+
+        //process the data for the recipients
         $this->processBuilderModel('getMessageMeta', 'recipients', $messageMeta);
     }
 
@@ -235,9 +257,10 @@ abstract class AbstractMessageBuilder
 
     /**
      * Creates the message meta for a new message.
-     * @param $message
+     *
+     * @param MessageInterface $message
      */
-    private function createMessageMetaForNewMessage($message)
+    private function createMessageMetaForNewMessage(MessageInterface $message)
     {
         $messageMeta = $this->createNewMessageMetaForParticipant($message, $this->sender);
         $this->updateMessageMetaForSender($messageMeta);

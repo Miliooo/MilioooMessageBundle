@@ -11,8 +11,6 @@
 namespace Miliooo\Messaging\Model;
 
 use Miliooo\Messaging\User\ParticipantInterface;
-use Miliooo\Messaging\Model\MessageInterface;
-use Miliooo\Messaging\Model\ThreadMetaInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -23,35 +21,35 @@ use Doctrine\Common\Collections\ArrayCollection;
 interface ThreadInterface
 {
     /**
-     * Gets the unique id of the thread
+     * Gets the unique id of the thread.
      *
      * @return integer The unique id
      */
     public function getId();
 
     /**
-     * Sets the subject of the thread
+     * Sets the subject of the thread.
      *
      * @param string $subject The subject of the thread
      */
     public function setSubject($subject);
 
     /**
-     * Gets the subject of the thread
+     * Gets the subject of the thread.
      *
      * @return string The subject of the thread
      */
     public function getSubject();
 
     /**
-     * Sets the participant who created the thread
+     * Sets the participant who created the thread.
      *
      * @param ParticipantInterface $participant The participant who created the thread
      */
     public function setCreatedBy(ParticipantInterface $participant);
 
     /**
-     * Gets the participant who created the thread
+     * Gets the participant who created the thread.
      *
      * @return ParticipantInterface The participant who created the thread
      */
@@ -65,7 +63,7 @@ interface ThreadInterface
     public function setCreatedAt(\DateTime $createdAt);
 
     /**
-     * Gets the datetime when the thread was created
+     * Gets the datetime when the thread was created.
      */
     public function getCreatedAt();
 
@@ -77,25 +75,38 @@ interface ThreadInterface
     public function addMessage(MessageInterface $message);
 
     /**
-     * Gets all the messages contained in the thread
+     * Gets all the messages contained in the thread.
      *
      * @return ArrayCollection
      */
     public function getMessages();
 
     /**
-     * Gets the first message of the thread
+     * Gets the first message of the thread.
      *
      * @return MessageInterface The first message of the thread
      */
     public function getFirstMessage();
 
     /**
-     * Gets the last message of the thread
+     * Gets the last message of the thread.
      *
      * @return MessageInterface The last message of the thread
      */
     public function getLastMessage();
+
+    /**
+     * Sets the last message.
+     *
+     * We set the last message of a thread because we use it in the folders overview.
+     * If we don't do this we will loop over the whole array collection.
+     *
+     * There is always the trade off between denormalizing or not, if you don't want this to be denormalized
+     * you can use $this->messages->last();
+     *
+     * @param MessageInterface $message
+     */
+    public function setLastMessage(MessageInterface $message);
 
     /**
      * Adds thread meta to the thread meta collection

@@ -12,7 +12,6 @@ namespace Miliooo\Messaging\Model;
 
 use Miliooo\Messaging\User\ParticipantInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use Miliooo\Messaging\Model\MessageInterface;
 
 /**
  * The thread model
@@ -52,14 +51,14 @@ abstract class Thread implements ThreadInterface
     /**
      * An array collection of messages for this thread
      *
-     * @var ArrayCollection
+     * @var ArrayCollection|MessageInterface[]
      */
     protected $messages;
 
     /**
      * An array collection of thread metas for this thread
      *
-     * @var ArrayCollection
+     * @var ArrayCollection|ThreadMeta[]
      */
     protected $threadMeta;
 
@@ -69,6 +68,13 @@ abstract class Thread implements ThreadInterface
      * @var ArrayCollection
      */
     protected $participants;
+
+    /**
+     * The last message posted in this thread.
+     *
+     * @var MessageInterface
+     */
+    protected $lastMessage;
 
     /**
      * Constructor.
@@ -166,7 +172,15 @@ abstract class Thread implements ThreadInterface
      */
     public function getLastMessage()
     {
-        return $this->messages->last();
+        return $this->lastMessage;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setLastMessage(MessageInterface $message)
+    {
+        $this->lastMessage = $message;
     }
 
     /**
@@ -266,11 +280,12 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * Adds a participant form the threadmeta
+     * Adds a participant form the thread meta
      *
      * @param ThreadMetaInterface $threadMeta The threadmeta we extract the participant from
      *
-     * @todo we loop over them quite a lotfix it so we only do this once
+     * @throws \InvalidArgumentException
+     * @todo we loop over them quite a lot fix it so we only do this once
      */
     protected function addParticipantFromThreadMeta(ThreadMetaInterface $threadMeta)
     {
