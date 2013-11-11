@@ -37,9 +37,9 @@ abstract class AbstractProviderPagerFanta
      *
      * @return Pagerfanta
      */
-    protected function getPagerFanta(DoctrineOrmAdapter $adapter)
+    protected function getPagerFanta(DoctrineORMAdapter $adapter)
     {
-        return new PagerFanta($adapter);
+        return new Pagerfanta($adapter);
     }
 
     /**

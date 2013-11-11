@@ -38,7 +38,7 @@ class OutboxProviderPagerFanta extends AbstractProviderPagerFanta implements Out
      * @param ThreadRepositoryInterface $threadRepository A thread repository instance
      * @param integer                   $itemsPerPage     Total items per page
      */
-    public function __construct(ThreadrepositoryInterface $threadRepository, $itemsPerPage)
+    public function __construct(ThreadRepositoryInterface $threadRepository, $itemsPerPage)
     {
         $this->threadRepository = $threadRepository;
         $this->itemsPerPage = $itemsPerPage;

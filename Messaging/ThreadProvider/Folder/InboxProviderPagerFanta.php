@@ -36,7 +36,7 @@ class InboxProviderPagerFanta extends AbstractProviderPagerFanta implements Inbo
      * @param ThreadRepositoryInterface $threadRepository A thread repository instance
      * @param integer                   $itemsPerPage     Total items per page
      */
-    public function __construct(ThreadrepositoryInterface $threadRepository, $itemsPerPage = 15)
+    public function __construct(ThreadRepositoryInterface $threadRepository, $itemsPerPage = 15)
     {
         $this->threadRepository = $threadRepository;
         $this->itemsPerPage = $itemsPerPage;
@@ -45,7 +45,7 @@ class InboxProviderPagerFanta extends AbstractProviderPagerFanta implements Inbo
     /**
      * {@inheritdoc}
      */
-    public function getInboxThreadsPagerfanta(participantInterface $participant, $currentPage)
+    public function getInboxThreadsPagerfanta(ParticipantInterface $participant, $currentPage)
     {
         $queryBuilder = $this->threadRepository->getInboxThreadsForParticipantQueryBuilder($participant);
 

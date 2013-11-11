@@ -14,7 +14,7 @@ title:
   send_new_message: Send a new message
   reply:            Send a reply message
 
- action:
+action:
   send_reply: Send reply
   create_new_thread: Send message
 

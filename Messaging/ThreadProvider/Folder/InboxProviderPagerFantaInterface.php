@@ -24,9 +24,9 @@ interface InboxProviderPagerFantaInterface
      * Gets paginated inbox threads
      *
      * @param ParticipantInterface $participant The participant for whom we get the inbox threads
-     * @param integer $currentPage The page we are on
+     * @param integer              $currentPage The page we are on
      *
      * @return Pagerfanta The pager fanta object with the current page and max per page items set.
      */
-    public function getInboxThreadsPagerfanta(participantInterface $participant, $currentPage);
+    public function getInboxThreadsPagerfanta(ParticipantInterface $participant, $currentPage);
 }
