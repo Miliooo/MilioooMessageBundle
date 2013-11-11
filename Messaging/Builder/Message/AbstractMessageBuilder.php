@@ -164,9 +164,9 @@ abstract class AbstractMessageBuilder
     /**
      * Updates the given object with the given methodName and argumentName
      *
-     * @param string $callMethodName Calls the builder with this methodName
+     * @param string      $callMethodName     Calls the builder with this methodName
      * @param string|null $callMethodArgument Calls the builder with this argument for the given methodName
-     * @param object $object The object which gets updated
+     * @param object      $object             The object which gets updated
      */
     protected function processBuilderModel($callMethodName, $callMethodArgument, $object)
     {
