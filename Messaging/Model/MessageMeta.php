@@ -11,6 +11,7 @@
 namespace Miliooo\Messaging\Model;
 
 use Miliooo\Messaging\User\ParticipantInterface;
+use Miliooo\Messaging\ValueObjects\ReadStatus;
 
 /**
  * The message meta model class
@@ -31,7 +32,7 @@ abstract class MessageMeta implements MessageMetaInterface
      *
      * @var boolean true if it's read by the given participant, false otherwise
      */
-    protected $isRead = false;
+    protected $readStatus;
 
     /**
      * Sets the new read status of the message.
@@ -47,6 +48,14 @@ abstract class MessageMeta implements MessageMetaInterface
     protected $newRead = false;
 
     protected $message;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->readStatus = MessageMetaInterface::READ_STATUS_NEVER_READ;
+    }
 
     /**
      * {@inheritdoc}
@@ -67,17 +76,17 @@ abstract class MessageMeta implements MessageMetaInterface
     /**
      * {@inheritdoc}
      */
-    public function setIsRead($boolean)
+    public function setReadStatus(ReadStatus $readStatus)
     {
-        $this->isRead = (bool) $boolean;
+        $this->readStatus = $readStatus->getReadStatus();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function isRead()
+    public function getReadStatus()
     {
-        return $this->isRead;
+        return $this->readStatus;
     }
 
     /**

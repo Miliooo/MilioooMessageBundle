@@ -12,7 +12,9 @@ namespace Miliooo\Messaging\Manager;
 
 use Miliooo\Messaging\Repository\MessageRepositoryInterface;
 use Miliooo\Messaging\Model\MessageInterface;
+use Miliooo\Messaging\Model\MessageMetaInterface;
 use Miliooo\Messaging\User\ParticipantInterface;
+use Miliooo\Messaging\ValueObjects\ReadStatus;
 
 /**
  * The read status manager is responsible for changing the read statuses of messages.
@@ -75,7 +77,7 @@ class ReadStatusManager implements ReadStatusManagerInterface
      * We only want to flush once so this is just a helper function for markMessageCollectionAsRead
      *
      * @param ParticipantInterface $participant The participant where we check the read status for
-     * @param MessageInterface $message The message where we check the read status for
+     * @param MessageInterface     $message     The message where we check the read status for
      *
      * @throws \InvalidArgumentException When no message meta found for given participant
      *
@@ -83,15 +85,25 @@ class ReadStatusManager implements ReadStatusManagerInterface
      */
     protected function maybeMarkMessageAsRead(ParticipantInterface $participant, MessageInterface $message)
     {
+
+
         $messageMeta = $message->getMessageMetaForParticipant($participant);
 
         if ($messageMeta === null) {
             throw new \InvalidArgumentException('No message meta found for the given participant');
         }
 
-        if ($messageMeta->isRead() === false) {
-            $messageMeta->setIsRead(true);
-            $messageMeta->setNewRead(true);
+        if (in_array(
+            $messageMeta->getReadStatus(),
+            [
+            MessageMetaInterface::READ_STATUS_NEVER_READ,
+            MessageMetaInterface::READ_STATUS_MARKED_UNREAD
+            ],
+            true)
+            ) {
+
+                $messageMeta->setReadStatus(new ReadStatus(MessageMetaInterface::READ_STATUS_READ));
+                $messageMeta->setNewRead(true);
 
             return true;
         }
@@ -108,5 +120,15 @@ class ReadStatusManager implements ReadStatusManagerInterface
             $this->messageRepository->flush();
             $this->needsUpdate = false;
         }
+    }
+
+    /**
+     * @param ParticipantInterface $participant
+     * @param array $messages
+     * @return mixed
+     */
+    public function markMessageCollectionAsMarkedUnread(ParticipantInterface $participant, $messages = [])
+    {
+
     }
 }

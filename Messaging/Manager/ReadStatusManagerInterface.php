@@ -36,4 +36,13 @@ interface ReadStatusManagerInterface
      * @throws \InvalidArgumentException if no message meta found for given participant
      */
     public function markMessageCollectionAsRead(ParticipantInterface $participant, $messages = []);
+
+
+    /**
+     * @param ParticipantInterface $participant
+     * @param array $messages
+     * @return mixed
+     */
+    public function markMessageCollectionAsMarkedUnread(ParticipantInterface $participant, $messages = []);
+
 }

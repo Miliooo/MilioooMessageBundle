@@ -12,6 +12,8 @@ namespace Milioo\Messaging\Tests\Model;
 
 use Miliooo\Messaging\Model\MessageMeta;
 use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
+use Miliooo\Messaging\Model\MessageMetaInterface;
+use Miliooo\Messaging\ValueObjects\ReadStatus;
 
 /**
  * Test file for the message meta model
@@ -44,17 +46,14 @@ class MessageMetaTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($participant, $this->messageMeta->getParticipant());
     }
 
-    public function testIsReadWorks()
+    public function testSetReadStatusRead()
     {
-        $this->messageMeta->setIsRead(true);
-        $this->assertTrue($this->messageMeta->isRead());
-        $this->messageMeta->setIsRead(false);
-        $this->assertFalse($this->messageMeta->isRead());
-    }
+        //original status should be unread
+        $this->assertSame(MessageMetaInterface::READ_STATUS_NEVER_READ, $this->messageMeta->getReadStatus());
 
-    public function testIsReadDefaultsToFalse()
-    {
-        $this->assertAttributeEquals(false, 'isRead', $this->messageMeta);
+        $readStatus = new ReadStatus(MessageMetaInterface::READ_STATUS_READ);
+        $this->messageMeta->setReadStatus($readStatus);
+        $this->assertSame(MessageMetaInterface::READ_STATUS_READ, $this->messageMeta->getReadStatus());
     }
 
     public function testMessageWorks()

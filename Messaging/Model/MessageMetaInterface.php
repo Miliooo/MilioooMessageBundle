@@ -11,6 +11,7 @@
 namespace Miliooo\Messaging\Model;
 
 use Miliooo\Messaging\User\ParticipantInterface;
+use Miliooo\Messaging\ValueObjects\ReadStatus;
 
 /**
  * Interface for the message meta
@@ -19,6 +20,23 @@ use Miliooo\Messaging\User\ParticipantInterface;
  */
 interface MessageMetaInterface
 {
+
+    /**
+     * The participant has never read the message
+     */
+    const READ_STATUS_NEVER_READ = 0;
+
+    /**
+     * The participant has read the message but marked it as unread
+     */
+    const READ_STATUS_MARKED_UNREAD = 1;
+
+    /**
+     * The participant has read the message
+     */
+    const READ_STATUS_READ = 2;
+
+
     /**
      * Sets the participant to the message meta
      *
@@ -34,18 +52,18 @@ interface MessageMetaInterface
     public function getParticipant();
 
     /**
-     * Sets if the message has been read for the given participant of this meta
+     * Sets the read status of the message for the given participant.
      *
-     * @param boolean $boolean true if the message is read, false otherwise
+     * @param ReadStatus $readStatus
      */
-    public function setIsRead($boolean);
+    public function setReadStatus(ReadStatus $readStatus);
 
     /**
      * Gets the read status of the message for the participant of this meta
      *
      * @return boolean true if it's read false otherwise
      */
-    public function isRead();
+    public function getReadStatus();
 
     /**
      * Sets the message this message meta belongs to
@@ -64,18 +82,21 @@ interface MessageMetaInterface
     /**
      * Sets the new read status of the message.
      *
-     * If it's the first time the participant sees a message this should be set to true.
+     * If we changed the message status to READ_STATUS_READ we should set this value to true.
+     * This makes it possible to update the object before sending it to the view but still show the user that the message
+     * was previously not read.
      *
-     * @param $boolean true if it's the first time the user sees this message, false otherwise.
+     * @param boolean $boolean true if the message had
      */
     public function setNewRead($boolean);
 
     /**
      * Gets the new read status of the message.
      *
-     * If it's not the first time the participant sees this message it should return false, else it returns true
+     * If this value is true then it's either the first time the user sees his message or it became read again after
+     * having the status READ_STATUS_MARKED_UNREAD
      *
-     * @return $boolean true if it's the first time the participant reads this message, false otherwise
+     * @return $boolean
      */
     public function getNewRead();
 }

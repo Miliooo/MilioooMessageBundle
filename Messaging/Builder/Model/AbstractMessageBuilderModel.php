@@ -12,6 +12,8 @@ namespace Miliooo\Messaging\Builder\Model;
 
 use Miliooo\Messaging\Form\FormModel\NewMessageInterface;
 use Miliooo\Messaging\User\ParticipantInterface;
+use Miliooo\Messaging\Model\MessageMetaInterface;
+use Miliooo\Messaging\ValueObjects\ReadStatus;
 
 /**
  * Description of AbstractMessageBuilderModel
@@ -70,8 +72,8 @@ abstract class AbstractMessageBuilderModel
         $this->addMessageData('createdAt', $this->messageModel->getCreatedAt());
         $this->addMessageData('sender', $this->messageModel->getSender());
 
-        $this->addMessageMeta(self::SENDER, 'isRead', true);
-        $this->addMessageMeta(self::RECIPIENTS, 'isRead', false);
+        $this->addMessageMeta(self::SENDER, 'readStatus', new ReadStatus(MessageMetaInterface::READ_STATUS_READ));
+        $this->addMessageMeta(self::RECIPIENTS, 'readStatus', new ReadStatus(MessageMetaInterface::READ_STATUS_NEVER_READ));
 
         $this->addThreadMeta(self::SENDER, 'lastParticipantMessageDate', $this->messageModel->getCreatedAt());
         $this->addThreadMeta(self::RECIPIENTS, 'lastMessageDate', $this->messageModel->getCreatedAt());
