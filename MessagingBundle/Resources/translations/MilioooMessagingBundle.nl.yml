@@ -9,8 +9,8 @@ navigate:
 
 #titles
 title:
-  inbox:            Jouw verzonden berichten
-  outbox:           Jouw ontvangen berichten
+  inbox:            Jouw ontvangen berichten
+  outbox:           Jouw verzonden berichten
   send_new_message: Verstuur een nieuw bericht
   reply:            Nieuw bericht toevoegen
 
@@ -19,3 +19,13 @@ action:
   create_new_thread: Bericht versturen
 
 no_threads_found: Geen onderwerpen gevonden
+goto_last:        Naar laatste bericht
+on:               Op %date%
+by:               Door %sender%
+
+#table heading on folders
+table:
+  subject:      Onderwerp
+  starter:      Gestart door
+  messages:     Berichten
+  last_message: Laatste bericht

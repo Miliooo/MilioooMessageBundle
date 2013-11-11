@@ -1,5 +1,16 @@
 <table class="table">
+
+    <thead>
+    <tr>
+        <th>{% trans from 'MilioooMessagingBundle' %}subject{% endtrans %}</th>
+        <th>{% trans from 'MilioooMessagingBundle' %}starter{% endtrans %}</th>
+        <th>{% trans from 'MilioooMessagingBundle' %}messages{% endtrans %}</th>
+        <th>{% trans from 'MilioooMessagingBundle' %}last_message{% endtrans %}</th>
+    </tr>
+
+    </thead>
     {% if pagerfanta.getNbResults > 0 %}
+
         {% for thread in pagerfanta.getCurrentPageResults %}
             <tr>
                 <td>
@@ -11,13 +22,21 @@
                     {{ thread.createdBy }}
                 </td>
                 <td>
-                    {{ thread.createdAt|date }}
+                    {{ thread.messages|length }}
+                </td>
+                <td>
+                    {% if thread.lastMessage %}
+                        <a href="{{ url('miliooo_message_thread_view', {'threadId': thread.id}) }}#message-{{ thread.lastMessage.id }}" title="{% trans from 'MilioooMessagingBundle' %}goto_last{% endtrans %}">#</a>
+                        {% trans with {'%date%': thread.lastMessage.createdAt|date} from 'MilioooMessagingBundle' %}on{% endtrans %}
+                        <br />
+                        {% trans with {'%sender%': thread.lastMessage.sender|e } from 'MilioooMessagingBundle' %}by{% endtrans %}
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
     {% else %}
         <tr>
-            <td colspan="2">{% trans from 'MilioooMessagingBundle' %}no_threads_found{% endtrans %}</td>
+            <td colspan="4">{% trans from 'MilioooMessagingBundle' %}no_threads_found{% endtrans %}</td>
         </tr>
 
     {% endif %}

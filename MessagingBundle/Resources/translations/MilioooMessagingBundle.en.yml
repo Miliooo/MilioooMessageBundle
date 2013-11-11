@@ -19,3 +19,14 @@ action:
   create_new_thread: Send message
 
 no_threads_found: No threads found
+goto_last:        Go to last message
+on:               On %date%
+by:               By %sender%
+
+#table heading on folders
+table:
+  subject:      Subject
+  starter:      Starter
+  messages:     Messages
+  last_message: Last message
+

@@ -6,7 +6,7 @@
 
 {% for message in thread.messages %}
 
-    <div class="panel panel-default message-id={{ message.id }}">
+    <div class="panel panel-default" id="message-{{ message.id }}">
         <div class="panel-heading">{{ message.sender|e}} {{ message.createdAt|date}}</div>
         <div class="panel-body">
             {{ message.body }}
