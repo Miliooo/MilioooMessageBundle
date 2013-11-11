@@ -8,7 +8,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Miliooo\Messaging\Tests\User;
+namespace Miliooo\Messaging\Tests\ValueObjects;
 
 use Miliooo\Messaging\ValueObjects\ReadStatus;
 use Miliooo\Messaging\Model\MessageMetaInterface;
