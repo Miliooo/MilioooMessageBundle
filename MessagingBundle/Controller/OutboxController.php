@@ -11,7 +11,7 @@
 namespace Miliooo\MessagingBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Miliooo\Messaging\ThreadProvider\Folder\OutboxProviderInterface;
+use Miliooo\Messaging\ThreadProvider\Folder\OutboxProviderPagerFantaInterface;
 use Miliooo\Messaging\User\ParticipantProviderInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -29,13 +29,13 @@ class OutboxController
     /**
      * Constructor.
      *
-     * @param EngineInterface $templating
-     * @param OutboxProviderInterface $outboxProvider
-     * @param ParticipantProviderInterface $participantProvider
+     * @param EngineInterface                   $templating
+     * @param OutboxProviderPagerFantaInterface $outboxProvider
+     * @param ParticipantProviderInterface      $participantProvider
      */
     public function __construct(
         EngineInterface $templating,
-        OutboxProviderInterface $outboxProvider,
+        OutboxProviderPagerFantaInterface $outboxProvider,
         ParticipantProviderInterface $participantProvider
     ) {
         $this->templating = $templating;
@@ -46,14 +46,16 @@ class OutboxController
     /**
      * Shows the outbox threads for the logged in user
      *
+     * @param integer $page The page we are on
+     *
      * @return Response
      */
-    public function showAction()
+    public function showAction($page)
     {
         $loggedInUser = $this->participantProvider->getAuthenticatedParticipant();
-        $threads = $this->outboxProvider->getOutboxThreads($loggedInUser);
+        $pagerfanta = $this->outboxProvider->getOutboxThreadsPagerfanta($loggedInUser, $page);
         $view = 'MilioooMessagingBundle:Folders:outbox.html.twig';
 
-        return $this->templating->renderResponse($view, ['threads' => $threads]);
+        return $this->templating->renderResponse($view, ['pagerfanta' => $pagerfanta]);
     }
 }

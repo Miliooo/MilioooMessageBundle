@@ -17,3 +17,5 @@ title:
 action:
   send_reply:        Bericht toevoegen
   create_new_thread: Bericht versturen
+
+no_threads_found: Geen onderwerpen gevonden

@@ -11,9 +11,9 @@
 namespace Miliooo\MessagingBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Miliooo\Messaging\ThreadProvider\Folder\InboxProviderInterface;
 use Miliooo\Messaging\User\ParticipantProviderInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Miliooo\Messaging\ThreadProvider\Folder\InboxProviderPagerFantaInterface;
 
 /**
  * The inbox controller is responsible for showing inbox threads to the logged in user.
@@ -29,13 +29,13 @@ class InboxController
     /**
      * Constructor.
      *
-     * @param ParticipantProviderInterface $participantProvider
-     * @param InboxProviderInterface       $inboxProvider
-     * @param EngineInterface              $templating
+     * @param ParticipantProviderInterface     $participantProvider
+     * @param InboxProviderPagerFantaInterface $inboxProvider
+     * @param EngineInterface                  $templating
      */
     public function __construct(
         ParticipantProviderInterface $participantProvider,
-        InboxProviderInterface $inboxProvider,
+        InboxProviderPagerFantaInterface $inboxProvider,
         EngineInterface $templating
     ) {
         $this->participantProvider = $participantProvider;
@@ -46,14 +46,16 @@ class InboxController
     /**
      * Shows inbox threads for the logged in user
      *
+     * @param integer $page The page we are on
+     *
      * @return Response
      */
-    public function showAction()
+    public function showAction($page)
     {
         $loggedInUser = $this->participantProvider->getAuthenticatedParticipant();
-        $threads = $this->inboxProvider->getInboxThreads($loggedInUser);
+        $pagerfanta = $this->inboxProvider->getInboxThreadsPagerfanta($loggedInUser, $page);
         $view = 'MilioooMessagingBundle:Folders:inbox.html.twig';
 
-        return $this->templating->renderResponse($view, ['threads' => $threads]);
+        return $this->templating->renderResponse($view, ['pagerfanta' => $pagerfanta]);
     }
 }

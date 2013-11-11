@@ -7,13 +7,15 @@
     </head>
 
     <body>
-        <div class="btn-group">
-            <a href="{{ url('miliooo_message_thread_new' )}}"><button type="button" class="btn btn-default">{% trans from 'MilioooMessagingBundle' %}navigate.send_new_message{% endtrans %}</button></a>
-            <a href="{{ url('miliooo_message_inbox') }}"><button type="button" class="btn btn-default">{% trans from 'MilioooMessagingBundle' %}navigate.inbox{% endtrans %}</button></a>
-            <a href="{{ url('miliooo_message_outbox') }}"><button type="button" class="btn btn-default">{% trans from 'MilioooMessagingBundle' %}navigate.outbox{% endtrans %}</button></a>
-        </div>
+    <div class="container">
+        <h1>{% trans from 'MilioooMessagingBundle' %}messenger{% endtrans %}</h1>
+            <div class="btn-group">
+                <a href="{{ url('miliooo_message_thread_new' )}}"><button type="button" class="btn btn-default">{% trans from 'MilioooMessagingBundle' %}navigate.send_new_message{% endtrans %}</button></a>
+                <a href="{{ url('miliooo_message_inbox') }}"><button type="button" class="btn btn-default">{% trans from 'MilioooMessagingBundle' %}navigate.inbox{% endtrans %}</button></a>
+                <a href="{{ url('miliooo_message_outbox') }}"><button type="button" class="btn btn-default">{% trans from 'MilioooMessagingBundle' %}navigate.outbox{% endtrans %}</button></a>
+            </div>
 
         {% block miliooo_messaging_content %}{% endblock %}
-
+    </div>
     </body>
 </html>

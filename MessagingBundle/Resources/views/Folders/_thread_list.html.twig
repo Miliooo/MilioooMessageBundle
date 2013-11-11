@@ -1,6 +1,6 @@
 <table class="table">
-    {% if threads %}
-        {% for thread in threads %}
+    {% if pagerfanta.getNbResults > 0 %}
+        {% for thread in pagerfanta.getCurrentPageResults %}
             <tr>
                 <td>
                     <a href="{{ url('miliooo_message_thread_view', {'threadId': thread.id}) }}">
@@ -17,8 +17,11 @@
         {% endfor %}
     {% else %}
         <tr>
-            <td colspan="2">No threads found</td>
+            <td colspan="2">{% trans from 'MilioooMessagingBundle' %}no_threads_found{% endtrans %}</td>
         </tr>
 
     {% endif %}
 </table>
+{% if pagerfanta.haveToPaginate %}
+    <div class="pagerfanta">{{ pagerfanta(pagerfanta, 'twitter_bootstrap3') }}</div>
+{% endif %}

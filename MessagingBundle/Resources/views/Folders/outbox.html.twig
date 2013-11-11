@@ -4,6 +4,6 @@
 
     <h2>{% trans from 'MilioooMessagingBundle' %}title.outbox{% endtrans %}</h2>
 
-    {% include 'MilioooMessagingBundle:Folders:_thread_list.html.twig' with {'threads': threads} %}
+    {% include 'MilioooMessagingBundle:Folders:_thread_list.html.twig' with {'pagerfanta': pagerfanta} %}
 
 {% endblock %}

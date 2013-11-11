@@ -42,13 +42,15 @@ class OutboxControllerTest extends \PHPUnit_Framework_TestCase
      */
     private $outboxProvider;
     private $loggedInUser;
-    private $threads;
+    private $pagerfanta;
 
     public function setup()
     {
         $this->loggedInUser = new ParticipantTestHelper(1);
         $this->threads = $this->getMock('Miliooo\Messaging\Model\ThreadInterface');
-        $this->outboxProvider = $this->getMock('Miliooo\Messaging\ThreadProvider\Folder\OutboxProviderInterface');
+        $this->outboxProvider =
+            $this->getMock('Miliooo\Messaging\ThreadProvider\Folder\OutboxProviderPagerFantaInterface');
+        $this->pagerfanta = $this->getMockBuilder('Pagerfanta\Pagerfanta')->disableOriginalConstructor()->getMock();
         $this->participantProvider = $this->getMock('Miliooo\Messaging\User\ParticipantProviderInterface');
         $this->templating = $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
         $this->controller = new OutboxController(
@@ -60,20 +62,21 @@ class OutboxControllerTest extends \PHPUnit_Framework_TestCase
 
     public function testShowAction()
     {
+        $page = 1;
         $this->participantProvider
             ->expects($this->once())
             ->method('getAuthenticatedParticipant')
             ->will($this->returnvalue($this->loggedInUser));
 
         $this->outboxProvider->expects($this->once())
-            ->method('getOutboxThreads')
-            ->with($this->loggedInUser)
-            ->will($this->returnValue([$this->threads]));
+            ->method('getOutboxThreadsPagerfanta')
+            ->with($this->loggedInUser, $page)
+            ->will($this->returnValue($this->pagerfanta));
 
         $this->templating->expects($this->once())
             ->method('renderResponse')
-            ->with('MilioooMessagingBundle:Folders:outbox.html.twig', ['threads' => [$this->threads]]);
+            ->with('MilioooMessagingBundle:Folders:outbox.html.twig', ['pagerfanta' => $this->pagerfanta]);
 
-        $this->controller->showAction();
+        $this->controller->showAction($page);
     }
 }
