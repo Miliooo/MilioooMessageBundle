@@ -11,9 +11,7 @@
 namespace Miliooo\Messaging\Model;
 
 use Miliooo\Messaging\User\ParticipantInterface;
-use Miliooo\Messaging\Model\MessageMetaInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
  * The message Interface
