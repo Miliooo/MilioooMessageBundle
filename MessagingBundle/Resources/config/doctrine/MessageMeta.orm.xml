@@ -6,7 +6,7 @@
 
     <mapped-superclass name="Miliooo\MessagingBundle\Entity\MessageMeta">
 
-        <field name="getReadStatus" column="read_status" type="integer" />
+        <field name="readStatus" column="read_status" type="integer" />
 
         <!--<many-to-one field="message" target-entity="MyProject\MessagingBundle\Entity\Message" inversed-by="messageMeta" />-->
 
