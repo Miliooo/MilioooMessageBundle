@@ -12,7 +12,6 @@ namespace Miliooo\Messaging\User;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Miliooo\Messaging\User\ParticipantInterface;
 
 /**
  * Participant provider from the security token.
