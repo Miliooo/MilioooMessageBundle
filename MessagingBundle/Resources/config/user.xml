@@ -16,6 +16,10 @@
             <argument type="service" id="miliooo_messaging.security.token" />
         </service>
 
+        <service id="miliooo_messaging.participant_provider.security_context" class="Miliooo\Messaging\User\ParticipantProviderSecurityContext">
+            <argument type="service" id="security.context" />
+        </service>
+
     </services>
 
 </container>

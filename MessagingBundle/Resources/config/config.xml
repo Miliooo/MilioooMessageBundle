@@ -23,7 +23,7 @@
         </service>
 
         <service id="miliooo_messaging.twig_extension" class="Miliooo\MessagingBundle\Twig\Extension\MessagingExtension" public="false">
-            <argument type="service" id="miliooo_messaging.participant_provider" />
+            <argument type="service" id="miliooo_messaging.participant_provider.security_context" />
             <tag name="twig.extension" alias="miliooo_messaging" />
         </service>
 
