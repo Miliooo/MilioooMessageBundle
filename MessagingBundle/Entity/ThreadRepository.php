@@ -68,7 +68,7 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
             ->where('t.id = :id')
             ->setParameter('id', $id, \PDO::PARAM_INT)
             ->getQuery()
-            ->execute();
+            ->getSingleResult();
     }
 
     /**
