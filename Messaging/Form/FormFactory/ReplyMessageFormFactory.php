@@ -13,6 +13,7 @@ namespace Miliooo\Messaging\Form\FormFactory;
 use Miliooo\Messaging\Model\ThreadInterface;
 use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\Messaging\Form\FormModel\ReplyMessageInterface;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * The form factory for reply messages.
@@ -22,14 +23,14 @@ use Miliooo\Messaging\Form\FormModel\ReplyMessageInterface;
 class ReplyMessageFormFactory extends AbstractMessageFormFactory
 {
     /**
-     * Creates a replyform from a form type with a form model set.
+     * Creates a reply form from a form type with a form model set.
      *
      * It also sets some values on that form model.
      *
      * @param ThreadInterface      $thread The thread we answer to
      * @param ParticipantInterface $sender The sender of the reply
      *
-     * @return Form
+     * @return FormInterface
      */
     public function create(ThreadInterface $thread, ParticipantInterface $sender)
     {
