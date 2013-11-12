@@ -61,7 +61,7 @@ interface MessageMetaInterface
     /**
      * Gets the read status of the message for the participant of this meta
      *
-     * @return boolean true if it's read false otherwise
+     * @return integer one of the read statuses constants
      */
     public function getReadStatus();
 
@@ -83,8 +83,8 @@ interface MessageMetaInterface
      * Sets the new read status of the message.
      *
      * If we changed the message status to READ_STATUS_READ we should set this value to true.
-     * This makes it possible to update the object before sending it to the view but still show the user that the message
-     * was previously not read.
+     * This makes it possible to update the object before sending it to the view
+     * but still show the user that the message was previously not read.
      *
      * @param boolean $boolean true if the message had
      */
