@@ -48,8 +48,6 @@ class MessagingExtensionTest extends \PHPUnit_Framework_TestCase
      */
     private $loggedInUser;
 
-
-
     public function setUp()
     {
         $this->participantProvider = $this->getMock('Miliooo\Messaging\User\ParticipantProviderInterface');
