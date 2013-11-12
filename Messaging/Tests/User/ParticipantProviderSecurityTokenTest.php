@@ -26,6 +26,10 @@ class ParticipantProviderSecurityTokenTest extends \PHPUnit_Framework_TestCase
      * @var ParticipantProviderSecurityToken
      */
     private $participantProvider;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $securityToken;
 
     public function setUp()
