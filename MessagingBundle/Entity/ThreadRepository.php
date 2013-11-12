@@ -61,7 +61,8 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
     {
         return $this->createQueryBuilder('t')
             ->select('t', 'tm', 'm', 'mm')
-            ->leftJoin('t.threadMeta', 'tm', Join::WITH, 'tm.participant = :participant')
+            //we want all the thread meta since this gets passed to the builder too, we get the recipients from there.
+            ->innerJoin('t.threadMeta', 'tm')
             ->setParameter('participant', $participant)
             ->leftJoin('t.messages', 'm')
             ->leftJoin('m.messageMeta', 'mm', Join::WITH, 'mm.participant = :participant')
