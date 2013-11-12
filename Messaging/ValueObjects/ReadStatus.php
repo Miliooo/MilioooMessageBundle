@@ -31,7 +31,7 @@ class ReadStatus
      */
     public function __construct($readStatus)
     {
-        if($this->isValidReadStatus($readStatus)) {
+        if ($this->isValidReadStatus($readStatus)) {
             $this->readStatus = $readStatus;
         }
     }
@@ -57,12 +57,12 @@ class ReadStatus
      */
     protected function isValidReadStatus($readStatus)
     {
-        if(!is_integer($readStatus) || !in_array(
+        if (!is_integer($readStatus) || !in_array(
             $readStatus,
             [
-                MessageMetaInterface::READ_STATUS_NEVER_READ,
-                MessageMetaInterface::READ_STATUS_MARKED_UNREAD,
-                MessageMetaInterface::READ_STATUS_READ
+            MessageMetaInterface::READ_STATUS_NEVER_READ,
+            MessageMetaInterface::READ_STATUS_MARKED_UNREAD,
+            MessageMetaInterface::READ_STATUS_READ
             ],
             true
             )
