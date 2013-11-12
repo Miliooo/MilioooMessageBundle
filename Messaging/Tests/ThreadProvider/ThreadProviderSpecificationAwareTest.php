@@ -12,6 +12,7 @@ namespace Miliooo\Messaging\Tests\ThreadProvider;
 
 use Miliooo\Messaging\ThreadProvider\ThreadProviderSpecificationAware;
 use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
+use Miliooo\Messaging\User\ParticipantInterface;
 
 /**
  * Test file for ThreadProviderSpecificationAware
@@ -41,6 +42,11 @@ class ThreadProviderSpecificationAwareTest extends \PHPUnit_Framework_TestCase
      */
     private $thread;
 
+    /**
+     * @var ParticipantInterface
+     */
+    private $participant;
+
     public function setUp()
     {
         $this->canSeeThread = $this->getMockBuilder('Miliooo\Messaging\Specifications\CanSeeThreadSpecification')
@@ -48,33 +54,30 @@ class ThreadProviderSpecificationAwareTest extends \PHPUnit_Framework_TestCase
         $this->threadProvider = $this->getMock('Miliooo\Messaging\ThreadProvider\ThreadProviderInterface');
         $this->secureProvider = new ThreadProviderSpecificationAware($this->threadProvider, $this->canSeeThread);
         $this->thread = $this->getMock('Miliooo\Messaging\Model\ThreadInterface');
+        $this->participant = new ParticipantTestHelper(1);
     }
 
     public function testFindThreadReturnsNullWhenNoSuchThread()
     {
-        $participant = new ParticipantTestHelper(1);
-
         $this->threadProvider->expects($this->once())
-            ->method('findThreadById')->with(1)
+            ->method('findThreadForParticipant')->with(1, $this->participant)
             ->will($this->returnValue(null));
 
         $this->canSeeThread->expects($this->never())
             ->method('isSatisfiedBy');
 
-        $this->assertNull($this->secureProvider->findThreadForParticipant($participant, 1));
+        $this->assertNull($this->secureProvider->findThreadForParticipant($this->participant, 1));
     }
 
     public function testFindThreadSpecReturnsTrue()
     {
-        $participant = new ParticipantTestHelper(1);
-
         $this->expectsThreadFound();
         $this->canSeeThread->expects($this->once())
             ->method('isSatisfiedBy')
-            ->with($participant, $this->thread)
+            ->with($this->participant, $this->thread)
             ->will($this->returnValue(true));
 
-        $this->assertSame($this->thread, $this->secureProvider->findThreadForParticipant($participant, 1));
+        $this->assertSame($this->thread, $this->secureProvider->findThreadForParticipant($this->participant, 1));
     }
 
     /**
@@ -83,21 +86,19 @@ class ThreadProviderSpecificationAwareTest extends \PHPUnit_Framework_TestCase
      */
     public function testFindThreadSpecReturnsFalseThrowsError()
     {
-        $participant = new ParticipantTestHelper(2);
-
         $this->expectsThreadFound();
         $this->canSeeThread->expects($this->once())
             ->method('isSatisfiedBy')
-            ->with($participant, $this->thread)
+            ->with($this->participant, $this->thread)
             ->will($this->returnValue(false));
 
-        $this->secureProvider->findThreadForParticipant($participant, 1);
+        $this->secureProvider->findThreadForParticipant($this->participant, 1);
     }
 
     protected function expectsThreadFound()
     {
         $this->threadProvider->expects($this->once())
-            ->method('findThreadById')->with(1)
+            ->method('findThreadForParticipant')->with(1, $this->participant)
             ->will($this->returnValue($this->thread));
     }
 }

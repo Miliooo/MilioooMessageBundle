@@ -44,7 +44,7 @@ class ThreadProviderSpecificationAware implements SecureThreadProviderInterface
      */
     public function findThreadForParticipant(ParticipantInterface $participant, $threadId)
     {
-        $thread = $this->threadProvider->findThreadById($threadId);
+        $thread = $this->threadProvider->findThreadForParticipant($threadId, $participant);
         if (!$thread) {
             return null;
         }
