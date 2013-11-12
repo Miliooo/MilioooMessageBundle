@@ -57,6 +57,23 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
     /**
      * {@inheritdoc}
      */
+    public function findThreadForParticipant($id, ParticipantInterface $participant)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t', 'tm', 'm', 'mm')
+            ->leftJoin('t.threadMeta', 'tm', Join::WITH, 'tm.participant = :participant')
+            ->setParameter('participant', $participant)
+            ->leftJoin('t.messages', 'm')
+            ->leftJoin('m.messageMeta', 'mm', Join::WITH, 'mm.participant = :participant')
+            ->where('t.id = :id')
+            ->setParameter('id', $id, \PDO::PARAM_INT)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function save(ThreadInterface $thread, $flush = true)
     {
         $em = $this->getEntityManager();

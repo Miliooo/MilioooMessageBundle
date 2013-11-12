@@ -65,6 +65,21 @@ interface ThreadRepositoryInterface
     public function findThread($id);
 
     /**
+     * Finds a thread by it's unique id optimized for a given participant.
+     *
+     * This is essentially the same as findThread but now it's optimized to only return one query. And not do dozens
+     * of query calls. If the participant is not part of the thread (this can happen if you allow people to see
+     * threads if they are not participants, eg an admin) Then this query should still work since it's an left join
+     * and not an inner join.
+     *
+     * @param $id
+     * @param ParticipantInterface $participant
+     *
+     * @return ThreadInterface|null
+     */
+    public function findThreadForParticipant($id, ParticipantInterface $participant);
+
+    /**
      * Saves a thread to the storage engine
      *
      * @param ThreadInterface $thread The thread we save
