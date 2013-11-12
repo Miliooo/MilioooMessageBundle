@@ -14,7 +14,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryInterface;
 
 /**
- * Instanciates forms for adding a message
+ * Instantiates forms for adding a message
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
