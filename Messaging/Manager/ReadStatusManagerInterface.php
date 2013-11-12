@@ -44,5 +44,4 @@ interface ReadStatusManagerInterface
      * @return mixed
      */
     public function markMessageCollectionAsMarkedUnread(ParticipantInterface $participant, $messages = []);
-
 }
