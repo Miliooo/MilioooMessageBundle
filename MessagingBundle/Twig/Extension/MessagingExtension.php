@@ -16,6 +16,9 @@ use Miliooo\Messaging\Model\MessageInterface;
 /**
  * Twig extension class
  *
+ * There is a problem with using the securityToken directly here since it does not get populated in time.
+ * http://stackoverflow.com/questions/18770467/
+ *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
 class MessagingExtension extends \Twig_Extension
@@ -47,11 +50,6 @@ class MessagingExtension extends \Twig_Extension
         return [
             'miliooo_messaging_is_new_read' => new \Twig_Function_Method($this, 'isMessageNewRead')
         ];
-        /*
-         * Errors out https://github.com/Elao/WebProfilerExtraBundle/issues/35
-        return [
-            [new \Twig_SimpleFunction('miliooo_messaging_is_new_read', [$this, 'isMessageNewRead'])]
-        ]; */
     }
 
     /**

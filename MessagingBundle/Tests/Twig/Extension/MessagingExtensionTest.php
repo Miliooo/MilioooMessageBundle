@@ -92,8 +92,7 @@ class MessagingExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testGetFunctions()
     {
-        $key = [new \Twig_SimpleFunction('miliooo_messaging_is_new_read', [$this->messagingExtension, 'isMessageNewRead'])];
-        $this->assertContains($key, $this->messagingExtension->getFunctions());
+        $this->assertArrayHasKey('miliooo_messaging_is_new_read', $this->messagingExtension->getFunctions());
     }
 
     protected function expectsLoggedInUser()
