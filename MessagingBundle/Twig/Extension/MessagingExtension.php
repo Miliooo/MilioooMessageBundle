@@ -45,8 +45,13 @@ class MessagingExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            [new \Twig_SimpleFunction('miliooo_messaging_is_new_read', [$this, 'isMessageNewRead'])]
+            'miliooo_messaging_is_new_read' => new \Twig_Function_Method($this, 'isMessageNewRead')
         ];
+        /*
+         * Errors out https://github.com/Elao/WebProfilerExtraBundle/issues/35
+        return [
+            [new \Twig_SimpleFunction('miliooo_messaging_is_new_read', [$this, 'isMessageNewRead'])]
+        ]; */
     }
 
     /**
