@@ -19,6 +19,7 @@
             <argument type="service" id="miliooo_messaging.thread_provider.thread_provider_secure" />
             <argument type="service" id="templating" />
             <argument type="service" id="miliooo_messaging.participant_provider" />
+            <argument type="service" id="miliooo_messaging.read_status_manager" />
         </service>
 
         <service id="miliooo_messaging.controller.inbox_controller" class="Miliooo\MessagingBundle\Controller\InboxController" scope="request">

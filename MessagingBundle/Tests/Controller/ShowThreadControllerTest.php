@@ -25,15 +25,63 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
      * @var ShowThreadController
      */
     private $controller;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $participantProvider;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $templating;
+
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $threadProvider;
     private $loggedInUser;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $thread;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $formFactory;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $formHandler;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $form;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $formView;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $readStatusManager;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $message;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $arrayCollection;
 
     public function setUp()
     {
@@ -43,7 +91,8 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
             $this->formHandler,
             $this->threadProvider,
             $this->templating,
-            $this->participantProvider
+            $this->participantProvider,
+            $this->readStatusManager
         );
 
         $this->loggedInUser = new ParticipantTestHelper(1);
@@ -52,6 +101,9 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
                 ->disableOriginalConstructor()->getMock();
         $this->formView = $this->getMockBuilder('Symfony\Component\Form\FormView')
                 ->disableOriginalConstructor()->getMock();
+
+        $this->message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');
+        $this->arrayCollection = $this->getMock('Doctrine\Common\Collections\ArrayCollection');
     }
 
     /**
@@ -77,6 +129,9 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
         $this->expectsFormHandlerProcessesForm();
         $this->expectsFormCreatesAView();
         $this->expectsTemplatingRendersResponse();
+
+        $this->expectsReadStatusUpdates();
+
         $this->controller->showAction(1);
     }
 
@@ -119,6 +174,7 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
         $this->participantProvider = $this->getMock('Miliooo\Messaging\User\ParticipantProviderInterface');
         $this->templating = $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
         $this->threadProvider = $this->getMock('Miliooo\Messaging\ThreadProvider\SecureThreadProviderInterface');
+        $this->readStatusManager = $this->getMock('Miliooo\Messaging\Manager\ReadStatusManagerInterface');
     }
 
     protected function expectsUser()
@@ -133,5 +189,21 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
             ->method('findThreadForParticipant')
             ->with($this->loggedInUser, 1)
             ->will($this->returnValue($this->thread));
+    }
+
+    protected function expectsReadStatusUpdates()
+    {
+
+        $this->thread->expects($this->once())
+            ->method('getMessages')
+            ->will($this->returnValue($this->arrayCollection));
+
+        $this->arrayCollection->expects($this->once())->method('toArray')
+            ->will($this->returnValue([$this->message]));
+
+        $this->readStatusManager
+            ->expects($this->once())
+            ->method('markMessageCollectionAsRead')
+            ->with($this->loggedInUser, [$this->message]);
     }
 }

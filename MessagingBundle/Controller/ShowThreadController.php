@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Miliooo\Messaging\User\ParticipantProviderInterface;
 use Miliooo\Messaging\Form\FormFactory\ReplyMessageFormFactory;
 use Miliooo\Messaging\Form\FormHandler\NewReplyFormHandler;
+use Miliooo\Messaging\Manager\ReadStatusManagerInterface;
 
 /**
  * Controller for showing a single thread.
@@ -32,6 +33,7 @@ class ShowThreadController
     protected $threadProvider;
     protected $templating;
     protected $participantProvider;
+    protected $readStatusManager;
 
     /**
      * Constructor.
@@ -41,19 +43,23 @@ class ShowThreadController
      * @param SecureThreadProviderInterface $threadProvider      A secure thread provider instance
      * @param EngineInterface               $templating          A templating engine
      * @param ParticipantProviderInterface  $participantProvider A participant provider
+     * @param ReadStatusManagerInterface    $readStatusManager   A read status manager instance
      */
     public function __construct(
         ReplyMessageFormFactory $formFactory,
         NewReplyFormHandler $formHandler,
         SecureThreadProviderInterface $threadProvider,
         EngineInterface $templating,
-        ParticipantProviderInterface $participantProvider
+        ParticipantProviderInterface $participantProvider,
+        ReadStatusManagerInterface $readStatusManager
+
         ) {
         $this->formFactory = $formFactory;
         $this->formHandler = $formHandler;
         $this->threadProvider = $threadProvider;
         $this->templating = $templating;
         $this->participantProvider = $participantProvider;
+        $this->readStatusManager = $readStatusManager;
     }
 
     /**
@@ -72,6 +78,7 @@ class ShowThreadController
         if (!$thread) {
             throw new NotFoundHttpException('Thread not found');
         }
+        $this->readStatusManager->markMessageCollectionAsRead($loggedInUser, $thread->getMessages()->toArray());
         $form = $this->formFactory->create($thread, $loggedInUser);
         $this->formHandler->process($form);
         $twig = 'MilioooMessagingBundle:ShowThread:show_thread.html.twig';
