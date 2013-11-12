@@ -11,6 +11,7 @@
 namespace Miliooo\Messaging\ThreadProvider;
 
 use Miliooo\Messaging\Repository\ThreadRepositoryInterface;
+use Miliooo\Messaging\User\ParticipantInterface;
 
 /**
  * The thread provider is responsible for providing threads
@@ -38,9 +39,19 @@ class ThreadProvider implements ThreadProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function findThreadById($id)
+    public function findThreadById($threadId)
     {
-        $thread = $this->threadRepository->findThread($id);
+        $thread = $this->threadRepository->findThread($threadId);
+
+        return is_object($thread) ? $thread : null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findThreadForParticipant($threadId, ParticipantInterface $participant)
+    {
+        $thread = $this->threadRepository->findThreadForParticipant($threadId, $participant);
 
         return is_object($thread) ? $thread : null;
     }
