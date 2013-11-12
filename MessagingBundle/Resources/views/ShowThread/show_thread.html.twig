@@ -6,8 +6,12 @@
 
 {% for message in thread.messages %}
 
+    {% set newReadInfo='' %}
+    {% if miliooo_messaging_is_new_read(message) %}
+        {% set newReadInfo %}<span class="label label-info">{% trans from 'MilioooMessagingBundle' %}new_message{% endtrans %}</span>{% endset %}
+    {% endif %}
     <div class="panel panel-default" id="message-{{ message.id }}">
-        <div class="panel-heading">{{ message.sender|e}} {{ message.createdAt|date}}</div>
+        <div class="panel-heading">{{ message.sender|e}} {{ message.createdAt|date}} {{ newReadInfo }}</div>
         <div class="panel-body">
             {{ message.body }}
         </div>
