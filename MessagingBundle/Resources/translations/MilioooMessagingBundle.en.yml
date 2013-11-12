@@ -22,6 +22,7 @@ no_threads_found: No threads found
 goto_last:        Go to last message
 on:               On %date%
 by:               By %sender%
+new_message:      New message
 
 #table heading on folders
 table:
