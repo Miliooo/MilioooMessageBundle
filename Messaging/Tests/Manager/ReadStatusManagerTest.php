@@ -65,14 +65,20 @@ class ReadStatusManagerTest extends \PHPUnit_Framework_TestCase
         $this->readStatusManager->markMessageCollectionAsRead($this->participant, $message);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage No message meta found for the given participant
-     */
-    public function testMarkMessageThrowsExceptionWhenNoMetaForParticipantFound()
+    public function testMarkMessageDoesNotUpdateWhenNo()
     {
         $notParticipant = new ParticipantTestHelper('now participant');
-        $message = $this->getMessageWithUnreadMessageMetaForParticipant();
+        $message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');
+        $message->expects($this->once())
+            ->method('getMessageMetaForParticipant')
+            ->with($notParticipant)
+            ->will($this->returnValue(null));
+
+        $this->messageRepository->expects($this->never())
+            ->method('save');
+
+        $this->messageRepository->expects($this->never())
+            ->method('flush');
 
         $this->readStatusManager->markMessageCollectionAsRead($notParticipant, [$message]);
     }

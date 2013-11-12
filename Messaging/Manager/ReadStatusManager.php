@@ -85,12 +85,11 @@ class ReadStatusManager implements ReadStatusManagerInterface
      */
     protected function maybeMarkMessageAsRead(ParticipantInterface $participant, MessageInterface $message)
     {
-
-
         $messageMeta = $message->getMessageMetaForParticipant($participant);
 
         if ($messageMeta === null) {
-            throw new \InvalidArgumentException('No message meta found for the given participant');
+            // this can happen if the logged in user is not participant of the thread but does have access to see the thread
+            return false;
         }
 
         if (in_array(
