@@ -130,7 +130,6 @@ class ReadStatusManagerTest extends \PHPUnit_Framework_TestCase
 
         $messageMeta->expects($this->once())->method('setReadStatus')
             ->with(new ReadStatus(MessageMetaInterface::READ_STATUS_READ));
-        $messageMeta->expects($this->once())->method('setNewRead')->with(true);
 
         $this->readStatusManager->markMessageCollectionAsRead($this->participant, [$message]);
     }
@@ -148,7 +147,6 @@ class ReadStatusManagerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(MessageMetaInterface::READ_STATUS_READ));
 
         $messageMeta->expects($this->never())->method('setReadStatus');
-        $messageMeta->expects($this->never())->method('setNewRead');
 
         $this->readStatusManager->markMessageCollectionAsRead($this->participant, [$message]);
     }

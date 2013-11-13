@@ -79,24 +79,15 @@ interface MessageMetaInterface
      */
     public function getMessage();
 
-    /**
-     * Sets the new read status of the message.
-     *
-     * If we changed the message status to READ_STATUS_READ we should set this value to true.
-     * This makes it possible to update the object before sending it to the view
-     * but still show the user that the message was previously not read.
-     *
-     * @param boolean $boolean true if the message had
-     */
-    public function setNewRead($boolean);
+
 
     /**
-     * Gets the new read status of the message.
+     * Gets the previous read status of a message.
      *
-     * If this value is true then it's either the first time the user sees his message or it became read again after
-     * having the status READ_STATUS_MARKED_UNREAD
+     * Since we update the read status before we display the messages to the user we need to check the previous read
+     * status to see if a message is a new read or not
      *
      * @return $boolean
      */
-    public function getNewRead();
+    public function getPreviousReadStatus();
 }

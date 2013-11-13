@@ -12,6 +12,7 @@ namespace Miliooo\MessagingBundle\Twig\Extension;
 
 use Miliooo\Messaging\User\ParticipantProviderInterface;
 use Miliooo\Messaging\Model\MessageInterface;
+use Miliooo\Messaging\Model\MessageMetaInterface;
 
 /**
  * Twig extension class
@@ -65,8 +66,8 @@ class MessagingExtension extends \Twig_Extension
 
         $messageMeta = $message->getMessageMetaForParticipant($currentUser);
 
-        if($messageMeta) {
-            return $messageMeta->getNewRead();
+        if ($messageMeta) {
+            return ($messageMeta->getPreviousReadStatus() !== MessageMetaInterface::READ_STATUS_READ);
         }
 
         //this can happen if you let non participants (eg admin) see a thread

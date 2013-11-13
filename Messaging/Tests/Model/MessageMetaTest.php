@@ -46,14 +46,23 @@ class MessageMetaTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($participant, $this->messageMeta->getParticipant());
     }
 
-    public function testSetReadStatusRead()
+    public function testSetReadStatusUpdatesOldStatus()
     {
-        //original status should be unread
-        $this->assertSame(MessageMetaInterface::READ_STATUS_NEVER_READ, $this->messageMeta->getReadStatus());
-
+        //we set the status to read
         $readStatus = new ReadStatus(MessageMetaInterface::READ_STATUS_READ);
         $this->messageMeta->setReadStatus($readStatus);
+        //the getReadStatus should be read
         $this->assertSame(MessageMetaInterface::READ_STATUS_READ, $this->messageMeta->getReadStatus());
+        //the previous read status should still  be never read
+        $this->assertSame(MessageMetaInterface::READ_STATUS_NEVER_READ, $this->messageMeta->getPreviousReadStatus());
+
+        //we set the new read status to marked_unread
+        $readStatus = new ReadStatus(MessageMetaInterface::READ_STATUS_MARKED_UNREAD);
+        $this->messageMeta->setReadStatus($readStatus);
+        //the read status should be marked unread
+        $this->assertSame(MessageMetaInterface::READ_STATUS_MARKED_UNREAD, $this->messageMeta->getReadStatus());
+        //the previous status should now be read
+        $this->assertSame(MessageMetaInterface::READ_STATUS_READ, $this->messageMeta->getPreviousReadStatus());
     }
 
     public function testMessageWorks()
@@ -63,14 +72,8 @@ class MessageMetaTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($message, $this->messageMeta->getMessage());
     }
 
-    public function testGetNewReadDefaultsToFalse()
+    public function testGetPreviousReadStatusDefautsToNeverRead()
     {
-        $this->assertFalse($this->messageMeta->getNewRead());
-    }
-
-    public function testGetNewReadWorks()
-    {
-        $this->messageMeta->setNewRead(true);
-        $this->assertTrue($this->messageMeta->getNewRead());
+        $this->assertEquals($this->messageMeta->getReadStatus(), MessageMetaInterface::READ_STATUS_NEVER_READ);
     }
 }

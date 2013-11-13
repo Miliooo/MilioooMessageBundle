@@ -13,6 +13,7 @@ namespace Miliooo\MessagingBundle\Tests\Twig\Extension;
 use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
 use Miliooo\MessagingBundle\Twig\Extension\MessagingExtension;
 use Miliooo\Messaging\User\ParticipantInterface;
+use Miliooo\Messaging\Model\MessageMetaInterface;
 
 /**
  * Test file for MessagingExtension
@@ -63,19 +64,22 @@ class MessagingExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('miliooo_messaging', $this->messagingExtension->getName());
     }
 
-    public function testIsMessageReadWithNewReadTrue()
+    public function testIsMessageReadWithPreviousStateMarkedUnread()
     {
         $this->expectsLoggedInUser();
         $this->expectsMessageMetaForLoggedInUser();
-        $this->messageMeta->expects($this->once())->method('getNewRead')->will($this->returnValue(true));
+        $this->messageMeta->expects($this->once())
+            ->method('getPreviousReadStatus')
+            ->will($this->returnValue(MessageMetaInterface::READ_STATUS_MARKED_UNREAD));
         $this->assertTrue($this->messagingExtension->isMessageNewRead($this->message));
     }
 
-    public function testIsMessageReadWithNewReadFalse()
+    public function testIsMessageReadWithNewPreviousStateRead()
     {
         $this->expectsLoggedInUser();
         $this->expectsMessageMetaForLoggedInUser();
-        $this->messageMeta->expects($this->once())->method('getNewRead')->will($this->returnValue(false));
+        $this->messageMeta->expects($this->once())->method('getPreviousReadStatus')
+            ->will($this->returnValue(MessageMetaInterface::READ_STATUS_READ));
         $this->assertFalse($this->messagingExtension->isMessageNewRead($this->message));
     }
 

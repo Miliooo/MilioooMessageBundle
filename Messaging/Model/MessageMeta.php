@@ -32,30 +32,11 @@ abstract class MessageMeta implements MessageMetaInterface
      *
      * @var boolean true if it's read by the given participant, false otherwise
      */
-    protected $readStatus;
+    protected $readStatus = MessageMetaInterface::READ_STATUS_NEVER_READ;
 
-    /**
-     * Sets the new read status of the message.
-     *
-     * Since we update the read status just before we show the message to the user, we use this helper
-     * function to check if it's the first time that the user has read this message.
-     *
-     * If the value is true it's the first time that the user sees this message. You could use this to style the message
-     * in a different way.
-     *
-     * @var boolean true if the message has just been read, false otherwise
-     */
-    protected $newRead = false;
+    protected $previousReadStatus = MessageMetaInterface::READ_STATUS_NEVER_READ;
 
     protected $message;
-
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->readStatus = MessageMetaInterface::READ_STATUS_NEVER_READ;
-    }
 
     /**
      * {@inheritdoc}
@@ -78,6 +59,7 @@ abstract class MessageMeta implements MessageMetaInterface
      */
     public function setReadStatus(ReadStatus $readStatus)
     {
+        $this->previousReadStatus = $this->readStatus;
         $this->readStatus = $readStatus->getReadStatus();
     }
 
@@ -108,16 +90,8 @@ abstract class MessageMeta implements MessageMetaInterface
     /**
      * {@inheritdoc}
      */
-    public function setNewRead($boolean)
+    public function getPreviousReadStatus()
     {
-        $this->newRead = $boolean;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getNewRead()
-    {
-        return $this->newRead;
+        return $this->previousReadStatus;
     }
 }

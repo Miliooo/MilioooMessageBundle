@@ -92,7 +92,6 @@ class ReadStatusManager implements ReadStatusManagerInterface
             return false;
         }
                 $messageMeta->setReadStatus(new ReadStatus(MessageMetaInterface::READ_STATUS_READ));
-                $messageMeta->setNewRead(true);
 
             return true;
     }
