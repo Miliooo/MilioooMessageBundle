@@ -22,7 +22,7 @@ interface NewReplyFormProcessorInterface
     /**
      * Processes a Replymessage form model instance
      *
-     * @param NewThreadInterface $formModel The form model we process
+     * @param ReplyMessageInterface $formModel The form model we process
      */
     public function process(ReplyMessageInterface $formModel);
 }
