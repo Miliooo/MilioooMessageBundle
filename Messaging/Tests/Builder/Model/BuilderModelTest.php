@@ -35,7 +35,7 @@ class BuilderModelTest extends \PHPUnit_Framework_TestCase
         $model->setSender($sender);
         $model->setBody('this is my message lalala');
         $model->setCreatedAt(new \DateTime('now'));
-        $model->setRecipients(new ParticipantTestHelper(2));
+        $model->setRecipient(new ParticipantTestHelper(2));
         $model->setSubject('hoi hier is mijn bericht');
         $this->builderModel = new ThreadBuilderModel($model);
     }

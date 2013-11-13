@@ -21,7 +21,8 @@ use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
 class NewThreadSingleRecipientTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * The class under test
+     * The class under test.
+     *
      * @var NewThreadSingleRecipient
      */
     private $formModel;
@@ -39,8 +40,8 @@ class NewThreadSingleRecipientTest extends \PHPUnit_Framework_TestCase
     public function testRecipientWorks()
     {
         $recipient = new ParticipantTestHelper(1);
-        $this->formModel->setRecipients($recipient);
-        $this->assertSame(array($recipient), $this->formModel->getRecipients());
+        $this->formModel->setRecipient($recipient);
+        $this->assertSame([$recipient], $this->formModel->getRecipients());
     }
 
     public function testSubjectWorks()

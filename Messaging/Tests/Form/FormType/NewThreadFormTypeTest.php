@@ -42,14 +42,14 @@ class NewThreadFormTypeTest extends \PHPUnit_Framework_TestCase
     {
         $formBuilder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
                 ->disableOriginalConstructor()->getMock();
-        $formBuilder->expects($this->at(0))->method('add')->with('recipients', 'username_selector')
+        $formBuilder->expects($this->at(0))->method('add')->with('recipient', 'username_selector')
             ->will($this->returnValue($formBuilder));
         $formBuilder->expects($this->at(1))->method('add')->with('subject', 'text')
             ->will($this->returnValue($formBuilder));
         $formBuilder->expects($this->at(2))->method('add')->with('body', 'textarea')
             ->will($this->returnValue($formBuilder));
 
-        $this->newThreadFormType->buildForm($formBuilder, array());
+        $this->newThreadFormType->buildForm($formBuilder, []);
     }
 
     public function testSetDefaultOptions()

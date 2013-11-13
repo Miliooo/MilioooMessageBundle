@@ -44,7 +44,7 @@ class NewThreadFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('recipients', 'username_selector')
+            ->add('recipient', 'username_selector')
             ->add('subject', 'text')
             ->add('body', 'textarea');
     }
@@ -56,9 +56,9 @@ class NewThreadFormType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'intention' => 'add_new_thread',
-        ));
+        ]);
     }
 
     /**

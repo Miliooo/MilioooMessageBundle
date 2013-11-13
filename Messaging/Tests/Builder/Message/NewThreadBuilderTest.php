@@ -26,6 +26,11 @@ use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
  */
 class ThreadBuilderModelTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * The class under test.
+     *
+     * @var NewThreadBuilder
+     */
     private $builder;
 
     public function setUp()
@@ -44,14 +49,14 @@ class ThreadBuilderModelTest extends \PHPUnit_Framework_TestCase
 
         $newThreadModel = new NewThreadSingleRecipient();
         $newThreadModel->setSender($sender);
-        $newThreadModel->setRecipients($recipient);
+        $newThreadModel->setRecipient($recipient);
         $newThreadModel->setSubject('subject');
         $newThreadModel->setBody('body');
         $newThreadModel->setCreatedAt(new \DateTime('2013-10-10 00:00:00'));
 
         $builderModel = new ThreadBuilderModel($newThreadModel);
         $build = $this->builder->build($builderModel);
-        
+
         $this->assertInstanceOf('Miliooo\Messaging\Model\ThreadInterface', $build);
     }
 
@@ -68,7 +73,7 @@ class ThreadBuilderModelTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($sender));
 
         $builderModel->expects($this->at(1))->method('getRecipients')
-            ->will($this->returnValue(array($recipient)));
+            ->will($this->returnValue([$recipient]));
 
         $builderModel->expects($this->at(2))->method('getThreadData')
             ->with(null);
@@ -113,7 +118,7 @@ class ThreadBuilderModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage could not find setter for foo
      */
     public function testBuilderThrowsExceptionWhenNotAbleToCreateSetter()
@@ -128,7 +133,7 @@ class ThreadBuilderModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage could not create setter method, no string given
      */
     public function testBuilderThrowsExceptionWhenSetterKeyNotString()
