@@ -15,7 +15,6 @@ use Miliooo\Messaging\User\ParticipantInterface;
 /**
  * Interface for form models which create a new thread.
  *
- * @todo solve the problem how we will set recipients
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
 interface NewThreadInterface extends NewMessageInterface
