@@ -20,6 +20,7 @@
             <argument type="service" id="templating" />
             <argument type="service" id="miliooo_messaging.participant_provider" />
             <argument type="service" id="miliooo_messaging.read_status_manager" />
+            <argument type="service" id="routing" />
         </service>
 
         <service id="miliooo_messaging.controller.inbox_controller" class="Miliooo\MessagingBundle\Controller\InboxController" scope="request">

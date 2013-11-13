@@ -99,8 +99,9 @@ class ShowThreadController
 
         $form = $this->formFactory->create($thread, $loggedInUser);
         $processed = $this->formHandler->process($form);
-        if($processed) {
+        if ($processed) {
             $url = $this->router->generate('miliooo_message_thread_view', ['threadId' => $threadId]);
+
             return new RedirectResponse($url);
         }
 
