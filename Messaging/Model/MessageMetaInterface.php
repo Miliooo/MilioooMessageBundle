@@ -18,7 +18,7 @@ use Miliooo\Messaging\ValueObjects\ReadStatus;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-interface MessageMetaInterface
+interface MessageMetaInterface extends BuilderInterface
 {
 
     /**

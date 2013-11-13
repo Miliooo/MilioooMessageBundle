@@ -17,7 +17,7 @@ use Miliooo\Messaging\User\ParticipantInterface;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-interface ThreadMetaInterface
+interface ThreadMetaInterface extends BuilderInterface
 {
     const STATUS_ACTIVE = 1;
     const STATUS_ARCHIVED = 2;

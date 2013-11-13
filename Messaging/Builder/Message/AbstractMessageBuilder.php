@@ -15,6 +15,7 @@ use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\Messaging\Model\ThreadMetaInterface;
 use Miliooo\Messaging\Model\MessageInterface;
 use Miliooo\Messaging\Model\MessageMetaInterface;
+use Miliooo\Messaging\Model\BuilderInterface;
 
 /**
  * Description of AbstractMessageBuilder
@@ -186,11 +187,11 @@ abstract class AbstractMessageBuilder
     /**
      * Updates the given object with the given methodName and argumentName
      *
-     * @param string      $callMethodName     Calls the builder with this methodName
-     * @param string|null $callMethodArgument Calls the builder with this argument for the given methodName
-     * @param object      $object             The object which gets updated
+     * @param string           $callMethodName     Calls the builder with this methodName
+     * @param string|null      $callMethodArgument Calls the builder with this argument for the given methodName
+     * @param BuilderInterface $object             The object which gets updated
      */
-    protected function processBuilderModel($callMethodName, $callMethodArgument, $object)
+    protected function processBuilderModel($callMethodName, $callMethodArgument, BuilderInterface $object)
     {
         $data = $this->builderModel->$callMethodName($callMethodArgument);
 

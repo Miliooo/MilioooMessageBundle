@@ -18,7 +18,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-interface MessageInterface
+interface MessageInterface extends BuilderInterface
 {
     /**
      * Gets the unique id of the message
