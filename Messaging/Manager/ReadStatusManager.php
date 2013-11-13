@@ -87,27 +87,14 @@ class ReadStatusManager implements ReadStatusManagerInterface
     {
         $messageMeta = $message->getMessageMetaForParticipant($participant);
 
-        if ($messageMeta === null) {
-            // this can happen if the logged in user is not participant of the thread but does have access to see the thread
+        //if no message meta can happen if the logged in user is not participant of the thread
+        if ($messageMeta === null || $messageMeta->getReadStatus() === MessageMetaInterface::READ_STATUS_READ) {
             return false;
         }
-
-        if (in_array(
-            $messageMeta->getReadStatus(),
-            [
-            MessageMetaInterface::READ_STATUS_NEVER_READ,
-            MessageMetaInterface::READ_STATUS_MARKED_UNREAD
-            ],
-            true)
-            ) {
-
                 $messageMeta->setReadStatus(new ReadStatus(MessageMetaInterface::READ_STATUS_READ));
                 $messageMeta->setNewRead(true);
 
             return true;
-        }
-
-        return false;
     }
 
     /**
@@ -123,7 +110,8 @@ class ReadStatusManager implements ReadStatusManagerInterface
 
     /**
      * @param ParticipantInterface $participant
-     * @param array $messages
+     * @param array                $messages
+     *
      * @return mixed
      */
     public function markMessageCollectionAsMarkedUnread(ParticipantInterface $participant, $messages = [])
