@@ -12,7 +12,6 @@ namespace Miliooo\Messaging\Form\FormHandler;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormInterface;
-use Miliooo\Messaging\Model\MessageInterface;
 
 /**
  * Description of AbstractFormHandler
@@ -66,10 +65,6 @@ abstract class AbstractFormHandler
      * Do the processing of the valid form.
      *
      * @param FormInterface $form
-     *
-     * @return MessageInterface the processed message
      */
     abstract public function doProcess(FormInterface $form);
-    //abstract function getProcessedMessage();
-    //abstract function getProcessedStatus();
 }
