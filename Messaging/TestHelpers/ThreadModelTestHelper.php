@@ -10,10 +10,11 @@
 
 namespace Miliooo\Messaging\TestHelpers;
 
-use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
 use Miliooo\Messaging\Builder\Message\NewThreadBuilder;
 use Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipient;
 use Miliooo\Messaging\Builder\Model\ThreadBuilderModel;
+use Miliooo\Messaging\Model\ThreadInterface;
+use Miliooo\Messaging\User\ParticipantInterface;
 
 /**
  * Description of ThreadModelTestHelper
@@ -31,6 +32,11 @@ class ThreadModelTestHelper
     const DATE_TIME_VALUE = "2011-10-13 00:00:00";
     const THREAD_SUBJECT = "The subject of the message";
 
+    /**
+     * Builds a thread.
+     *
+     * @return ThreadInterface
+     */
     public function getModelThread()
     {
         $this->sender = new ParticipantTestHelper(self::SENDER_ID);
@@ -44,7 +50,7 @@ class ThreadModelTestHelper
 
         $newThreadModel = new NewThreadSingleRecipient();
         $newThreadModel->setSender($this->sender);
-        $newThreadModel->setRecipients($this->recipient);
+        $newThreadModel->setRecipient($this->recipient);
         $newThreadModel->setSubject(self::THREAD_SUBJECT);
         $newThreadModel->setBody(self::MESSAGE_BODY);
         $newThreadModel->setCreatedAt(new \DateTime(self::DATE_TIME_VALUE));
@@ -54,11 +60,21 @@ class ThreadModelTestHelper
         return $builder->build($builderModel);
     }
 
+    /**
+     * Returns the sender of the first message in the model thread.
+     *
+     * @return ParticipantInterface the sender of the first message in the model thread
+     */
     public function getSender()
     {
         return $this->sender;
     }
 
+    /**
+     * Returns the recipient of the first message in the model thread.
+     *
+     * @return ParticipantInterface the recipient of the first message in the model thread
+     */
     public function getRecipient()
     {
         return $this->recipient;
