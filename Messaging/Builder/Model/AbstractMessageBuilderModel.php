@@ -187,6 +187,16 @@ abstract class AbstractMessageBuilderModel
     }
 
     /**
+     * Returns the form model used to set the default data.
+     *
+     * If you added more data to the form model you can ask for the model and update the data in the processors.
+     */
+    public function getFormModel()
+    {
+        return $this->messageModel;
+    }
+
+    /**
      * Helper function to populate the data array.
      *
      * @param string $name        Name of the meta one of threadMeta, messageMeta
