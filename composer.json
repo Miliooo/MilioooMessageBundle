@@ -20,6 +20,9 @@
         "symfony/twig-bundle": "~2.3",
         "white-october/pagerfanta-bundle": "1.0.*"
     },
+    "require-dev": {
+        "satooshi/php-coveralls": "dev-master"
+    },
     "autoload": {
         "psr-0": {"Miliooo": ""}
     },

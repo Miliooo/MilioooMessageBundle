@@ -4,6 +4,9 @@
     <php>
         <ini name="xdebug.max_nesting_level" value="200" />
     </php>
+    <logging>
+        <log type="coverage-php" target="build/logs/coverage.cov"/>
+    </logging>
     <testsuites>
         <testsuite name="MiliooMessaging">
             <directory suffix="Test.php">./Messaging/Tests</directory>
@@ -18,6 +21,8 @@
             <directory>./</directory>
             <exclude>
                 <directory>./vendor</directory>
+                <directory>./MessagingBundle/Tests</directory>
+                <directory>./Messaging/Tests</directory>
             </exclude>
         </whitelist>
     </filter>
