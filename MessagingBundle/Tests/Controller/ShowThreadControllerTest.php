@@ -12,6 +12,7 @@ namespace Miliooo\MessagingBundle\Tests\Controller;
 
 use Miliooo\MessagingBundle\Controller\ShowThreadController;
 use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
+use Miliooo\Messaging\User\ParticipantInterface;
 
 /**
  * Test file for Miliooo\MessagingBundle\Controller\ShowThreadController
@@ -41,6 +42,10 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $threadProvider;
+
+    /**
+     * @var ParticipantInterface
+     */
     private $loggedInUser;
 
     /**
@@ -83,6 +88,12 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
      */
     private $arrayCollection;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $router;
+
+
     public function setUp()
     {
         $this->setConstructorMocks();
@@ -92,7 +103,8 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
             $this->threadProvider,
             $this->templating,
             $this->participantProvider,
-            $this->readStatusManager
+            $this->readStatusManager,
+            $this->router
         );
 
         $this->loggedInUser = new ParticipantTestHelper(1);
@@ -121,18 +133,32 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
         $this->controller->showAction(1);
     }
 
-    public function testShowActionReturnsResponse()
+    public function testShowActionReturnsResponseWhenFormNotProcessed()
     {
         $this->expectsUser();
         $this->expectsThread();
         $this->expectsFormFactoryCreatesForm();
-        $this->expectsFormHandlerProcessesForm();
+        $this->expectsFormHandlerProcessesFormAndReturnsFalse();
         $this->expectsFormCreatesAView();
         $this->expectsTemplatingRendersResponse();
 
         $this->expectsReadStatusUpdates();
 
         $this->controller->showAction(1);
+    }
+
+    public function testShowActionRedirectsResponseWhenFormProcessed()
+    {
+        $this->expectsUser();
+        $this->expectsThread();
+        $this->expectsFormFactoryCreatesForm();
+        $this->expectsFormHandlerProcessesFormAndReturnsTrue();
+        $this->router->expects($this->once())->method('generate')
+            ->with('miliooo_message_thread_view', ['threadId' => 1])
+            ->will($this->returnValue('test.com'));
+
+        $this->controller->showAction(1);
+
     }
 
     protected function expectsFormFactoryCreatesForm()
@@ -143,10 +169,19 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->form));
     }
 
-    protected function expectsFormHandlerProcessesForm()
+    protected function expectsFormHandlerProcessesFormAndReturnsFalse()
     {
         $this->formHandler->expects($this->once())
-            ->method('process')->with($this->form);
+            ->method('process')->with($this->form)
+            ->will($this->returnValue(false));
+    }
+
+    protected function expectsFormHandlerProcessesFormAndReturnsTrue()
+    {
+        $this->formHandler->expects($this->once())
+            ->method('process')->with($this->form)
+            ->will($this->returnValue(true));
+
     }
 
     protected function expectsFormCreatesAView()
@@ -175,6 +210,7 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
         $this->templating = $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
         $this->threadProvider = $this->getMock('Miliooo\Messaging\ThreadProvider\SecureThreadProviderInterface');
         $this->readStatusManager = $this->getMock('Miliooo\Messaging\Manager\ReadStatusManagerInterface');
+        $this->router = $this->getMock('Symfony\Component\Routing\RouterInterface');
     }
 
     protected function expectsUser()
@@ -193,7 +229,6 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
 
     protected function expectsReadStatusUpdates()
     {
-
         $this->thread->expects($this->once())
             ->method('getMessages')
             ->will($this->returnValue($this->arrayCollection));

@@ -18,6 +18,8 @@ use Miliooo\Messaging\User\ParticipantProviderInterface;
 use Miliooo\Messaging\Form\FormFactory\ReplyMessageFormFactory;
 use Miliooo\Messaging\Form\FormHandler\NewReplyFormHandler;
 use Miliooo\Messaging\Manager\ReadStatusManagerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Controller for showing a single thread.
@@ -31,9 +33,22 @@ class ShowThreadController
     protected $formFactory;
     protected $formHandler;
     protected $threadProvider;
+
+    /**
+     * @var EngineInterface
+     */
     protected $templating;
+
     protected $participantProvider;
+    /**
+     * @var ReadStatusManagerInterface
+     */
     protected $readStatusManager;
+
+    /**
+     * @var RouterInterface
+     */
+    protected $router;
 
     /**
      * Constructor.
@@ -44,6 +59,7 @@ class ShowThreadController
      * @param EngineInterface               $templating          A templating engine
      * @param ParticipantProviderInterface  $participantProvider A participant provider
      * @param ReadStatusManagerInterface    $readStatusManager   A read status manager instance
+     * @param RouterInterface               $router              A router instance
      */
     public function __construct(
         ReplyMessageFormFactory $formFactory,
@@ -51,7 +67,8 @@ class ShowThreadController
         SecureThreadProviderInterface $threadProvider,
         EngineInterface $templating,
         ParticipantProviderInterface $participantProvider,
-        ReadStatusManagerInterface $readStatusManager
+        ReadStatusManagerInterface $readStatusManager,
+        RouterInterface $router
 
         ) {
         $this->formFactory = $formFactory;
@@ -60,6 +77,7 @@ class ShowThreadController
         $this->templating = $templating;
         $this->participantProvider = $participantProvider;
         $this->readStatusManager = $readStatusManager;
+        $this->router = $router;
     }
 
     /**
@@ -78,9 +96,15 @@ class ShowThreadController
         if (!$thread) {
             throw new NotFoundHttpException('Thread not found');
         }
-        $this->readStatusManager->markMessageCollectionAsRead($loggedInUser, $thread->getMessages()->toArray());
+
         $form = $this->formFactory->create($thread, $loggedInUser);
-        $this->formHandler->process($form);
+        $processed = $this->formHandler->process($form);
+        if($processed) {
+            $url = $this->router->generate('miliooo_message_thread_view', ['threadId' => $threadId]);
+            return new RedirectResponse($url);
+        }
+
+        $this->readStatusManager->markMessageCollectionAsRead($loggedInUser, $thread->getMessages()->toArray());
         $twig = 'MilioooMessagingBundle:ShowThread:show_thread.html.twig';
 
         return $this->templating->renderResponse($twig, ['thread' => $thread, 'form' => $form->createView()]);
