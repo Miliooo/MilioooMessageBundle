@@ -284,8 +284,7 @@ abstract class Thread implements ThreadInterface
      *
      * @param ThreadMetaInterface $threadMeta The threadmeta we extract the participant from
      *
-     * @throws \InvalidArgumentException
-     * @todo we loop over them quite a lot fix it so we only do this once
+     * @throws \InvalidArgumentException if participant is not instance of participantinterface
      */
     protected function addParticipantFromThreadMeta(ThreadMetaInterface $threadMeta)
     {
@@ -295,7 +294,7 @@ abstract class Thread implements ThreadInterface
         //If there is no longer a link between those there could be other problems though...
         // Let's throw an exception here for the moment...
         if (!is_object($participant) || !$participant instanceof ParticipantInterface) {
-            throw new \InvalidArgumentException('ThreadMeta contains  participant with no participantinterface');
+            throw new \InvalidArgumentException('ThreadMeta contains participant with no participantinterface');
         }
 
         if (!$this->participants->contains($participant)) {
