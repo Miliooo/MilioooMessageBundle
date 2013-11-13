@@ -43,25 +43,27 @@ class NewReplyFormHandler extends AbstractFormHandler
     /**
      * Processes the form with the request
      *
-     * @param Form $form A form instance
+     * @param FormInterface $form A form instance
      *
-     * @return Message|false the last message if the form is valid, false otherwise
      */
     public function doProcess(FormInterface $form)
     {
         $replyThreadFormModel = $this->getFormData($form);
         $replyThreadFormModel->setCreatedAt(new \DateTime('now'));
+        $this->processFormModelExtra($replyThreadFormModel);
         $this->replyFormProcessor->process($replyThreadFormModel);
     }
 
     /**
      * Gets the form data
      *
-     * Helper function to get autocompletion
+     * Helper function to get auto completion
      *
-     * @param Form $form
+     * @param FormInterface $form
      *
      * @return ReplyMessageInterface
+     *
+     * @throws \InvalidArgumentException when wrong form data
      */
     protected function getFormData(FormInterface $form)
     {
@@ -72,5 +74,22 @@ class NewReplyFormHandler extends AbstractFormHandler
         }
 
         return $data;
+    }
+
+    /**
+     * Helper function if you need to extend this class.
+     *
+     * Here you have your custom form model which implements the NewThreadInterface.
+     * If you need extra processing of this valid form model you can extend this class and overwrite this function.
+     *
+     * An example...
+     * You want to store the ip address from the client.
+     * $newThreadFormModel->setIpAddress = $this->request->getClientIp();
+     *
+     * @param ReplyMessageInterface $replyThreadFormModel
+     */
+    protected function processFormModelExtra(ReplyMessageInterface $replyThreadFormModel)
+    {
+
     }
 }

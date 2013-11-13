@@ -12,7 +12,6 @@ namespace Miliooo\Messaging\Form\FormHandler;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipient;
 use Miliooo\Messaging\Form\FormModel\NewThreadInterface;
 use Miliooo\Messaging\Form\FormModelProcessor\NewThreadFormProcessorInterface;
 
@@ -33,6 +32,13 @@ class NewSingleThreadFormHandler extends AbstractFormHandler
     protected $newThreadProcessor;
 
     /**
+     * The request when the form was valid.
+     *
+     * @var Request
+     */
+    protected $request;
+
+    /**
      * Constructor.
      *
      * @param Request                         $request   The request the form will process
@@ -40,6 +46,8 @@ class NewSingleThreadFormHandler extends AbstractFormHandler
      */
     public function __construct(Request $request, NewThreadFormProcessorInterface $processor)
     {
+        $this->request = $request;
+
         parent::__construct($request);
         $this->newThreadProcessor = $processor;
     }
@@ -47,26 +55,31 @@ class NewSingleThreadFormHandler extends AbstractFormHandler
     /**
      * Processes the form with the request
      *
-     * @param Form $form A form instance
-     *
-     * @return Message|false the last message if the form is valid, false otherwise
+     * @param FormInterface $form A form instance
      */
     public function doProcess(FormInterface $form)
     {
+        //here we have the valid Form Model. This needs to be an instance of NewThreadInterface.
+
         $newThreadFormModel = $this->getFormData($form);
-        //we want the creation date to be the same as the submit date..
+
+        //we update the createdAt to use the datetime when the form was successfully submitted
         $newThreadFormModel->setCreatedAt(new \DateTime('now'));
+        $this->processFormModelExtra($newThreadFormModel);
+
         $this->newThreadProcessor->process($newThreadFormModel);
     }
 
     /**
      * Gets the form data
      *
-     * Helper function to get autocompletion
+     * Helper function to get auto completion
      *
-     * @param Form $form
+     * @param FormInterface $form
      *
-     * @return NewThreadSingleRecipient
+     * @return NewThreadInterface
+     *
+     * @throws \InvalidArgumentException when form data is not the expected data
      */
     protected function getFormData(FormInterface $form)
     {
@@ -77,5 +90,22 @@ class NewSingleThreadFormHandler extends AbstractFormHandler
         }
 
         return $data;
+    }
+
+    /**
+     * Helper function if you need to extend this class.
+     *
+     * Here you have your custom form model which implements the NewThreadInterface.
+     * If you need extra processing of this valid form model you can extend this class and overwrite this function.
+     *
+     * An example...
+     * You want to store the ip address from the client.
+     * $newThreadFormModel->setIpAddress = $this->request->getClientIp();     *
+     *
+     * @param NewThreadInterface $newThreadFormModel
+     */
+    protected function processFormModelExtra(NewThreadInterface $newThreadFormModel)
+    {
+
     }
 }
