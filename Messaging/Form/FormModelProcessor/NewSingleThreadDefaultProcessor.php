@@ -24,7 +24,7 @@ use Miliooo\Messaging\Builder\Model\ThreadBuilderModel;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class NewSingleThreadDefaultProcesser implements NewThreadFormProcessorInterface
+class NewSingleThreadDefaultProcessor implements NewThreadFormProcessorInterface
 {
     protected $newThreadBuilder;
     protected $newMessageManager;
