@@ -25,6 +25,7 @@ interface FlashMessageProviderInterface
      *
      * @param string $type           One of the class constants type
      * @param string $translationKey A translation string
+     * @param array  $parameters     Optional parameters for the translation of the string.
      */
-    public function addFlash($type, $translationKey);
+    public function addFlash($type, $translationKey, $parameters = []);
 }
