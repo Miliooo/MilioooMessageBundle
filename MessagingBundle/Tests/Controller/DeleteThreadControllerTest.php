@@ -11,6 +11,9 @@
 namespace Miliooo\MessagingBundle\Tests\Controller;
 
 use Miliooo\MessagingBundle\Controller\DeleteThreadController;
+use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
+use Miliooo\Messaging\User\ParticipantInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Test file for the delete thread controller.
@@ -56,32 +59,47 @@ class DeleteThreadControllerTest extends \PHPUnit_Framework_TestCase
      */
     private $router;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $participantProvider;
+
+    /**
+     * @var ParticipantInterface
+     */
+    private $loggedInUser;
+
     public function setUp()
     {
         $this->templating = $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
-        $this->deleteThreadManager = $this->getMock('Miliooo\Messaging\Manager\DeleteThreadManagerInterface');
+        $this->deleteThreadManager = $this->getMock('Miliooo\Messaging\Manager\DeleteThreadManagerSecureInterface');
         $this->threadProvider = $this->getMock('Miliooo\Messaging\ThreadProvider\ThreadProviderInterface');
         $this->flashMessageProvider = $this->getMock('Miliooo\Messaging\Helpers\FlashMessages\FlashMessageProviderInterface');
         $this->router = $this->getMock('Symfony\Component\Routing\RouterInterface');
+        $this->participantProvider = $this->getMock('Miliooo\Messaging\User\ParticipantProviderInterface');
+        $this->loggedInUser = new ParticipantTestHelper(1);
 
         $this->controller = new DeleteThreadController(
             $this->templating,
             $this->deleteThreadManager,
             $this->threadProvider,
             $this->flashMessageProvider,
-            $this->router
+            $this->router,
+            $this->participantProvider
         );
 
         $this->thread = $this->getMock('Miliooo\Messaging\Model\ThreadInterface');
     }
 
-    public function testDeleteWithExistingThread()
+    public function testDeleteWithExistingThreadAndPermissions()
     {
+        $this->expectsLoggedInUser();
         $this->expectsThreadExists();
 
+        //doesn't throw an exception
         $this->deleteThreadManager->expects($this->once())
             ->method('deleteThread')
-            ->with($this->thread);
+            ->with($this->loggedInUser, $this->thread);
 
         $this->flashMessageProvider->expects($this->once())
             ->method('addFlash')
@@ -92,8 +110,30 @@ class DeleteThreadControllerTest extends \PHPUnit_Framework_TestCase
         $this->controller->deleteAction(self::THREAD_ID);
     }
 
+    public function testDeleteWithExistingThreadButNoPermissions()
+    {
+        $this->expectsLoggedInUser();
+        $this->expectsThreadExists();
+
+        //throws an exception
+        $this->deleteThreadManager->expects($this->once())
+            ->method('deleteThread')
+            ->with($this->loggedInUser, $this->thread)
+            ->will($this->throwException(new AccessDeniedException()));
+
+        $this->flashMessageProvider->expects($this->once())
+            ->method('addFlash')
+            ->with('error', 'flash.thread_delete_no_permission');
+
+        $this->expectsRouterInbox();
+
+        $this->controller->deleteAction(self::THREAD_ID);
+    }
+
     public function testDeleteWithNonExistingThread()
     {
+        $this->expectsLoggedInUser();
+
         $this->threadProvider->expects($this->once())
             ->method('findThreadById')
             ->with(self::THREAD_ID)
@@ -126,5 +166,11 @@ class DeleteThreadControllerTest extends \PHPUnit_Framework_TestCase
             ->method('generate')
             ->with('miliooo_message_inbox')
             ->will($this->returnValue('http://test.com'));
+    }
+
+    protected function expectsLoggedInUser()
+    {
+        $this->participantProvider->expects($this->once())->method('getAuthenticatedParticipant')
+            ->will($this->returnValue($this->loggedInUser));
     }
 }

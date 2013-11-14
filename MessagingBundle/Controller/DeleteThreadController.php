@@ -11,13 +11,16 @@
 namespace Miliooo\MessagingBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Miliooo\Messaging\Manager\DeleteThreadManagerInterface;
+use Miliooo\Messaging\Manager\DeleteThreadManagerSecureInterface;
 use Miliooo\Messaging\ThreadProvider\ThreadProviderInterface;
 use Miliooo\Messaging\Helpers\FlashMessages\FlashMessageProviderInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Miliooo\Messaging\Model\ThreadInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Miliooo\Messaging\User\ParticipantProviderInterface;
+use Miliooo\Messaging\User\ParticipantInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * The delete thread controller is responsible for deleting threads from the storage engine.
@@ -36,7 +39,7 @@ class DeleteThreadController
     /**
      * A delete thread manager instance.
      *
-     * @var DeleteThreadManagerInterface
+     * @var DeleteThreadManagerSecureInterface
      */
     private $deleteThreadManager;
 
@@ -61,28 +64,38 @@ class DeleteThreadController
      */
     private $router;
 
+    /**
+     * A participant provider.
+     *
+     * @var ParticipantProviderInterface
+     */
+    private $participantProvider;
+
 
     /**
      * Constructor.
      *
-     * @param EngineInterface               $templating
-     * @param DeleteThreadManagerInterface  $deleteThreadManager
-     * @param ThreadProviderInterface       $threadProvider
-     * @param FlashMessageProviderInterface $flashMessageProvider
-     * @param RouterInterface               $router
+     * @param EngineInterface                    $templating
+     * @param DeleteThreadManagerSecureInterface $deleteThreadManager
+     * @param ThreadProviderInterface            $threadProvider
+     * @param FlashMessageProviderInterface      $flashMessageProvider
+     * @param RouterInterface                    $router
+     * @param ParticipantProviderInterface       $participantProvider
      */
     public function __construct(
         EngineInterface $templating,
-        DeleteThreadManagerInterface $deleteThreadManager,
+        DeleteThreadManagerSecureInterface $deleteThreadManager,
         ThreadProviderInterface $threadProvider,
         FlashMessageProviderInterface $flashMessageProvider,
-        RouterInterface $router
+        RouterInterface $router,
+        ParticipantProviderInterface $participantProvider
         ) {
         $this->templating = $templating;
         $this->deleteThreadManager = $deleteThreadManager;
         $this->threadProvider = $threadProvider;
         $this->flashMessageProvider = $flashMessageProvider;
         $this->router = $router;
+        $this->participantProvider = $participantProvider;
     }
 
     /**
@@ -96,10 +109,11 @@ class DeleteThreadController
      */
     public function deleteAction($threadId)
     {
+        $loggedInUser = $this->participantProvider->getAuthenticatedParticipant();
         $thread = $this->threadProvider->findThreadById($threadId);
 
         if ($thread) {
-            $this->doThreadDelete($thread);
+            $this->doThreadDelete($loggedInUser, $thread);
         } else {
             $this->doThreadNotFound();
         }
@@ -112,19 +126,36 @@ class DeleteThreadController
     /**
      * Deletes the thread and adds a flash.
      *
-     * @param ThreadInterface $thread
+     * @param ParticipantInterface $loggedInUser
+     * @param ThreadInterface      $thread
      */
-    protected function doThreadDelete(ThreadInterface $thread)
+    protected function doThreadDelete(ParticipantInterface $loggedInUser,ThreadInterface $thread)
     {
-        //delete the thread
-        $this->deleteThreadManager->deleteThread($thread);
+        //helper to decide if we need to add success flash
+        $access = true;
 
-        //add success to the flash
-        $this->flashMessageProvider->addFlash(
-            FlashMessageProviderInterface::TYPE_SUCCESS,
-            'flash.thread_deleted_success',
-            []
-        );
+        try {
+            $this->deleteThreadManager->deleteThread($loggedInUser, $thread);
+        } catch (AccessDeniedException $e) {
+
+            //add no permission flash
+            $this->flashMessageProvider->addFlash(
+                FlashMessageProviderInterface::TYPE_ERROR,
+                'flash.thread_delete_no_permission',
+                []
+            );
+            //set access to false
+            $access = false;
+        }
+
+        if ($access) {
+            //add success to the flash
+            $this->flashMessageProvider->addFlash(
+                FlashMessageProviderInterface::TYPE_SUCCESS,
+                'flash.thread_deleted_success',
+                []
+            );
+        }
     }
 
     /**
