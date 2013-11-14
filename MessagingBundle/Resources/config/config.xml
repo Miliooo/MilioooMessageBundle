@@ -27,6 +27,19 @@
             <tag name="twig.extension" alias="miliooo_messaging" />
         </service>
 
+        <service id="miliooo_messaging.session.flashbag"
+                 class="Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface"
+                 factory-service="session"
+                 factory-method="getFlashBag"
+                />
+
+        <service id="miliooo_messaging.flash_message_provider" class="Miliooo\Messaging\Helpers\FlashMessages\FlashMessageProvider">
+            <argument type="service" id="miliooo_messaging.session.flashbag" />
+            <argument type="service" id="translator" />
+            <argument>success</argument>
+            <argument>error</argument>
+        </service>
+
     </services>
 
 </container>
