@@ -31,3 +31,7 @@ table:
   messages:     Messages
   last_message: Last message
 
+#flash messages
+flash:
+  thread_deleted_success: The thread has been deleted
+  thread_not_found:       Thread not found

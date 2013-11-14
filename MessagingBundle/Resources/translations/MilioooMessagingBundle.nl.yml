@@ -30,3 +30,8 @@ table:
   starter:      Gestart door
   messages:     Berichten
   last_message: Laatste bericht
+
+#flash messages
+flash:
+  thread_deleted_success: De conversatie werd verwijderd.
+  thread_not_found:       Onderwerp niet gevonden.
