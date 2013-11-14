@@ -15,6 +15,12 @@
             <argument type="service" id="miliooo_messaging.repository.message"/>
         </service>
 
+        <service id="miliooo_messaging.read_status_manager_event_aware"
+                 class="Miliooo\Messaging\Manager\ReadStatusManagerEventAware">
+            <argument type="service" id="miliooo_messaging.read_status_manager"/>
+            <argument type="service" id="event_dispatcher" />
+        </service>
+
         <service id="miliooo_messaging.delete_thread_manager" class="Miliooo\Messaging\Manager\DeleteThreadManager">
             <argument type="service" id="miliooo_messaging.repository.thread"/>
         </service>
