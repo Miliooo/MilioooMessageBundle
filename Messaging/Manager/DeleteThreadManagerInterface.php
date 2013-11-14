@@ -26,6 +26,6 @@ interface DeleteThreadManagerInterface
      * @param ThreadInterface $thread The thread we want to delete
      * @param boolean         $flush  Whether to flush, defaults to true
      */
-    public function deleteThread(ThreadInterface $thread, $flush=true);
+    public function deleteThread(ThreadInterface $thread, $flush = true);
 
 }
