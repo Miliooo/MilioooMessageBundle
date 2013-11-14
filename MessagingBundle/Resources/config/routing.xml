@@ -22,6 +22,7 @@
 
     <route id="miliooo_message_thread_view" pattern="/{threadId}">
         <default key="_controller">miliooo_messaging.controller.show_thread_controller:ShowAction</default>
+        <requirement key="threadId">\d+</requirement>
     </route>
 
 </routes>
