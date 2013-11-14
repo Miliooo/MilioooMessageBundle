@@ -19,6 +19,11 @@
             <argument type="service" id="miliooo_messaging.repository.thread"/>
         </service>
 
+        <service id="miliooo_messaging.delete_thread_manager_secure"
+                 class="Miliooo\Messaging\Manager\DeleteThreadManagerSpecificationAware">
+            <argument type="service" id="miliooo_messaging.delete_thread_manager"/>
+        </service>
+
     </services>
 
 </container>
