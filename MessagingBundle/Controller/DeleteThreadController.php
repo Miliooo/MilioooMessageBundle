@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class deleteThreadController
+class DeleteThreadController
 {
     /**
      * A templating engine
@@ -77,8 +77,7 @@ class deleteThreadController
         ThreadProviderInterface $threadProvider,
         FlashMessageProviderInterface $flashMessageProvider,
         RouterInterface $router
-        )
-    {
+        ) {
         $this->templating = $templating;
         $this->deleteThreadManager = $deleteThreadManager;
         $this->threadProvider = $threadProvider;
