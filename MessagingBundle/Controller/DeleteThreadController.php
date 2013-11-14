@@ -129,7 +129,7 @@ class DeleteThreadController
      * @param ParticipantInterface $loggedInUser
      * @param ThreadInterface      $thread
      */
-    protected function doThreadDelete(ParticipantInterface $loggedInUser,ThreadInterface $thread)
+    protected function doThreadDelete(ParticipantInterface $loggedInUser, ThreadInterface $thread)
     {
         //helper to decide if we need to add success flash
         $access = true;
