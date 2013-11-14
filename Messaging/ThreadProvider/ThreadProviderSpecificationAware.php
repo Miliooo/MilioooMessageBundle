@@ -15,10 +15,7 @@ use Miliooo\Messaging\User\ParticipantInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
- * The SpecificationAware Thread Provider is a secure thread provider.
- *
- * This class uses the canseethreadspecification to decide whether or not to return a thread
- * or throw an exception. It implements the SecureThreadProviderinterface.
+ * A thread provider which uses the can see thread specification to decide whether to allow access to a thread.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
