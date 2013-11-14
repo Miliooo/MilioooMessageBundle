@@ -8,6 +8,8 @@
 
         <service id="miliooo_messaging.specification.can_see_thread" class="Miliooo\Messaging\Specifications\CanSeeThreadSpecification" />
 
+        <service id="miliooo_messaging.specification.can_delete_thread"
+                 class="Miliooo\Messaging\Specifications\CanSeeThreadSpecification"/>
     </services>
 
 </container>
