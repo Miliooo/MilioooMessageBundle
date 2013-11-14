@@ -15,6 +15,10 @@
             <argument type="service" id="miliooo_messaging.repository.message"/>
         </service>
 
+        <service id="miliooo_messaging.delete_thread_manager" class="Miliooo\Messaging\Manager\DeleteThreadManager">
+            <argument type="service" id="miliooo_messaging.repository.thread"/>
+        </service>
+
     </services>
 
 </container>
