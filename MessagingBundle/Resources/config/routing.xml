@@ -25,4 +25,9 @@
         <requirement key="threadId">\d+</requirement>
     </route>
 
+    <route id="miliooo_message_thread_delete" pattern="/delete/{threadId}">
+        <default key="_controller">miliooo_messaging.controller.delete_thread_controller:DeleteAction</default>
+        <requirement key="threadId">\d+</requirement>
+    </route>
+
 </routes>
