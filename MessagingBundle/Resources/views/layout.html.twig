@@ -9,6 +9,19 @@
     <body>
     <div class="container">
         <h1>{% trans from 'MilioooMessagingBundle' %}messenger{% endtrans %}</h1>
+
+        {% if app.session.flashbag.has('success') %}
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">{{ flashMessage }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {% if app.session.flashbag.has('error') %}
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <div class="alert alert-danger">{{ flashMessage }}</div>
+            {% endfor %}
+        {% endif %}
+
             <div class="btn-group">
                 <a href="{{ url('miliooo_message_thread_new' )}}"><button type="button" class="btn btn-default">{% trans from 'MilioooMessagingBundle' %}navigate.send_new_message{% endtrans %}</button></a>
                 <a href="{{ url('miliooo_message_inbox') }}"><button type="button" class="btn btn-default">{% trans from 'MilioooMessagingBundle' %}navigate.inbox{% endtrans %}</button></a>
