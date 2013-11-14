@@ -34,4 +34,5 @@ table:
 #flash messages
 flash:
   thread_deleted_success: De conversatie werd verwijderd.
+  thread_delete_no_permission: Je hebt onvoldoende rechten om dit onderwerp te verwijderen.
   thread_not_found:       Onderwerp niet gevonden.
