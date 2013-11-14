@@ -59,7 +59,7 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
      */
     public function findThreadForParticipant($id, ParticipantInterface $participant)
     {
-        $query = $this->createQueryBuilder('t')
+        return $this->createQueryBuilder('t')
             ->select('t', 'tm', 'm', 'mm')
             //we want all the thread meta since this gets passed to the builder too, we get the recipients from there.
             ->innerJoin('t.threadMeta', 'tm')
@@ -68,16 +68,8 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
             ->leftJoin('m.messageMeta', 'mm', Join::WITH, 'mm.participant = :participant')
             ->where('t.id = :id')
             ->setParameter('id', $id, \PDO::PARAM_INT)
-            ->getQuery();
-
-        //see documentation for getSingleResult in AbstractQuery
-        try {
-            $thread = $query->getSingleResult();
-        } catch (\Doctrine\Orm\NoResultException $e) {
-            $thread = null;
-        }
-
-        return $thread;
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     /**
