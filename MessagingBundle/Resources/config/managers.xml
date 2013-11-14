@@ -21,7 +21,8 @@
 
         <service id="miliooo_messaging.delete_thread_manager_secure"
                  class="Miliooo\Messaging\Manager\DeleteThreadManagerSpecificationAware">
-            <argument type="service" id="miliooo_messaging.delete_thread_manager"/>
+            <argument type="service" id="miliooo_messaging.delete_thread_manager" />
+            <argument type="service" id="miliooo_messaging.specification.can_delete_thread"/>
         </service>
 
     </services>
