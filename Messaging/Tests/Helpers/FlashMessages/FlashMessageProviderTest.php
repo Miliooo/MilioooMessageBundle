@@ -72,7 +72,10 @@ class FlashMessageProviderTest extends \PHPUnit_Framework_TestCase
             ->with(self::SUCCESS_KEY, self::TRANSLATED_STRING);
 
         $this->flashProvider->addFlash(
-            FlashMessageProviderInterface::TYPE_SUCCESS, self::TRANSLATE_KEY, []);
+            FlashMessageProviderInterface::TYPE_SUCCESS,
+            self::TRANSLATE_KEY,
+            []
+        );
     }
 
     public function testAddFlashWithTypeFailure()
@@ -84,7 +87,10 @@ class FlashMessageProviderTest extends \PHPUnit_Framework_TestCase
             ->with(self::ERROR_KEY, self::TRANSLATED_STRING);
 
         $this->flashProvider->addFlash(
-            FlashMessageProviderInterface::TYPE_ERROR, self::TRANSLATE_KEY, []);
+            FlashMessageProviderInterface::TYPE_ERROR,
+            self::TRANSLATE_KEY,
+            []
+        );
     }
 
     protected function expectsTranslatorTranslates()
