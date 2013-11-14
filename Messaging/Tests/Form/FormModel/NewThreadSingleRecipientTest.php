@@ -12,6 +12,7 @@ namespace Miliooo\Messaging\Tests\Form\FormModel;
 
 use Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipient;
 use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
+use Miliooo\Messaging\User\ParticipantInterface;
 
 /**
  * Test file for Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipient
@@ -27,9 +28,18 @@ class NewThreadSingleRecipientTest extends \PHPUnit_Framework_TestCase
      */
     private $formModel;
 
+    /**
+     * A participant
+     *
+     * @var ParticipantInterface
+     */
+    private $recipient;
+
+
     public function setUp()
     {
         $this->formModel = new NewThreadSingleRecipient();
+        $this->recipient = new ParticipantTestHelper(1);
     }
 
     public function testInterface()
@@ -49,5 +59,19 @@ class NewThreadSingleRecipientTest extends \PHPUnit_Framework_TestCase
         $subject = 'this is the subject';
         $this->formModel->setSubject($subject);
         $this->assertSame($subject, $this->formModel->getSubject());
+    }
+
+    /**
+     * The form will call this function to get the recipient.
+     */
+    public function testGetRecipientWorks()
+    {
+        $this->formModel->setRecipient($this->recipient);
+        $this->assertSame($this->recipient, $this->formModel->getRecipient());
+    }
+
+    public function testGetRecipientsReturnsArayWhenEmpty()
+    {
+        $this->assertEquals([], $this->formModel->getRecipients());
     }
 }

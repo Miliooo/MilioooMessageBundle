@@ -38,17 +38,36 @@ class NewThreadSingleRecipient extends AbstractNewMessage implements NewThreadIn
      */
     public function getRecipients()
     {
-        return [$this->recipients];
+        if(!empty($this->recipients))
+        {
+            return [$this->recipients];
+        }
+        return [];
     }
 
     /**
-     * Sets the recipient of the message
+     * Sets the recipient of the message.
+     *
+     * Setting the recipient is not part of the interface. We only care that we can call a function
+     * getRecipients which returns an array of recipients
      *
      * @param ParticipantInterface $recipient
      */
     public function setRecipient(ParticipantInterface $recipient)
     {
         $this->recipients = $recipient;
+    }
+
+    /**
+     * Gets the recipient of the message.
+     *
+     * This function is not part of the interface it's only used to populate the form.
+     * The function getRecipients is part of the interface and expects an array.
+     *
+     */
+    public function getRecipient()
+    {
+        return $this->recipients;
     }
 
     /**
