@@ -35,7 +35,7 @@ class CanSeeThreadSpecification
      * @param ParticipantInterface $participant The user that we check for
      * @param ThreadInterface      $thread      The thread that we check
      *
-     * @return boolean true if participant (user) can see the thread, false otherwise
+     * @return boolean true if participant can see the thread, false otherwise
      */
     public function isSatisfiedBy(ParticipantInterface $participant, ThreadInterface $thread)
     {
