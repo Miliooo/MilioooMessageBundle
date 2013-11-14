@@ -12,7 +12,6 @@ namespace Miliooo\Messaging\Manager;
 
 use Miliooo\Messaging\Repository\MessageRepositoryInterface;
 use Miliooo\Messaging\Model\MessageInterface;
-use Miliooo\Messaging\Model\MessageMetaInterface;
 use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\Messaging\ValueObjects\ReadStatus;
 
@@ -38,6 +37,8 @@ class ReadStatusManager implements ReadStatusManagerInterface
      */
     private $needsUpdate = false;
 
+    private $updatedMessages = [];
+
     /**
      * Constructor.
      *
@@ -51,47 +52,54 @@ class ReadStatusManager implements ReadStatusManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function markMessageCollectionAsRead(ParticipantInterface $participant, $messages = [])
-    {
-        if (!is_array($messages)) {
-            throw new \InvalidArgumentException('expects array with messages as second argument');
-        }
-
+    public function updateReadStatusForMessageCollection(
+        ReadStatus $updatedReadStatus,
+        ParticipantInterface $participant,
+        $messages = []
+    ) {
         foreach ($messages as $message) {
-            $updated = $this->maybeMarkMessageAsRead($participant, $message);
+            $updated = $this->maybeMarkMessageAs($updatedReadStatus, $participant, $message);
 
             if ($updated) {
                 $this->messageRepository->save($message, false);
                 $this->needsUpdate = true;
+                $this->updatedMessages[] = $message;
             }
         }
         //helper to only flush once
         //if one message is updated the needsUpdate gets set to true, so we know we need to flush after the loop
         $this->maybeFlush();
+
+        return $this->updatedMessages;
     }
 
+
+
+
     /**
-     * Maybe marks a single message as read.
+     * Updates a message read status to a new read status.
      *
      * This function is protected because it does not persist the message.
-     * We only want to flush once so this is just a helper function for markMessageCollectionAsRead
+     * We only want to flush once so this is just a helper function for updateReadStatusForMessageCollection
      *
-     * @param ParticipantInterface $participant The participant where we check the read status for
-     * @param MessageInterface     $message     The message where we check the read status for
+     * @param ReadStatus           $newReadStatus The new read status
+     * @param ParticipantInterface $participant   The participant where we check the read status for
+     * @param MessageInterface     $message       The message where we check the read status for
      *
      * @throws \InvalidArgumentException When no message meta found for given participant
      *
-     * @return boolean true if the message has been marked as read (updated), false otherwise
+     * @return boolean true if the message has been updated, false otherwise
      */
-    protected function maybeMarkMessageAsRead(ParticipantInterface $participant, MessageInterface $message)
+    protected function maybeMarkMessageAs(ReadStatus $newReadStatus, ParticipantInterface $participant, MessageInterface $message)
     {
+        $readStatusValue = $newReadStatus->getReadStatus();
         $messageMeta = $message->getMessageMetaForParticipant($participant);
 
         //if no message meta can happen if the logged in user is not participant of the thread
-        if ($messageMeta === null || $messageMeta->getReadStatus() === MessageMetaInterface::READ_STATUS_READ) {
+        if ($messageMeta === null || $messageMeta->getReadStatus() === $readStatusValue) {
             return false;
         }
-                $messageMeta->setReadStatus(new ReadStatus(MessageMetaInterface::READ_STATUS_READ));
+                $messageMeta->setReadStatus($newReadStatus);
 
             return true;
     }
@@ -105,16 +113,5 @@ class ReadStatusManager implements ReadStatusManagerInterface
             $this->messageRepository->flush();
             $this->needsUpdate = false;
         }
-    }
-
-    /**
-     * @param ParticipantInterface $participant
-     * @param array                $messages
-     *
-     * @return mixed
-     */
-    public function markMessageCollectionAsMarkedUnread(ParticipantInterface $participant, $messages = [])
-    {
-
     }
 }

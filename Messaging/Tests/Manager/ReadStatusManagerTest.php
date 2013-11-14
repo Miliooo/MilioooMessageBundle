@@ -43,11 +43,23 @@ class ReadStatusManagerTest extends \PHPUnit_Framework_TestCase
      */
     private $participant;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $message;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $messageMeta;
+
     public function setUp()
     {
         $this->participant = new ParticipantTestHelper(1);
         $this->messageRepository = $this->getMock('Miliooo\Messaging\Repository\MessageRepositoryInterface');
         $this->readStatusManager = new ReadStatusManager($this->messageRepository);
+        $this->message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');
+        $this->messageMeta = $this->getMock('Miliooo\Messaging\Model\MessageMetaInterface');
     }
 
     public function testInterface()
@@ -55,24 +67,16 @@ class ReadStatusManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Miliooo\Messaging\Manager\ReadStatusManagerInterface', $this->readStatusManager);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage expects array with messages as second argument
-     */
-    public function testMarkMessageCollectionAsReadExpectsArrayAsSecondArgument()
-    {
-        $message = $this->getMessageWithUnreadMessageMetaForParticipant();
-        $this->readStatusManager->markMessageCollectionAsRead($this->participant, $message);
-    }
-
-    public function testMarkMessageDoesNotUpdateWhenNo()
+    public function testUpdateReadStatusDoesNotUpdateWhenNoMessageMetaFoundForParticipant()
     {
         $notParticipant = new ParticipantTestHelper('now participant');
         $message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');
+
         $message->expects($this->once())
             ->method('getMessageMetaForParticipant')
             ->with($notParticipant)
             ->will($this->returnValue(null));
+
 
         $this->messageRepository->expects($this->never())
             ->method('save');
@@ -80,24 +84,59 @@ class ReadStatusManagerTest extends \PHPUnit_Framework_TestCase
         $this->messageRepository->expects($this->never())
             ->method('flush');
 
-        $this->readStatusManager->markMessageCollectionAsRead($notParticipant, [$message]);
+        $this->readStatusManager->updateReadStatusForMessageCollection(
+            new ReadStatus(MessageMetaInterface::READ_STATUS_READ),
+            $notParticipant,
+            [$message]
+        );
     }
 
-    public function testMarkMsgCollAsReadCallsSaveOnMessageRepository()
+    public function testUpdateReadStatusSavesTheNewStatusWhenStatusChanged()
     {
-        $message = $this->getMessageWithUnreadMessageMetaForParticipant();
+        $this->expectsMessageMetaForParticipant();
+        $this->expectsAskingMessageMetaForReadStatusWillReturn(MessageMetaInterface::READ_STATUS_READ);
+        $this->expectsUpdatingMessageMetaReadStatusWith(MessageMetaInterface::READ_STATUS_NEVER_READ);
 
+        //expects save
         $this->messageRepository->expects($this->once())
             ->method('save')
-            ->with($message, false);
+            ->with($this->message, false);
 
+        //expects flush
         $this->messageRepository->expects($this->once())
             ->method('flush');
 
-        $this->readStatusManager->markMessageCollectionAsRead($this->participant, [$message]);
+        $results = $this->readStatusManager->updateReadStatusForMessageCollection(
+            new ReadStatus(MessageMetaInterface::READ_STATUS_NEVER_READ),
+            $this->participant,
+            [$this->message]
+        );
+        //expect an array wit this message
+        $this->assertEquals([$this->message], $results);
+        //expect only one message in the array
+        $this->assertCount(1, $results);
     }
 
-    public function testMarkMsgCollAsReadCallsFlushOnlyOnce()
+    public function testUpdateReadStatusDoesNotUpdateAndReturnsEmptyWhenNoUpdates()
+    {
+        $this->expectsMessageMetaForParticipant();
+        $this->expectsAskingMessageMetaForReadStatusWillReturn(MessageMetaInterface::READ_STATUS_NEVER_READ);
+        $this->messageMeta->expects($this->never())->method('setReadStatus');
+
+        $this->messageRepository->expects($this->never())->method('save');
+        $this->messageRepository->expects($this->never())->method('flush');
+
+        $results = $this->readStatusManager->updateReadStatusForMessageCollection(
+            new ReadStatus(MessageMetaInterface::READ_STATUS_NEVER_READ),
+            $this->participant,
+            [$this->message]
+        );
+
+        $this->assertCount(0, $results);
+        $this->assertNotContains($this->message, $results);
+    }
+
+    public function testUpdateReadStatusWith2MessagesReturns2MessagesAndFlushesOnce()
     {
         $message = $this->getMessageWithUnreadMessageMetaForParticipant();
         $message2 = $this->getMessageWithUnreadMessageMetaForParticipant();
@@ -113,57 +152,16 @@ class ReadStatusManagerTest extends \PHPUnit_Framework_TestCase
         $this->messageRepository->expects($this->once())
             ->method('flush');
 
-        $this->readStatusManager->markMessageCollectionAsRead($this->participant, [$message, $message2]);
-    }
+        //expects an array with both messages to be updated
+       $updated = $this->readStatusManager->updateReadStatusForMessageCollection(
+            new ReadStatus(MessageMetaInterface::READ_STATUS_READ),
+            $this->participant,
+            [$message, $message2]
+        );
 
-    public function testMarkMsgCollAsReadCallsRightMethodsOnUnreadMessage()
-    {
-        $message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');
-        $messageMeta = $this->getMock('Miliooo\Messaging\Model\MessageMetaInterface');
-
-        $message->expects($this->once())->method('getMessageMetaForParticipant')
-            ->with($this->participant)
-            ->will($this->returnValue($messageMeta));
-
-        $messageMeta->expects($this->once())->method('getReadStatus')
-            ->will($this->returnValue(MessageMetaInterface::READ_STATUS_NEVER_READ));
-
-        $messageMeta->expects($this->once())->method('setReadStatus')
-            ->with(new ReadStatus(MessageMetaInterface::READ_STATUS_READ));
-
-        $this->readStatusManager->markMessageCollectionAsRead($this->participant, [$message]);
-    }
-
-    public function testMarkMsgCollAsReadCallsRightMethodsOnReadMessage()
-    {
-        $message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');
-        $messageMeta = $this->getMock('Miliooo\Messaging\Model\MessageMetaInterface');
-
-        $message->expects($this->once())->method('getMessageMetaForParticipant')
-            ->with($this->participant)
-            ->will($this->returnValue($messageMeta));
-
-        $messageMeta->expects($this->once())->method('getReadStatus')
-            ->will($this->returnValue(MessageMetaInterface::READ_STATUS_READ));
-
-        $messageMeta->expects($this->never())->method('setReadStatus');
-
-        $this->readStatusManager->markMessageCollectionAsRead($this->participant, [$message]);
-    }
-
-    public function testMarkMsgCollAsReadDoesNotUpdateAlreadyReadMessages()
-    {
-        $message = $this->getMessageWithUnreadMessageMetaForParticipant();
-        //set the status to read
-        $message->getMessageMetaForParticipant($this->participant)
-            ->setReadStatus(new ReadStatus(MessageMetaInterface::READ_STATUS_READ));
-
-        $this->messageRepository->expects($this->never())
-            ->method('save');
-        $this->messageRepository->expects($this->never())
-            ->method('flush');
-
-        $this->readStatusManager->markMessageCollectionAsRead($this->participant, [$message]);
+        $this->assertCount(2, $updated);
+        $this->assertContains($message, $updated);
+        $this->assertContains($message2, $updated);
     }
 
     /**
@@ -182,5 +180,31 @@ class ReadStatusManagerTest extends \PHPUnit_Framework_TestCase
         $message->addMessageMeta($messageMeta);
 
         return $message;
+    }
+
+    protected function expectsMessageMetaForParticipant()
+    {
+        $this->message->expects($this->once())->method('getMessageMetaForParticipant')
+            ->with($this->participant)
+            ->will($this->returnValue($this->messageMeta));
+    }
+
+    /**
+     * @param integer $readStatusValue The read status value
+     */
+    protected function expectsAskingMessageMetaForReadStatusWillReturn($readStatusValue)
+    {
+        $this->messageMeta->expects($this->once())->method('getReadStatus')
+            ->will($this->returnValue($readStatusValue));
+    }
+
+    /**
+     * @param integer $readStatusValue The read status value
+     */
+    protected function expectsUpdatingMessageMetaReadStatusWith($readStatusValue)
+    {
+        $this->messageMeta->expects($this->once())->method('setReadStatus')
+            ->with(new ReadStatus($readStatusValue));
+
     }
 }

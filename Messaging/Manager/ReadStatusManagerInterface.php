@@ -12,6 +12,7 @@ namespace Miliooo\Messaging\Manager;
 
 use Miliooo\Messaging\Model\MessageInterface;
 use Miliooo\Messaging\User\ParticipantInterface;
+use Miliooo\Messaging\ValueObjects\ReadStatus;
 
 /**
  * The read status manager is responsible for changing the read statuses of messages.
@@ -21,27 +22,20 @@ use Miliooo\Messaging\User\ParticipantInterface;
 interface ReadStatusManagerInterface
 {
     /**
-     * Marks a message collection as read for a given participant.
+     * Updates the read status for a message collection for a given participant.
      *
-     * If the message has been already marked as read nothing happens.
-     * We use a messageCollection as argument and not a thread since it's possible to paginate single threads.
-     * That way we are sure only the seen messages are being updated.
+     * If the old read status equals the new read status no updates happen
+     * If the participant is not part of the messageMeta no updates happen
      *
-     * Marking messages as read needs to happen just before we show the thread to the user.
+     * @param ReadStatus           $updatedReadStatus The new read status
+     * @param ParticipantInterface $participant       The participant for who we update the read status
+     * @param MessageInterface[]   $messages          An array of messageInterfaces for whom we want to update the read status
      *
-     * @param ParticipantInterface $participant The participant for who we update the read status
-     * @param MessageInterface[] $messages An array of messageInterfaces that ne
-     *
-     * @throws \InvalidArgumentException if no array given or array does not contain message interfaces
-     * @throws \InvalidArgumentException if no message meta found for given participant
+     * @return MessageInterface[]|[] Array with the updated messages, an empty array if no messages were updated
      */
-    public function markMessageCollectionAsRead(ParticipantInterface $participant, $messages = []);
-
-
-    /**
-     * @param ParticipantInterface $participant
-     * @param array $messages
-     * @return mixed
-     */
-    public function markMessageCollectionAsMarkedUnread(ParticipantInterface $participant, $messages = []);
+    public function updateReadStatusForMessageCollection(
+        ReadStatus $updatedReadStatus,
+        ParticipantInterface $participant,
+        $messages = []
+    );
 }
