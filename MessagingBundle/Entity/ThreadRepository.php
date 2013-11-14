@@ -132,7 +132,7 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
         $em = $this->getEntityManager();
         $em->remove($thread);
 
-        if($flush) {
+        if ($flush) {
             $em->flush();
         }
     }
