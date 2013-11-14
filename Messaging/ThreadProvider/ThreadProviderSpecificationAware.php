@@ -30,8 +30,8 @@ class ThreadProviderSpecificationAware implements SecureThreadProviderInterface
     /**
      * Constructor.
      *
-     * @param ThreadProviderInterface $threadProvider A thread provider instance
-     * @param CanSeeThreadSpecification $canSeeThread A canseethreadspecification
+     * @param ThreadProviderInterface   $threadProvider A thread provider instance
+     * @param CanSeeThreadSpecification $canSeeThread   A canseethreadspecification
      */
     public function __construct(ThreadProviderInterface $threadProvider, CanSeeThreadSpecification $canSeeThread)
     {
