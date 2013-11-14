@@ -94,4 +94,12 @@ interface ThreadRepositoryInterface
      * This calls flush to the entity manager and all persisted objects will be saved.
      */
     public function flush();
+
+    /**
+     * Deletes a thread.
+     *
+     * @param ThreadInterface $thread The thread we want to delete
+     * @param boolean         $flush  Whether to flush or not, defaults to true
+     */
+    public function delete(ThreadInterface $thread, $flush = true);
 }

@@ -75,19 +75,6 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
     /**
      * {@inheritdoc}
      */
-    public function save(ThreadInterface $thread, $flush = true)
-    {
-        $em = $this->getEntityManager();
-        $em->persist($thread);
-
-        if ($flush) {
-            $em->flush();
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function flush()
     {
         $em = $this->getEntityManager();
@@ -122,5 +109,31 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
             ->setParameter('status', ThreadMetaInterface::STATUS_ACTIVE, \PDO::PARAM_INT)
             ->andWhere('tm.lastParticipantMessageDate IS NOT NULL')
             ->orderBy('tm.lastParticipantMessageDate', 'DESC');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function save(ThreadInterface $thread, $flush = true)
+    {
+        $em = $this->getEntityManager();
+        $em->persist($thread);
+
+        if ($flush) {
+            $em->flush();
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function delete(ThreadInterface $thread, $flush = true)
+    {
+        $em = $this->getEntityManager();
+        $em->remove($thread);
+
+        if($flush) {
+            $em->flush();
+        }
     }
 }
