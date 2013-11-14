@@ -49,8 +49,10 @@ class ReadStatusManagerEventAware implements ReadStatusManagerInterface
      * @param ReadStatusManagerInterface $readStatusManager
      * @param EventDispatcherInterface   $eventDispatcher
      */
-    public function __construct(ReadStatusManagerInterface $readStatusManager, EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        ReadStatusManagerInterface $readStatusManager,
+        EventDispatcherInterface $eventDispatcher
+    ) {
         $this->readStatusManager = $readStatusManager;
         $this->eventDispatcher = $eventDispatcher;
     }
@@ -83,8 +85,7 @@ class ReadStatusManagerEventAware implements ReadStatusManagerInterface
      */
     protected function maybeDispatchMessages($updatedMessages, $participant)
     {
-        foreach ($updatedMessages as $message)
-        {
+        foreach ($updatedMessages as $message) {
             $this->dispatchMessage($message, $participant);
         }
     }

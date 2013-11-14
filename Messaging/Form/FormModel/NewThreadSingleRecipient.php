@@ -38,8 +38,7 @@ class NewThreadSingleRecipient extends AbstractNewMessage implements NewThreadIn
      */
     public function getRecipients()
     {
-        if(!empty($this->recipients))
-        {
+        if (!empty($this->recipients)) {
             return [$this->recipients];
         }
         return [];

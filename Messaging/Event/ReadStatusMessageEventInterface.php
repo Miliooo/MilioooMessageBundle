@@ -14,7 +14,6 @@ use Miliooo\Messaging\Model\MessageInterface;
 use Miliooo\Messaging\Model\ThreadInterface;
 use Miliooo\Messaging\User\ParticipantInterface;
 
-
 /**
  * A model for messages from whom the read status has changed.
  *

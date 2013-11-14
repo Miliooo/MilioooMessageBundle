@@ -29,5 +29,4 @@ class MilioooMessagingEvents
      *
      */
     const READ_STATUS_CHANGED = 'miliooo_messaging.read_status_changed';
-
 }
