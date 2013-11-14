@@ -160,7 +160,6 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('test.com'));
 
         $this->controller->showAction(1);
-
     }
 
     protected function expectsFormFactoryCreatesForm()

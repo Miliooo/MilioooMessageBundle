@@ -153,7 +153,7 @@ class ReadStatusManagerTest extends \PHPUnit_Framework_TestCase
             ->method('flush');
 
         //expects an array with both messages to be updated
-       $updated = $this->readStatusManager->updateReadStatusForMessageCollection(
+        $updated = $this->readStatusManager->updateReadStatusForMessageCollection(
             new ReadStatus(MessageMetaInterface::READ_STATUS_READ),
             $this->participant,
             [$message, $message2]

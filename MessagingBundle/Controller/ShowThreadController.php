@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
 use Miliooo\Messaging\Model\MessageMetaInterface;
 use Miliooo\Messaging\ValueObjects\ReadStatus;
+
 /**
  * Controller for showing a single thread.
  *
@@ -70,8 +71,7 @@ class ShowThreadController
         ParticipantProviderInterface $participantProvider,
         ReadStatusManagerInterface $readStatusManager,
         RouterInterface $router
-
-        ) {
+    ) {
         $this->formFactory = $formFactory;
         $this->formHandler = $formHandler;
         $this->threadProvider = $threadProvider;

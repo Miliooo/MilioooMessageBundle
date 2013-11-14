@@ -29,7 +29,7 @@ interface ReadStatusManagerInterface
      *
      * @param ReadStatus           $updatedReadStatus The new read status
      * @param ParticipantInterface $participant       The participant for who we update the read status
-     * @param MessageInterface[]   $messages          An array of messageInterfaces for whom we want to update the read status
+     * @param MessageInterface[]   $messages          array of messageInterfaces for whom we update the reads status
      *
      * @return MessageInterface[]|[] Array with the updated messages, an empty array if no messages were updated
      */

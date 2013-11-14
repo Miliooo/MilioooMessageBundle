@@ -73,9 +73,6 @@ class ReadStatusManager implements ReadStatusManagerInterface
         return $this->updatedMessages;
     }
 
-
-
-
     /**
      * Updates a message read status to a new read status.
      *
@@ -90,8 +87,11 @@ class ReadStatusManager implements ReadStatusManagerInterface
      *
      * @return boolean true if the message has been updated, false otherwise
      */
-    protected function maybeMarkMessageAs(ReadStatus $newReadStatus, ParticipantInterface $participant, MessageInterface $message)
-    {
+    protected function maybeMarkMessageAs(
+        ReadStatus $newReadStatus,
+        ParticipantInterface $participant,
+        MessageInterface $message
+    ) {
         $readStatusValue = $newReadStatus->getReadStatus();
         $messageMeta = $message->getMessageMetaForParticipant($participant);
 
