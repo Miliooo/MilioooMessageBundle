@@ -14,7 +14,7 @@
         <service id="miliooo_messaging.thread_provider.thread_provider_secure"
                  class="Miliooo\Messaging\ThreadProvider\ThreadProviderSpecificationAware">
             <argument type="service" id="miliooo_messaging.thread_provider.thread_provider"/>
-            <argument type="service" id="milioo_messaging.specification.can_see_thread"/>
+            <argument type="service" id="miliooo_messaging.specification.can_see_thread"/>
         </service>
 
         <service id="miliooo_messaging.thread_provider.inbox"
