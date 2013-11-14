@@ -13,6 +13,8 @@ namespace Miliooo\MessagingBundle\Tests\Controller;
 use Miliooo\MessagingBundle\Controller\ShowThreadController;
 use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
 use Miliooo\Messaging\User\ParticipantInterface;
+use Miliooo\Messaging\ValueObjects\ReadStatus;
+use Miliooo\Messaging\Model\MessageMetaInterface;
 
 /**
  * Test file for Miliooo\MessagingBundle\Controller\ShowThreadController
@@ -238,7 +240,7 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
 
         $this->readStatusManager
             ->expects($this->once())
-            ->method('markMessageCollectionAsRead')
-            ->with($this->loggedInUser, [$this->message]);
+            ->method('updateReadStatusForMessageCollection')
+            ->with(new ReadStatus(MessageMetaInterface::READ_STATUS_READ), $this->loggedInUser, [$this->message]);
     }
 }

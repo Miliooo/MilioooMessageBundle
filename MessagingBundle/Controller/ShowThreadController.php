@@ -20,7 +20,8 @@ use Miliooo\Messaging\Form\FormHandler\NewReplyFormHandler;
 use Miliooo\Messaging\Manager\ReadStatusManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
-
+use Miliooo\Messaging\Model\MessageMetaInterface;
+use Miliooo\Messaging\ValueObjects\ReadStatus;
 /**
  * Controller for showing a single thread.
  *
@@ -105,7 +106,12 @@ class ShowThreadController
             return new RedirectResponse($url);
         }
 
-        $this->readStatusManager->markMessageCollectionAsRead($loggedInUser, $thread->getMessages()->toArray());
+        $this->readStatusManager->updateReadStatusForMessageCollection(
+            new ReadStatus(MessageMetaInterface::READ_STATUS_READ),
+            $loggedInUser,
+            $thread->getMessages()->toArray()
+            );
+
         $twig = 'MilioooMessagingBundle:ShowThread:show_thread.html.twig';
 
         return $this->templating->renderResponse($twig, ['thread' => $thread, 'form' => $form->createView()]);
