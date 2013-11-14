@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 interface DeleteThreadManagerSecureInterface
 {
     /**
-     * Checks if the given participant can delete the given thread.
+     * Deletes a thread if the given participant has enough rights to do so. Else throws an exception.
      *
      * @param ParticipantInterface $participant The participant who wants to delete a thread
      * @param ThreadInterface      $thread      The given thread
