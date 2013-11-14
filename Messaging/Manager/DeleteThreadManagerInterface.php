@@ -19,7 +19,6 @@ use Miliooo\Messaging\Model\ThreadInterface;
  */
 interface DeleteThreadManagerInterface
 {
-
     /**
      * Deletes a thread.
      *
@@ -27,5 +26,4 @@ interface DeleteThreadManagerInterface
      * @param boolean         $flush  Whether to flush, defaults to true
      */
     public function deleteThread(ThreadInterface $thread, $flush = true);
-
 }
