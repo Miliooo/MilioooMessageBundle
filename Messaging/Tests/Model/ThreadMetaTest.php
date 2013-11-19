@@ -91,4 +91,14 @@ class ThreadMetaTest extends \PHPUnit_Framework_TestCase
         $this->threadMeta->setThread($thread);
         $this->assertSame($thread, $this->threadMeta->getThread());
     }
+
+    public function testUnreadMessageCountWorks()
+    {
+        //assert default value is zero
+        $this->assertEquals(0, $this->threadMeta->getUnreadMessageCount());
+
+        $unreadCount = 5;
+        $this->threadMeta->setUnreadMessageCount($unreadCount);
+        $this->assertSame($unreadCount, $this->threadMeta->getUnreadMessageCount());
+    }
 }

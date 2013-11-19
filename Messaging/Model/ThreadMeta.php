@@ -62,6 +62,13 @@ abstract class ThreadMeta implements ThreadMetaInterface
     protected $lastMessageDate;
 
     /**
+     * The number of unread messages for the participant for the given thread.
+     *
+     * @var integer
+     */
+    protected $unreadMessageCount = 0;
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -162,5 +169,21 @@ abstract class ThreadMeta implements ThreadMetaInterface
     public function setLastMessageDate(\DateTime $lastMessageDate)
     {
         $this->lastMessageDate = $lastMessageDate;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUnreadMessageCount()
+    {
+        return $this->unreadMessageCount;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUnreadMessageCount($unreadCount)
+    {
+        $this->unreadMessageCount = intval($unreadCount);
     }
 }
