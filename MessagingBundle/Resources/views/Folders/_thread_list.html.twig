@@ -12,11 +12,12 @@
     {% if pagerfanta.getNbResults > 0 %}
 
         {% for thread in pagerfanta.getCurrentPageResults %}
+            {% set unreadCount = miliooo_messaging_unread_message_count(thread) %}
             <tr>
                 <td>
                     <a href="{{ url('miliooo_message_thread_view', {'threadId': thread.id}) }}">
                         {{ thread.subject }}
-                    </a>
+                    </a>{% if unreadCount > 0 %}&nbsp;<span class="badge">{{ unreadCount }}</span>{% endif %}
                 </td>
                 <td>
                     {{ thread.createdBy }}

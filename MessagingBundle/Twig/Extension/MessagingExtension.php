@@ -13,6 +13,7 @@ namespace Miliooo\MessagingBundle\Twig\Extension;
 use Miliooo\Messaging\User\ParticipantProviderInterface;
 use Miliooo\Messaging\Model\MessageInterface;
 use Miliooo\Messaging\Model\MessageMetaInterface;
+use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
  * Twig extension class
@@ -49,15 +50,18 @@ class MessagingExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'miliooo_messaging_is_new_read' => new \Twig_Function_Method($this, 'isMessageNewRead')
+            'miliooo_messaging_is_new_read' => new \Twig_Function_Method($this, 'isMessageNewRead'),
+            'miliooo_messaging_unread_message_count' => new \Twig_Function_Method($this, 'getUnreadMessageCount')
         ];
     }
 
     /**
+     * Checks if the message needs a new read label.
+     *
      * @param MessageInterface $message
      *
      * @return boolean true if it's a new read message for the logged in user
-     *                 false if no messagemeta found for the logged in user
+     *                 false if no message meta found for the logged in user
      *                 or not a new read message for the logged in user
      */
     public function isMessageNewRead(MessageInterface $message)
@@ -78,6 +82,26 @@ class MessagingExtension extends \Twig_Extension
 
         //this can happen if you let non participants (eg admin) see a thread
         return false;
+    }
+
+    /**
+     * Checks how many unread messages a topic has.
+     *
+     * @param ThreadInterface $thread
+     *
+     * @return integer
+     */
+    public function getUnreadMessageCount(ThreadInterface $thread)
+    {
+        $currentUser = $this->participantProvider->getAuthenticatedParticipant();
+        $threadMeta = $thread->getThreadMetaForParticipant($currentUser);
+
+        //the current user is not part of this thread conversation let's just return zero
+        if (!$threadMeta) {
+            return 0;
+        }
+
+        return $threadMeta->getUnreadMessageCount();
     }
 
     /**

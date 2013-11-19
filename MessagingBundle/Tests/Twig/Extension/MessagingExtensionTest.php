@@ -45,6 +45,16 @@ class MessagingExtensionTest extends \PHPUnit_Framework_TestCase
     private $messageMeta;
 
     /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $thread;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $threadMeta;
+
+    /**
      * @var ParticipantInterface
      */
     private $loggedInUser;
@@ -56,6 +66,8 @@ class MessagingExtensionTest extends \PHPUnit_Framework_TestCase
 
         $this->message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');
         $this->messageMeta = $this->getMock('Miliooo\Messaging\Model\MessageMetaInterface');
+        $this->thread = $this->getMock('Miliooo\Messaging\Model\ThreadInterface');
+        $this->threadMeta = $this->getMock('Miliooo\Messaging\Model\ThreadMetaInterface');
         $this->loggedInUser = new ParticipantTestHelper(1);
     }
 
@@ -118,9 +130,33 @@ class MessagingExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->messagingExtension->isMessageNewRead($this->message));
     }
 
+    public function testGetUnreadMessageCount()
+    {
+        $this->expectsLoggedInUser();
+
+        $this->thread->expects($this->once())->method('getThreadMetaForParticipant')
+            ->with($this->loggedInUser)
+            ->will($this->returnValue($this->threadMeta));
+
+        $this->threadMeta->expects($this->once())->method('getUnreadMessageCount')
+            ->will($this->returnValue(5));
+
+        $this->assertEquals(5, $this->messagingExtension->getUnreadMessageCount($this->thread));
+    }
+
+    public function testGetUnreadMessageCountWhenParticipantNotThreadParticipant()
+    {
+        $this->expectsLoggedInUser();
+        $this->thread->expects($this->once())->method('getThreadMetaForParticipant')
+            ->with($this->loggedInUser)
+            ->will($this->returnValue(null));
+        $this->assertEquals(0, $this->messagingExtension->getUnreadMessageCount($this->thread));
+    }
+
     public function testGetFunctions()
     {
         $this->assertArrayHasKey('miliooo_messaging_is_new_read', $this->messagingExtension->getFunctions());
+        $this->assertArrayHasKey('miliooo_messaging_unread_message_count', $this->messagingExtension->getFunctions());
     }
 
     protected function expectsLoggedInUser()

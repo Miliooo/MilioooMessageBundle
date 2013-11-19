@@ -286,11 +286,17 @@ abstract class AbstractMessageBuilder
     /**
      * Updates the thread meta with the settings specific for the recipient
      *
+     * This processes the builder model
+     *
      * @param ThreadMetaInterface $threadMeta
      */
     protected function updateThreadMetaForRecipient(ThreadMetaInterface $threadMeta)
     {
         $this->processBuilderModel('getThreadMeta', 'all', $threadMeta);
         $this->processBuilderModel('getThreadMeta', 'recipients', $threadMeta);
+
+        //updates the unread message count for the recipient.
+        $previousUnreadCount = intval($threadMeta->getUnreadMessageCount());
+        $threadMeta->setUnreadMessageCount(++$previousUnreadCount);
     }
 }

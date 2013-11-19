@@ -14,6 +14,7 @@ use Miliooo\Messaging\Repository\MessageRepositoryInterface;
 use Miliooo\Messaging\Model\MessageInterface;
 use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\Messaging\ValueObjects\ReadStatus;
+use Miliooo\Messaging\Model\MessageMetaInterface;
 
 /**
  * The read status manager is responsible for changing the read statuses of messages.
@@ -100,6 +101,7 @@ class ReadStatusManager implements ReadStatusManagerInterface
             return false;
         }
                 $messageMeta->setReadStatus($newReadStatus);
+                $this->updateThreadMetaUnreadCount($message, $participant, $newReadStatus);
 
             return true;
     }
@@ -113,5 +115,41 @@ class ReadStatusManager implements ReadStatusManagerInterface
             $this->messageRepository->flush();
             $this->needsUpdate = false;
         }
+    }
+
+
+    /**
+     * Updates the thread meta unread count for the participant.
+     *
+     * @param MessageInterface     $message
+     * @param ParticipantInterface $participant
+     * @param ReadStatus           $newReadStatus
+     */
+    protected function updateThreadMetaUnreadCount(
+        MessageInterface $message,
+        ParticipantInterface $participant,
+        ReadStatus $newReadStatus
+    ) {
+        //get the thread
+        $thread = $message->getThread();
+
+        //get the thread meta for the participant
+        $threadMeta = $thread->getThreadMetaForParticipant($participant);
+        //return if no thread meta, should not happen
+        if (!$threadMeta) {
+            return;
+        }
+
+        // gets the integer of the number of unread messages
+        $unreadCount = $threadMeta->getUnreadMessageCount();
+
+        //we marked a message as read so we lower the unread count with one
+        if ($newReadStatus->getReadStatus() === MessageMetaInterface::READ_STATUS_READ) {
+            $newUnreadCount = --$unreadCount;
+        } else {
+            $newUnreadCount = ++$unreadCount;
+        }
+
+        $threadMeta->setUnreadMessageCount($newUnreadCount);
     }
 }

@@ -99,4 +99,18 @@ interface ThreadMetaInterface extends BuilderInterface
      * @param \DateTime $lastMessageDate datetime of the last message by another participant
      */
     public function setLastMessageDate(\DateTime $lastMessageDate);
+
+    /**
+     * Gets the number of unread messages for the participant from the given thread.
+     *
+     * @return integer The number of unread messages from the thread for the given participant
+     */
+    public function getUnreadMessageCount();
+
+    /**
+     * Sets the number of unread messages for the participant from the given thread.
+     *
+     * @param integer $unreadCount The number of unread messages from the thread for the given participant
+     */
+    public function setUnreadMessageCount($unreadCount);
 }
