@@ -95,8 +95,9 @@ class MessagingExtension extends \Twig_Extension
     {
         $currentUser = $this->participantProvider->getAuthenticatedParticipant();
         $threadMeta = $thread->getThreadMetaForParticipant($currentUser);
+
         //the current user is not part of this thread conversation let's just return zero
-        if(!$threadMeta) {
+        if (!$threadMeta) {
             return 0;
         }
 
