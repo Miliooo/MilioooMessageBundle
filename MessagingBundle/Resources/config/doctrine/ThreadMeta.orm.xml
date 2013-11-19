@@ -10,7 +10,7 @@
             <unique-constraint columns="thread_id, participant_id" name="search_idx" />
         </unique-constraints>
 
-        <field name="status" column="status" type="integer"/>
+        <field name="status" column="status" type="smallint"/>
 
         <field name="lastParticipantMessageDate" column="last_participant_message_date" type="datetime" nullable="true" />
 
