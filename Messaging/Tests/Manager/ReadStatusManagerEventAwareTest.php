@@ -102,9 +102,7 @@ class ReadStatusManagerEventAwareTest extends \PHPUnit_Framework_TestCase
         // create the event
         $event = new ReadStatusMessageEvent(
             $this->message,
-            $this->participant,
-            MessageMetaInterface::READ_STATUS_NEVER_READ,
-            MessageMetaInterface::READ_STATUS_READ
+            $this->participant
         );
 
         $this->eventDispatcher->expects($this->once())->method('dispatch')
