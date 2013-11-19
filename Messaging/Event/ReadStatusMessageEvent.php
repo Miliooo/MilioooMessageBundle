@@ -21,7 +21,7 @@ use Symfony\Component\EventDispatcher\Event;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class ReadStatusMessageEvent extends Event implements ReadStatusMessageEventInterface
+class ReadStatusMessageEvent extends Event
 {
     /**
      * The message from whom the read status has changed.
@@ -29,20 +29,6 @@ class ReadStatusMessageEvent extends Event implements ReadStatusMessageEventInte
      * @var MessageInterface
      */
     protected $message;
-
-    /**
-     * The old status.
-     *
-     * @var int
-     */
-    protected $oldStatus;
-
-    /**
-     * The new status.
-     *
-     * @var int
-     */
-    protected $newStatus;
 
     /**
      * The participant from whom the read status has changed.
@@ -56,14 +42,11 @@ class ReadStatusMessageEvent extends Event implements ReadStatusMessageEventInte
      *
      * @param MessageInterface     $message
      * @param ParticipantInterface $participant
-     * @param integer              $oldStatus
-     * @param integer              $newStatus
      */
-    public function __construct(MessageInterface $message, ParticipantInterface $participant, $oldStatus, $newStatus)
+    public function __construct(MessageInterface $message, ParticipantInterface $participant)
     {
         $this->message = $message;
-        $this->oldStatus = $oldStatus;
-        $this->newStatus = $newStatus;
+        $this->participant = $participant;
     }
 
     /**
@@ -91,9 +74,9 @@ class ReadStatusMessageEvent extends Event implements ReadStatusMessageEventInte
      *
      * @return integer one of MessageInterface read status constants
      */
-    public function getOldReadStatus()
+    public function getPreviousReadStatus()
     {
-        return $this->oldStatus;
+        return $this->message->getMessageMetaForParticipant($this->participant)->getPreviousReadStatus();
     }
 
     /**
@@ -101,9 +84,9 @@ class ReadStatusMessageEvent extends Event implements ReadStatusMessageEventInte
      *
      * @return integer one of MessageInterface read status constants
      */
-    public function getNewStatus()
+    public function getReadStatus()
     {
-        return $this->newStatus;
+        return $this->message->getMessageMetaForParticipant($this->participant)->getReadStatus();
     }
 
     /**
@@ -113,8 +96,8 @@ class ReadStatusMessageEvent extends Event implements ReadStatusMessageEventInte
      */
     public function isFirstTimeRead()
     {
-        if ($this->oldStatus === MessageMetaInterface::READ_STATUS_NEVER_READ
-            && $this->newStatus === MessageMetaInterface::READ_STATUS_READ) {
+        if ($this->getPreviousReadStatus() === MessageMetaInterface::READ_STATUS_NEVER_READ
+            && $this->getReadStatus() === MessageMetaInterface::READ_STATUS_READ) {
 
             return true;
         }
