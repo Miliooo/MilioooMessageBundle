@@ -12,6 +12,8 @@
 
         <field name="status" column="status" type="smallint"/>
 
+        <field name="unreadMessageCount" column="unread_message_count" type="integer"/>
+
         <field name="lastParticipantMessageDate" column="last_participant_message_date" type="datetime" nullable="true" />
 
         <field name="lastMessageDate" column="last_message_date" type="datetime" nullable="true" />
