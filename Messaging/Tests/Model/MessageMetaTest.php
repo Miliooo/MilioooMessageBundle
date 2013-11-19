@@ -53,8 +53,8 @@ class MessageMetaTest extends \PHPUnit_Framework_TestCase
         $this->messageMeta->setReadStatus($readStatus);
         //the getReadStatus should be read
         $this->assertSame(MessageMetaInterface::READ_STATUS_READ, $this->messageMeta->getReadStatus());
-        //the previous read status should still  be never read
-        $this->assertSame(MessageMetaInterface::READ_STATUS_NEVER_READ, $this->messageMeta->getPreviousReadStatus());
+        //the previous read status should still be never read //since we construct the message with status never read
+        $this->assertNull($this->messageMeta->getPreviousReadStatus());
 
         //we set the new read status to marked_unread
         $readStatus = new ReadStatus(MessageMetaInterface::READ_STATUS_MARKED_UNREAD);
@@ -72,8 +72,8 @@ class MessageMetaTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($message, $this->messageMeta->getMessage());
     }
 
-    public function testGetPreviousReadStatusDefautsToNeverRead()
+    public function testGetPreviousReadStatusDefaultsToNull()
     {
-        $this->assertEquals($this->messageMeta->getReadStatus(), MessageMetaInterface::READ_STATUS_NEVER_READ);
+        $this->assertNull($this->messageMeta->getPreviousReadStatus());
     }
 }

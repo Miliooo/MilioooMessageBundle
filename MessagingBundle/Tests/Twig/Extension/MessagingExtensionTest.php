@@ -64,26 +64,7 @@ class MessagingExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('miliooo_messaging', $this->messagingExtension->getName());
     }
 
-    public function testIsMessageReadWithPreviousStateMarkedUnread()
-    {
-        $this->expectsLoggedInUser();
-        $this->expectsMessageMetaForLoggedInUser();
-        $this->messageMeta->expects($this->once())
-            ->method('getPreviousReadStatus')
-            ->will($this->returnValue(MessageMetaInterface::READ_STATUS_MARKED_UNREAD));
-        $this->assertTrue($this->messagingExtension->isMessageNewRead($this->message));
-    }
-
-    public function testIsMessageReadWithNewPreviousStateRead()
-    {
-        $this->expectsLoggedInUser();
-        $this->expectsMessageMetaForLoggedInUser();
-        $this->messageMeta->expects($this->once())->method('getPreviousReadStatus')
-            ->will($this->returnValue(MessageMetaInterface::READ_STATUS_READ));
-        $this->assertFalse($this->messagingExtension->isMessageNewRead($this->message));
-    }
-
-    public function testIsNewReadWithGetMessageMetaForParticipantReturnsNull()
+    public function testIsMessageReadWithNoMessageMetaForParticipant()
     {
         $this->expectsLoggedInUser();
         $this->message->expects($this->once())
@@ -92,6 +73,49 @@ class MessagingExtensionTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(null));
 
         $this->assertFalse($this->messagingExtension->isMessageNewRead($this->message));
+    }
+
+    public function testIsMessageReadWithPreviousStateNull()
+    {
+        $this->expectsLoggedInUser();
+        $this->expectsMessageMetaForLoggedInUser();
+        $this->messageMeta->expects($this->once())
+            ->method('getPreviousReadStatus')
+            ->will($this->returnValue(null));
+        $this->messageMeta->expects($this->never())
+            ->method('getReadStatus');
+
+        $this->assertFalse($this->messagingExtension->isMessageNewRead($this->message));
+    }
+
+    public function testIsMessageReadWithPreviousReadStatusButReadStatusNotRead()
+    {
+        $this->expectsLoggedInUser();
+        $this->expectsMessageMetaForLoggedInUser();
+        $this->messageMeta->expects($this->once())->method('getPreviousReadStatus')
+            ->will($this->returnValue(MessageMetaInterface::READ_STATUS_READ));
+
+        $this->messageMeta->expects($this->once())->method('getReadStatus')
+            ->will($this->returnValue(MessageMetaInterface::READ_STATUS_MARKED_UNREAD));
+
+        $this->assertFalse($this->messagingExtension->isMessageNewRead($this->message));
+    }
+
+    public function testIsNewReadWReturnsTrue()
+    {
+        $this->expectsLoggedInUser();
+        $this->message->expects($this->once())
+            ->method('getMessageMetaForParticipant')
+            ->with($this->loggedInUser)
+            ->will($this->returnValue($this->messageMeta));
+
+        $this->messageMeta->expects($this->once())->method('getPreviousReadStatus')
+            ->will($this->returnValue(MessageMetaInterface::READ_STATUS_NEVER_READ));
+
+        $this->messageMeta->expects($this->once())->method('getReadStatus')
+            ->will($this->returnValue(MessageMetaInterface::READ_STATUS_READ));
+
+        $this->assertTrue($this->messagingExtension->isMessageNewRead($this->message));
     }
 
     public function testGetFunctions()

@@ -67,7 +67,13 @@ class MessagingExtension extends \Twig_Extension
         $messageMeta = $message->getMessageMetaForParticipant($currentUser);
 
         if ($messageMeta) {
-            return ($messageMeta->getPreviousReadStatus() !== MessageMetaInterface::READ_STATUS_READ);
+            return (
+                //since it's not null the read status has changed
+                $messageMeta->getPreviousReadStatus() !== null
+                &&
+                //the recent read status is read
+                $messageMeta->getReadStatus() === MessageMetaInterface::READ_STATUS_READ
+            );
         }
 
         //this can happen if you let non participants (eg admin) see a thread

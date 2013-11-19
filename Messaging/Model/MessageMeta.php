@@ -28,13 +28,19 @@ abstract class MessageMeta implements MessageMetaInterface
     protected $participant;
 
     /**
-     * Sets the read status of the message for the given participant
+     * The read status of the message for the given participant
      *
-     * @var boolean true if it's read by the given participant, false otherwise
+     * @var integer
      */
-    protected $readStatus = MessageMetaInterface::READ_STATUS_NEVER_READ;
+    protected $readStatus;
 
-    protected $previousReadStatus = MessageMetaInterface::READ_STATUS_NEVER_READ;
+    /**
+     * The previous read status this will return null if the read status has not changed or an integer of the read
+     * status has changed.
+     *
+     * @var integer|null
+     */
+    protected $previousReadStatus;
 
     protected $message;
 
