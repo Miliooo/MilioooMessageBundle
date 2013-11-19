@@ -15,6 +15,8 @@ use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
 use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\Messaging\TestHelpers\Model\Message;
 use Miliooo\Messaging\TestHelpers\Model\MessageMeta;
+use Miliooo\Messaging\TestHelpers\Model\Thread;
+use Miliooo\Messaging\TestHelpers\Model\ThreadMeta;
 use Miliooo\Messaging\Model\MessageInterface;
 use Miliooo\Messaging\Model\MessageMetaInterface;
 use Miliooo\Messaging\ValueObjects\ReadStatus;
@@ -53,6 +55,16 @@ class ReadStatusManagerTest extends \PHPUnit_Framework_TestCase
      */
     private $messageMeta;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $thread;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $threadMeta;
+
     public function setUp()
     {
         $this->participant = new ParticipantTestHelper(1);
@@ -60,6 +72,8 @@ class ReadStatusManagerTest extends \PHPUnit_Framework_TestCase
         $this->readStatusManager = new ReadStatusManager($this->messageRepository);
         $this->message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');
         $this->messageMeta = $this->getMock('Miliooo\Messaging\Model\MessageMetaInterface');
+        $this->thread = $this->getMock('Miliooo\Messaging\Model\ThreadInterface');
+        $this->threadMeta = $this->getMock('Miliooo\Messaging\Model\ThreadMetaInterface');
     }
 
     public function testInterface()
@@ -96,6 +110,8 @@ class ReadStatusManagerTest extends \PHPUnit_Framework_TestCase
         $this->expectsMessageMetaForParticipant();
         $this->expectsAskingMessageMetaForReadStatusWillReturn(MessageMetaInterface::READ_STATUS_READ);
         $this->expectsUpdatingMessageMetaReadStatusWith(MessageMetaInterface::READ_STATUS_NEVER_READ);
+        $this->expectsThreadUnreadCountUpdateIncrement();
+
 
         //expects save
         $this->messageRepository->expects($this->once())
@@ -138,6 +154,7 @@ class ReadStatusManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdateReadStatusWith2MessagesReturns2MessagesAndFlushesOnce()
     {
+        //use a real message in this test this is more a functional test now.
         $message = $this->getMessageWithUnreadMessageMetaForParticipant();
         $message2 = $this->getMessageWithUnreadMessageMetaForParticipant();
 
@@ -162,6 +179,10 @@ class ReadStatusManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $updated);
         $this->assertContains($message, $updated);
         $this->assertContains($message2, $updated);
+
+        //lets check if the count has actually increased
+        $count = $message->getThread()->getThreadMetaForParticipant($this->participant)->getUnreadMessageCount();
+        $this->assertEquals(4, $count);
     }
 
     /**
@@ -173,11 +194,24 @@ class ReadStatusManagerTest extends \PHPUnit_Framework_TestCase
     {
         $message = new Message();
         $messageMeta = new MessageMeta();
+        $thread = new Thread();
+
+
+        $threadMeta = new ThreadMeta();
+        $threadMeta->setParticipant($this->participant);
+        $threadMeta->setThread($thread);
+        $threadMeta->setUnreadMessageCount(5);
+        $thread->addThreadMeta($threadMeta);
+
 
         $messageMeta->setParticipant($this->participant);
         $messageMeta->setReadStatus(new ReadStatus(MessageMetaInterface::READ_STATUS_NEVER_READ));
         $messageMeta->setMessage($message);
+
         $message->addMessageMeta($messageMeta);
+        $message->setThread($thread);
+
+        $thread->addMessage($message);
 
         return $message;
     }
@@ -206,5 +240,17 @@ class ReadStatusManagerTest extends \PHPUnit_Framework_TestCase
         $this->messageMeta->expects($this->once())->method('setReadStatus')
             ->with(new ReadStatus($readStatusValue));
 
+    }
+
+    protected function expectsThreadUnreadCountUpdateIncrement()
+    {
+        $this->message->expects($this->once())->method('getThread')->will($this->returnValue($this->thread));
+
+        $this->thread->expects($this->once())->method('getThreadMetaForParticipant')->with($this->participant)
+            ->will($this->returnValue($this->threadMeta));
+
+        $this->threadMeta->expects($this->once())->method('getUnreadMessageCount')->will($this->returnValue(0));
+
+        $this->threadMeta->expects($this->once())->method('setUnreadMessageCount')->with(1);
     }
 }
