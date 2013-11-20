@@ -157,7 +157,7 @@ class ShowThreadControllerTest extends \PHPUnit_Framework_TestCase
         $this->expectsFormHandlerProcessesFormAndReturnsTrue();
         $this->router->expects($this->once())->method('generate')
             ->with('miliooo_message_thread_view', ['threadId' => 1])
-            ->will($this->returnValue('test.com'));
+            ->will($this->returnValue('http://test.com'));
 
         $this->controller->showAction(1);
     }

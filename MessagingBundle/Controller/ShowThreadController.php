@@ -22,6 +22,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
 use Miliooo\Messaging\Model\MessageMetaInterface;
 use Miliooo\Messaging\ValueObjects\ReadStatus;
+use Miliooo\Messaging\User\ParticipantInterface;
+use Miliooo\Messaging\Model\ThreadInterface;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * Controller for showing a single thread.
@@ -92,28 +95,104 @@ class ShowThreadController
      */
     public function showAction($threadId)
     {
+        //get the logged in user
         $loggedInUser = $this->participantProvider->getAuthenticatedParticipant();
+        //get the thread
+        $thread = $this->getThreadForLoggedInUser($loggedInUser, $threadId);
+        $form = $this->formFactory->create($thread, $loggedInUser);
+
+        //check form submit..
+        $response = $this->maybeProcessForm($form, $threadId);
+        if ($response) {
+            return $response;
+        }
+        //do some pre thread processing.
+        $thread = $this->doThreadProcessing($loggedInUser, $thread);
+
+        return $this->createResponse($thread, $form);
+    }
+
+    /**
+     * Gets the thread for the logged in user.
+     *
+     * This function gets the thread for the logged in user and throws an exception when no thread is found.
+     *
+     * @param ParticipantInterface $loggedInUser The user for whom we lookup the thread
+     * @param integer              $threadId     The unique thread id
+     *
+     * @return ThreadInterface The thread
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    protected function getThreadForLoggedInUser(ParticipantInterface $loggedInUser, $threadId)
+    {
         $thread = $this->threadProvider->findThreadForParticipant($loggedInUser, $threadId);
         if (!$thread) {
             throw new NotFoundHttpException('Thread not found');
         }
 
-        $form = $this->formFactory->create($thread, $loggedInUser);
-        $processed = $this->formHandler->process($form);
-        if ($processed) {
+        return $thread;
+    }
+
+    /**
+     * Checks if the form is valid returns a redirect response if valid or false if not submitted or not valid
+     *
+     * @param FormInterface $form     The form we process
+     * @param integer       $threadId The unique thread id
+     *
+     * @return RedirectResponse|false
+     */
+    protected function maybeProcessForm(FormInterface $form, $threadId)
+    {
+        $submittedAndValidForm = $this->formHandler->process($form);
+        if ($submittedAndValidForm) {
             $url = $this->router->generate('miliooo_message_thread_view', ['threadId' => $threadId]);
 
             return new RedirectResponse($url);
         }
 
+        return false;
+    }
+
+    /**
+     * doThreadProcessing.
+     *
+     * Here we do some thread actions before sending it to the view.
+     *
+     * We are marking the messages of the thread as read since we'll show those messages to the user.
+     *
+     * @param ParticipantInterface $loggedInUser
+     * @param ThreadInterface      $thread
+     *
+     * @return threadInterface
+     */
+    protected function doThreadProcessing(ParticipantInterface $loggedInUser, ThreadInterface $thread)
+    {
         $this->readStatusManager->updateReadStatusForMessageCollection(
             new ReadStatus(MessageMetaInterface::READ_STATUS_READ),
             $loggedInUser,
             $thread->getMessages()->toArray()
-            );
+        );
 
-        $twig = 'MilioooMessagingBundle:ShowThread:show_thread.html.twig';
+        return $thread;
+    }
 
-        return $this->templating->renderResponse($twig, ['thread' => $thread, 'form' => $form->createView()]);
+    /**
+     * Creates the response.
+     *
+     * @param ThreadInterface $thread
+     * @param FormInterface   $form
+     *
+     * @return Response
+     */
+    protected function createResponse(ThreadInterface $thread, FormInterface $form)
+    {
+        return $this->templating->renderResponse(
+            'MilioooMessagingBundle:ShowThread:show_thread.html.twig',
+            [
+                'thread' => $thread,
+                'form' => $form->createView()
+            ]
+        );
     }
 }
