@@ -22,7 +22,7 @@ use Miliooo\Messaging\Model\MessageMetaInterface;
  */
 class ReadStatus
 {
-    protected $readStatus;
+    private $readStatus;
 
     /**
      * Constructor.
