@@ -61,13 +61,13 @@ class ThreadStatus
      */
     private function isValidThreadStatus($threadStatus)
     {
-        if(!is_integer($threadStatus) || !in_array(
-                $threadStatus,
-                [
-                ThreadMetaInterface::STATUS_ACTIVE,
-                ThreadMetaInterface::STATUS_ARCHIVED
-                ],
-                true
+        if (!is_integer($threadStatus) || !in_array(
+            $threadStatus,
+            [
+            ThreadMetaInterface::STATUS_ACTIVE,
+            ThreadMetaInterface::STATUS_ARCHIVED
+            ],
+            true
             )
         ) {
             throw new \InvalidArgumentException('Invalid thread status');

@@ -14,6 +14,7 @@ use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\Messaging\Model\ThreadInterface;
 use Miliooo\Messaging\Repository\ThreadRepositoryInterface;
 use Miliooo\Messaging\ValueObjects\ThreadStatus;
+
 /**
  * The interface for the threadmeta class
  *
@@ -40,8 +41,12 @@ class ThreadStatusManager implements ThreadStatusManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function updateThreadStatusForParticipant(ThreadStatus $threadStatus, ThreadInterface $thread, ParticipantInterface $participant)
-    {
+    public function updateThreadStatusForParticipant(
+        ThreadStatus $threadStatus,
+        ThreadInterface $thread,
+        ParticipantInterface $participant
+    ) {
+
         $threadMeta = $thread->getThreadMetaForParticipant($participant);
 
         $newThreadStatus = $threadStatus->getThreadStatus();
@@ -50,7 +55,8 @@ class ThreadStatusManager implements ThreadStatusManagerInterface
             return;
         }
 
-       $threadMeta->setStatus($newThreadStatus);
+        $threadMeta->setStatus($newThreadStatus);
+
 
         $this->threadRepository->save($thread);
     }
