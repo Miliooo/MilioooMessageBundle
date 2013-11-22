@@ -33,6 +33,7 @@ table:
 
 #flash messages
 flash:
+  thread_created_success: Your new message has been sent.
   thread_deleted_success: The thread has been deleted
   thread_delete_no_permission: Not enough permissions to delete this thread
   thread_not_found:       Thread not found
