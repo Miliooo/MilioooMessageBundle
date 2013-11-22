@@ -2,6 +2,7 @@
 
     <thead>
     <tr>
+        <th></th>
         <th>{% trans from 'MilioooMessagingBundle' %}table.subject{% endtrans %}</th>
         <th>{% trans from 'MilioooMessagingBundle' %}table.starter{% endtrans %}</th>
         <th>{% trans from 'MilioooMessagingBundle' %}table.messages{% endtrans %}</th>
@@ -14,6 +15,11 @@
         {% for thread in pagerfanta.getCurrentPageResults %}
             {% set unreadCount = miliooo_messaging_unread_message_count(thread) %}
             <tr>
+                <td>
+                    <label>
+                        <input type='checkbox' name='selected_threads[]' value='{{ thread.id }}'/>
+                    </label>
+                </td>
                 <td>
                     <a href="{{ url('miliooo_message_thread_view', {'threadId': thread.id}) }}">
                         {{ thread.subject }}
