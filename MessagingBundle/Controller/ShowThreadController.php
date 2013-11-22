@@ -35,22 +35,51 @@ use Symfony\Component\Form\FormInterface;
  */
 class ShowThreadController
 {
+    /**
+     * A reply message form factory instance.
+     *
+     * @var ReplyMessageFormFactory
+     */
     protected $formFactory;
+
+    /**
+     * A new reply form handler instance.
+     *
+     * @var NewReplyFormHandler
+     */
     protected $formHandler;
+
+    /**
+     * A secure thread provider instance.
+     *
+     * @var SecureThreadProviderInterface
+     */
     protected $threadProvider;
 
     /**
+     * A templating instance.
+     *
      * @var EngineInterface
      */
     protected $templating;
 
-    protected $participantProvider;
     /**
+     * A participant provider instance.
+     *
+     * @var ParticipantProviderInterface
+     */
+    protected $participantProvider;
+
+    /**
+     * A read status manager instance.
+     *
      * @var ReadStatusManagerInterface
      */
     protected $readStatusManager;
 
     /**
+     * A router instance.
+     *
      * @var RouterInterface
      */
     protected $router;
