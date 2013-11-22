@@ -107,7 +107,7 @@ class NewThreadControllerTest extends \PHPUnit_Framework_TestCase
         $this->expectsLoggedInUser();
         $this->expectsFormProcessingWillReturn(true);
         $this->flashMessageProvider->expects($this->once())->method('addFlash')
-            ->with(FlashMessageProviderInterface::TYPE_SUCCESS, 'thread_created_success');
+            ->with(FlashMessageProviderInterface::TYPE_SUCCESS, 'flash.thread_created_success');
         $this->router->expects($this->once())
             ->method('generate')
             ->with('miliooo_message_thread_new')

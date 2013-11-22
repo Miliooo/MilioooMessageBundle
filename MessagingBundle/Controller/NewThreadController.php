@@ -132,7 +132,7 @@ class NewThreadController
     {
         $this->flashMessageProvider->addFlash(
             FlashMessageProviderInterface::TYPE_SUCCESS,
-            'thread_created_success'
+            'flash.thread_created_success'
         );
 
         $url = $this->router->generate('miliooo_message_thread_new');
