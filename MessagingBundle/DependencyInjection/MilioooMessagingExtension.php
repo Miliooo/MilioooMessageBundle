@@ -39,6 +39,7 @@ class MilioooMessagingExtension extends Extension
         $loader->load('specifications.xml');
         $loader->load('thread_providers.xml');
         $loader->load('user.xml');
+        $loader->load('validators.xml');
 
         $container->setParameter('miliooo_messaging.thread_class', $config['thread_class']);
         $container->setParameter('miliooo_messaging.thread_meta_class', $config['thread_meta_class']);
