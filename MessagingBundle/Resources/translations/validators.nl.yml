@@ -1,2 +1,6 @@
 validate:
-  author_not_recipient: Je kan geen bericht naar jezelf versturen
+  author_not_recipient: Je kan geen bericht naar jezelf versturen.
+  subject_blank:        Gelieve een onderwerp in te geven.
+  subject_too_short:    Jouw onderwerp is te kort.
+  subject_too_long:     Jouw onderwerp is te lang.
+  recipient_no_recipient: Gelieve een ontvanger in te geven.

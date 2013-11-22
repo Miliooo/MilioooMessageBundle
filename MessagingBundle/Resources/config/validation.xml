@@ -6,26 +6,25 @@ http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd">
 
     <class name="Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipient">
         <property name="recipient">
-            <constraint name="All">
-                <constraint name="Miliooo\MessagingBundle\Validator\Constraint\SelfRecipient"/>
-                <constraint name="NotBlank">
-                    <option name="message">No recipient specified</option>
-                </constraint>
-                <constraint name="Type">
-                    <option name="type">Miliooo\Messaging\User\ParticipantInterface</option>
-                    <option name="message">validate.recipient_invalid_type</option>
-                </constraint>
+            <constraint name="Miliooo\MessagingBundle\Validator\Constraint\SelfRecipient"/>
+            <constraint name="NotBlank">
+                <option name="message">validate.recipient_no_recipient</option>
+            </constraint>
+            <constraint name="Type">
+                <option name="type">Miliooo\Messaging\User\ParticipantInterface</option>
+                <option name="message">validate.recipient_invalid_type</option>
             </constraint>
         </property>
+
         <property name="subject">
             <constraint name="NotBlank">
-                <option name="message">Please enter a subject</option>
+                <option name="message">validate.subject_blank</option>
             </constraint>
             <constraint name="Length">
                 <option name="min">2</option>
                 <option name="max">255</option>
-                <option name="minMessage">The subject is too short|The subject is too short</option>
-                <option name="maxMessage">The subject is too long|The subject is too long</option>
+                <option name="minMessage">validate.subject_too_short</option>
+                <option name="maxMessage">validate.subject_too_long</option>
             </constraint>
         </property>
 

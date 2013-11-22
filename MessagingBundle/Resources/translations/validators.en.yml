@@ -1,2 +1,6 @@
 validate:
   author_not_recipient: You cannot send a message to yourself
+  subject_blank:        Please enter a subject.
+  subject_too_short:    Your subject is too short.
+  subject_too_long:     Your subject is too long.
+  recipient_no_recipient: Please enter a recipient.
