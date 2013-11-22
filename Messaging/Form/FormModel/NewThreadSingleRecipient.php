@@ -24,7 +24,7 @@ class NewThreadSingleRecipient extends AbstractNewMessage implements NewThreadIn
      *
      * @var ParticipantInterface
      */
-    protected $recipients;
+    protected $recipient;
 
     /**
      * Subject of the message
@@ -38,8 +38,8 @@ class NewThreadSingleRecipient extends AbstractNewMessage implements NewThreadIn
      */
     public function getRecipients()
     {
-        if (!empty($this->recipients)) {
-            return [$this->recipients];
+        if (!empty($this->recipient)) {
+            return [$this->recipient];
         }
         return [];
     }
@@ -54,7 +54,7 @@ class NewThreadSingleRecipient extends AbstractNewMessage implements NewThreadIn
      */
     public function setRecipient(ParticipantInterface $recipient)
     {
-        $this->recipients = $recipient;
+        $this->recipient = $recipient;
     }
 
     /**
@@ -66,7 +66,7 @@ class NewThreadSingleRecipient extends AbstractNewMessage implements NewThreadIn
      */
     public function getRecipient()
     {
-        return $this->recipients;
+        return $this->recipient;
     }
 
     /**
