@@ -30,4 +30,9 @@
         <requirement key="threadId">\d+</requirement>
     </route>
 
+    <route id="miliooo_message_thread_actions" pattern="/thread_actions" methods="POST">
+        <default key="_controller">miliooo_messaging.controller.thread_actions_controller:ThreadAction</default>
+        <requirement key="threadId">\d+</requirement>
+    </route>
+
 </routes>

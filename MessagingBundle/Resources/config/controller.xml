@@ -49,6 +49,10 @@
             <argument type="service" id="miliooo_messaging.participant_provider" />
          </service>
 
+        <service id="miliooo_messaging.controller.thread_actions_controller" class="Miliooo\MessagingBundle\Controller\ThreadActionsController">
+
+        </service>
+
     </services>
 
 </container>
