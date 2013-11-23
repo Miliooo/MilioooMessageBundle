@@ -42,11 +42,26 @@ class NewThreadFormTypeTest extends \PHPUnit_Framework_TestCase
     {
         $formBuilder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
                 ->disableOriginalConstructor()->getMock();
-        $formBuilder->expects($this->at(0))->method('add')->with('recipient', 'username_selector')
+
+        $formBuilder->expects($this->at(0))->method('add')->with(
+            'recipient',
+            'username_selector',
+            ['label' => 'form.label.recipient']
+        )
             ->will($this->returnValue($formBuilder));
-        $formBuilder->expects($this->at(1))->method('add')->with('subject', 'text')
+
+        $formBuilder->expects($this->at(1))->method('add')->with(
+            'subject',
+            'text',
+            ['label' => 'form.label.subject']
+        )
             ->will($this->returnValue($formBuilder));
-        $formBuilder->expects($this->at(2))->method('add')->with('body', 'textarea')
+
+        $formBuilder->expects($this->at(2))->method('add')->with(
+            'body',
+            'textarea',
+            ['label' => 'form.label.body']
+        )
             ->will($this->returnValue($formBuilder));
 
         $this->newThreadFormType->buildForm($formBuilder, []);
@@ -54,7 +69,7 @@ class NewThreadFormTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testSetDefaultOptions()
     {
-        $defaults = ['intention' => 'add_new_thread'];
+        $defaults = ['intention' => 'add_new_thread', 'translation_domain' => 'MilioooMessagingBundle'];
         $resolver = $this->getMock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
         $resolver->expects($this->once())->method('setDefaults')->with($defaults);
         $this->newThreadFormType->setDefaultOptions($resolver);

@@ -31,6 +31,13 @@ table:
   messages:     Messages
   last_message: Last message
 
+#form labels
+form:
+  label:
+    recipient:  Recipient
+    subject:    Subject
+    body:       Body
+
 #flash messages
 flash:
   thread_created_success: Your new message has been sent.

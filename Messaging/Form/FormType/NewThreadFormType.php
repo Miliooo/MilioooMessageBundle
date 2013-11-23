@@ -44,9 +44,9 @@ class NewThreadFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('recipient', 'username_selector')
-            ->add('subject', 'text')
-            ->add('body', 'textarea');
+            ->add('recipient', 'username_selector', ['label' => 'form.label.recipient'])
+            ->add('subject', 'text', ['label' => 'form.label.subject'])
+            ->add('body', 'textarea', ['label' => 'form.label.body']);
     }
 
     /**
@@ -58,6 +58,7 @@ class NewThreadFormType extends AbstractType
     {
         $resolver->setDefaults([
             'intention' => 'add_new_thread',
+            'translation_domain' => 'MilioooMessagingBundle'
         ]);
     }
 
