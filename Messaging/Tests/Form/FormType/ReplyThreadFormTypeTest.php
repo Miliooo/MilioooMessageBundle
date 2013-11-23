@@ -43,14 +43,14 @@ class ReplyThreadFormTypeTest extends \PHPUnit_Framework_TestCase
     {
         $formBuilder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
                 ->disableOriginalConstructor()->getMock();
-        $formBuilder->expects($this->at(0))->method('add')->with('body', 'textarea')
+        $formBuilder->expects($this->at(0))->method('add')->with('body', 'textarea', ['label' => 'form.label.body'])
             ->will($this->returnValue($formBuilder));
-        $this->replyThreadFormType->buildForm($formBuilder, array());
+        $this->replyThreadFormType->buildForm($formBuilder, []);
     }
 
     public function testSetDefaultOptions()
     {
-        $defaults = ['intention' => 'reply'];
+        $defaults = ['intention' => 'reply', 'translation_domain' => 'MilioooMessagingBundle'];
         $resolver = $this->getMock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
         $resolver->expects($this->once())->method('setDefaults')->with($defaults);
         $this->replyThreadFormType->setDefaultOptions($resolver);

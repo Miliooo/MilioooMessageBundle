@@ -41,7 +41,7 @@ class ReplyThreadFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('body', 'textarea');
+        $builder->add('body', 'textarea', ['label' => 'form.label.body']);
     }
 
     /**
@@ -51,9 +51,10 @@ class ReplyThreadFormType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'intention' => 'reply',
-        ));
+            'translation_domain' => 'MilioooMessagingBundle'
+        ]);
     }
 
     /**
