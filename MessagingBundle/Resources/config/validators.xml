@@ -11,6 +11,12 @@
            <tag name="validator.constraint_validator" alias="miliooo_messaging.validator.self_recipient"/>
        </service>
 
+        <service id="miliooo_messaging.validator.can_message_recipient" class="Miliooo\MessagingBundle\Validator\Constraint\CanMessageRecipientValidator">
+            <argument type="service" id="miliooo_messaging.can_message_recipient_manager" />
+            <argument type="service" id="miliooo_messaging.participant_provider"  />
+            <tag name="validator.constraint_validator" alias="miliooo_messaging.validator.can_message_recipient" />
+        </service>
+
     </services>
 
 </container>

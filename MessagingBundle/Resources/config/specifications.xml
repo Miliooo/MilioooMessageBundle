@@ -10,6 +10,10 @@
 
         <service id="miliooo_messaging.specification.can_delete_thread"
                  class="Miliooo\Messaging\Specifications\CanDeleteThreadSpecification"/>
+
+        <service id="miliooo_messaging.specification.can_message_recipient"
+                 class="Miliooo\Messaging\Specifications\CanMessageRecipientSpecification" />
+
     </services>
 
 </container>
