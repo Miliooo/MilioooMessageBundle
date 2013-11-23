@@ -13,7 +13,7 @@ namespace Miliooo\MessagingBundle\Validator\Constraint;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class SelfRecipient
+ * Self recipient constraint.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
