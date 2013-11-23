@@ -30,7 +30,7 @@ use Miliooo\Messaging\Model\ThreadInterface;
 class CanSeeThreadSpecification
 {
     /**
-     * Checks if the given participant can see the given thread
+     * Checks if the given participant can see the given thread.
      *
      * @param ParticipantInterface $participant The user that we check for
      * @param ThreadInterface      $thread      The thread that we check
@@ -39,10 +39,22 @@ class CanSeeThreadSpecification
      */
     public function isSatisfiedBy(ParticipantInterface $participant, ThreadInterface $thread)
     {
-        if ($thread->isParticipant($participant)) {
-            return true;
-        }
+        $participantThread = $this->getIsParticipantThreadSpecification();
 
-        return false;
+        return $participantThread->isSatisfiedBy($participant, $thread);
+    }
+
+    /**
+     * Gets the participantThreadSpecification.
+     *
+     * Helper function for unit tests
+     *
+     * @return IsParticipantThreadSpecification
+     */
+    protected function getIsParticipantThreadSpecification()
+    {
+        $participantThread = new IsParticipantThreadSpecification();
+
+        return $participantThread;
     }
 }
