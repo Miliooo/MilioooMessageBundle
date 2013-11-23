@@ -6,7 +6,6 @@ http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd">
 
     <class name="Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipient">
         <property name="recipient">
-            <constraint name="Miliooo\MessagingBundle\Validator\Constraint\SelfRecipient"/>
             <constraint name="NotBlank">
                 <option name="message">validate.recipient_no_recipient</option>
             </constraint>
@@ -14,6 +13,8 @@ http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd">
                 <option name="type">Miliooo\Messaging\User\ParticipantInterface</option>
                 <option name="message">validate.recipient_invalid_type</option>
             </constraint>
+            <constraint name="Miliooo\MessagingBundle\Validator\Constraint\CanMessageRecipient"/>
+            <constraint name="Miliooo\MessagingBundle\Validator\Constraint\SelfRecipient"/>
         </property>
 
         <property name="subject">
