@@ -4,3 +4,4 @@ validate:
   subject_too_short:    Jouw onderwerp is te kort.
   subject_too_long:     Jouw onderwerp is te lang.
   recipient_no_recipient: Gelieve een ontvanger in te geven.
+  can_not_message_recipient: Deze gebruiker wenst geen berichten van je te ontvangen.

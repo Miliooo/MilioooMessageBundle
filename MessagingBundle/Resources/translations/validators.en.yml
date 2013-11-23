@@ -4,3 +4,4 @@ validate:
   subject_too_short:    Your subject is too short.
   subject_too_long:     Your subject is too long.
   recipient_no_recipient: Please enter a recipient.
+  can_not_message_recipient: You can not send a message to this user.
