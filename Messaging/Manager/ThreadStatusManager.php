@@ -16,7 +16,10 @@ use Miliooo\Messaging\Repository\ThreadRepositoryInterface;
 use Miliooo\Messaging\ValueObjects\ThreadStatus;
 
 /**
- * The interface for the threadmeta class
+ * ThreadStatusManager.
+ *
+ * The thread status manager is responsible for updating the thread status and persisting the updated thread to
+ * the storage engine.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
@@ -49,15 +52,15 @@ class ThreadStatusManager implements ThreadStatusManagerInterface
 
         $threadMeta = $thread->getThreadMetaForParticipant($participant);
 
+        //get the integer value of the thread status.
         $newThreadStatus = $threadStatus->getThreadStatus();
+
         //if no thread meta can happen if the current user is not participant of the thread
         if (!$threadMeta || $threadMeta->getStatus() === $newThreadStatus) {
             return;
         }
 
         $threadMeta->setStatus($newThreadStatus);
-
-
         $this->threadRepository->save($thread);
     }
 }
