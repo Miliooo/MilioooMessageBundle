@@ -11,6 +11,7 @@ navigate:
 title:
   inbox:            Jouw ontvangen berichten
   outbox:           Jouw verzonden berichten
+  archived:         Gearchiveerd
   send_new_message: Verstuur een nieuw bericht
   reply:            Nieuw bericht toevoegen
 

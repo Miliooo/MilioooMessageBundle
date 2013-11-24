@@ -1,0 +1,9 @@
+{% extends 'MilioooMessagingBundle::layout.html.twig' %}
+
+{% block miliooo_messaging_content %}
+
+    <h2>{% trans from 'MilioooMessagingBundle' %}title.archived{% endtrans %}</h2>
+
+    {% include 'MilioooMessagingBundle:Folders:_thread_list.html.twig' with {'pagerfanta': pagerfanta, 'folder': 'archived'} %}
+
+{% endblock %}

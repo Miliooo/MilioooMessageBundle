@@ -11,6 +11,7 @@ navigate:
 title:
   inbox:            Inbox
   outbox:           Outbox
+  archived:         Archived
   send_new_message: Send a new message
   reply:            Send a reply message
 
