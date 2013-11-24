@@ -11,6 +11,7 @@
 namespace Miliooo\Messaging\Tests\ThreadProvider;
 
 use Miliooo\Messaging\ThreadProvider\ThreadProvider;
+use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
 
 /**
  * Test file for Miliooo\Messaging\ThreadProvider\ThreadProvider
@@ -25,6 +26,10 @@ class ThreadProviderTest extends \PHPUnit_Framework_TestCase
      * @var ThreadProvider
      */
     protected $provider;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     protected $threadRepository;
 
     public function setUp()
@@ -59,5 +64,32 @@ class ThreadProviderTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(null));
 
         $this->assertNull($this->provider->findThreadById(1));
+    }
+
+    public function testFindThreadForParticipantNoThreadFound()
+    {
+        $participant = new ParticipantTestHelper('1');
+
+        $this->threadRepository
+            ->expects($this->once())
+            ->method('findThreadForParticipant')
+            ->with(1, $participant)
+            ->will($this->returnValue(null));
+
+        $this->assertNull($this->provider->findThreadForParticipant(1, $participant));
+    }
+
+    public function testFindThreadForParticipantThreadFound()
+    {
+        $participant = new ParticipantTestHelper('1');
+        $threadMock = $this->getMock('Miliooo\Messaging\Model\ThreadInterface');
+
+        $this->threadRepository
+            ->expects($this->once())
+            ->method('findThreadForParticipant')
+            ->with(1, $participant)
+            ->will($this->returnValue($threadMock));
+
+        $this->assertSame($threadMock, $this->provider->findThreadForParticipant(1, $participant));
     }
 }
