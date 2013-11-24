@@ -36,6 +36,10 @@
             <argument type="service" id="miliooo_messaging.specification.can_message_recipient" />
          </service>
 
+        <service id="miliooo_messaging.manager.thread_status_manager" class="Miliooo\Messaging\Manager\ThreadStatusManager">
+            <argument type="service" id="miliooo_messaging.repository.thread" />
+        </service>
+
     </services>
 
 </container>
