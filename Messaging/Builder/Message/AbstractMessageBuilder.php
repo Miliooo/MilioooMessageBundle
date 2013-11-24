@@ -16,6 +16,7 @@ use Miliooo\Messaging\Model\ThreadMetaInterface;
 use Miliooo\Messaging\Model\MessageInterface;
 use Miliooo\Messaging\Model\MessageMetaInterface;
 use Miliooo\Messaging\Model\BuilderInterface;
+use Miliooo\Messaging\ValueObjects\ThreadStatus;
 
 /**
  * Description of AbstractMessageBuilder
@@ -294,9 +295,47 @@ abstract class AbstractMessageBuilder
     {
         $this->processBuilderModel('getThreadMeta', 'all', $threadMeta);
         $this->processBuilderModel('getThreadMeta', 'recipients', $threadMeta);
+        $this->increaseUnreadMessageCountRecipient($threadMeta);
+        $this->maybeUpdateThreadStatusForRecipient($threadMeta);
+    }
 
+    /**
+     * Increases the unread message count for the recipient.
+     *
+     * Since the recipient has received a new message we need to increase the unread message count for the recipient.
+     * When it's a new thread this count should become one.
+     * When it's a we should add +1 to the current unread count.
+     *
+     * @param ThreadMetaInterface $threadMeta
+     */
+    protected function increaseUnreadMessageCountRecipient(ThreadMetaInterface $threadMeta)
+    {
         //updates the unread message count for the recipient.
         $previousUnreadCount = intval($threadMeta->getUnreadMessageCount());
         $threadMeta->setUnreadMessageCount(++$previousUnreadCount);
+    }
+
+    /**
+     * If the recipient has marked his message as archived but receives a new message that message would not appear
+     * in his inbox folder. This feels wrong since now there is an unread message count in the archived box.
+     *
+     * Archived also means no longer active, but receiving a new reply makes it active again. So it makes sense to put
+     * this back in the inbox folder.
+     *
+     * To consider: using the thread status manager for this, since there is also an event bound to the thread status
+     * manager which we are not receiving now...
+     *
+     * @param ThreadMetaInterface $threadMeta
+     */
+    protected function maybeUpdateThreadStatusForRecipient(ThreadMetaInterface $threadMeta)
+    {
+        //updates the thread meta status for the recipient
+        //Not sure if the best way is to do this here or to use the thread status manager, this way we loose the event
+        // but is there really a good reason we need the event?
+        $status = $threadMeta->getStatus();
+        if (in_array($status, [ThreadMetaInterface::STATUS_ARCHIVED], true)) {
+            $updateStatus = new ThreadStatus(ThreadMetaInterface::STATUS_ACTIVE);
+            $threadMeta->setStatus($updateStatus);
+        }
     }
 }
