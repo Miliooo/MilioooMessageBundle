@@ -44,6 +44,12 @@
             <argument>15</argument>
         </service>
 
+        <service id="miliooo_messaging.thread_provider.archived_pagerfanta"
+                 class="Miliooo\Messaging\ThreadProvider\Folder\ArchivedProviderPagerFanta">
+            <argument type="service" id="miliooo_messaging.repository.thread"/>
+            <argument>15</argument>
+        </service>
+
     </services>
 
 </container>
