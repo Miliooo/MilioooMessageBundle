@@ -24,7 +24,7 @@ class InboxProviderPagerFantaTest extends \PHPUnit_Framework_TestCase
     /**
      * @var InboxProviderPagerFanta
      */
-    private $inboxProviderPf;
+    private $threadProvider;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -45,7 +45,7 @@ class InboxProviderPagerFantaTest extends \PHPUnit_Framework_TestCase
     {
         $this->participant = new ParticipantTestHelper(1);
         $this->threadRepository = $this->getMock('Miliooo\Messaging\Repository\ThreadRepositoryInterface');
-        $this->inboxProviderPf = new InboxProviderPagerFanta($this->threadRepository, 15);
+        $this->threadProvider = new InboxProviderPagerFanta($this->threadRepository, 15);
         $this->queryBuilderMock =  $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
             ->disableOriginalConstructor()
             ->getMock();
@@ -54,8 +54,8 @@ class InboxProviderPagerFantaTest extends \PHPUnit_Framework_TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            'Miliooo\Messaging\ThreadProvider\Folder\InboxProviderPagerFanta',
-            $this->inboxProviderPf
+            'Miliooo\Messaging\ThreadProvider\Folder\InboxProviderPagerFantaInterface',
+            $this->threadProvider
         );
     }
 
@@ -66,7 +66,7 @@ class InboxProviderPagerFantaTest extends \PHPUnit_Framework_TestCase
             ->method('getInboxThreadsForParticipantQueryBuilder')
             ->will($this->returnValue($this->queryBuilderMock));
 
-        $result = $this->inboxProviderPf->getInboxThreadsPagerfanta($this->participant, 1);
+        $result = $this->threadProvider->getInboxThreadsPagerfanta($this->participant, 1);
         $this->assertInstanceOf('Pagerfanta\Pagerfanta', $result);
     }
 }
