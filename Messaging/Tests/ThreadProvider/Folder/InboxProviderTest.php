@@ -14,7 +14,7 @@ use Miliooo\Messaging\ThreadProvider\Folder\InboxProvider;
 use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
 
 /**
- * Test file for the inboxprovider
+ * Test file for the inbox provider
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
@@ -24,18 +24,22 @@ class InboxProviderTest extends \PHPUnit_Framework_TestCase
      * The class under test
      * @var InboxProvider
      */
-    private $inboxProvider;
+    private $provider;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $threadRepository;
 
     public function setUp()
     {
         $this->threadRepository = $this->getMock('Miliooo\Messaging\Repository\ThreadRepositoryInterface');
-        $this->inboxProvider = new InboxProvider($this->threadRepository);
+        $this->provider = new InboxProvider($this->threadRepository);
     }
 
     public function testInterface()
     {
-        $this->assertInstanceOf('Miliooo\Messaging\ThreadProvider\Folder\InboxProviderInterface', $this->inboxProvider);
+        $this->assertInstanceOf('Miliooo\Messaging\ThreadProvider\Folder\InboxProviderInterface', $this->provider);
     }
 
     public function testGetInboxThreadsRepositoryReturnsNull()
@@ -47,7 +51,7 @@ class InboxProviderTest extends \PHPUnit_Framework_TestCase
             ->with($participant)
             ->will($this->returnValue(null));
 
-        $this->assertNull($this->inboxProvider->getInboxThreads($participant));
+        $this->assertNull($this->provider->getInboxThreads($participant));
     }
 
     public function testGetInboxThreadsRepositoryReturnsThreads()
@@ -61,6 +65,6 @@ class InboxProviderTest extends \PHPUnit_Framework_TestCase
             ->with($participant)
             ->will($this->returnValue($arrayOfThreads));
 
-        $this->assertEquals($arrayOfThreads, $this->inboxProvider->getInboxThreads($participant));
+        $this->assertEquals($arrayOfThreads, $this->provider->getInboxThreads($participant));
     }
 }
