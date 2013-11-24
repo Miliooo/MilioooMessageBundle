@@ -49,7 +49,7 @@
             <argument type="service" id="miliooo_messaging.participant_provider" />
          </service>
 
-        <service id="miliooo_messaging.controller.thread_actions_controller" class="Miliooo\MessagingBundle\Controller\ThreadActionsController">
+        <service id="miliooo_messaging.controller.thread_actions_controller" class="Miliooo\MessagingBundle\Controller\ThreadActionsController" scope="request">
             <argument type="service" id="miliooo_messaging.manager.thread_status_manager" />
             <argument type="service" id="miliooo_messaging.thread_provider.thread_provider_secure" />
             <argument type="service" id="miliooo_messaging.participant_provider" />
