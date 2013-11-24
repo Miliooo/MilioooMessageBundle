@@ -22,8 +22,25 @@ use Miliooo\Messaging\ThreadProvider\Folder\InboxProviderPagerFantaInterface;
  */
 class InboxController
 {
+    /**
+     * A participant provider instance.
+     *
+     * @var ParticipantProviderInterface
+     */
     protected $participantProvider;
+
+    /**
+     * An inbox provider pagerfanta instance.
+     *
+     * @var InboxProviderPagerFantaInterface
+     */
     protected $inboxProvider;
+
+    /**
+     * A templating engine instance.
+     *
+     * @var EngineInterface
+     */
     protected $templating;
 
     /**

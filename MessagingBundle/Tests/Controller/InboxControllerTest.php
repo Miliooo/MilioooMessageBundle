@@ -12,6 +12,7 @@ namespace Miliooo\MessagingBundle\Tests\Controller;
 
 use Miliooo\MessagingBundle\Controller\InboxController;
 use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
+use Miliooo\Messaging\User\ParticipantInterface;
 
 /**
  * Test file for the InboxController
@@ -41,7 +42,15 @@ class InboxControllerTest extends \PHPUnit_Framework_TestCase
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $inboxProvider;
+
+    /**
+     * @var ParticipantInterface
+     */
     private $loggedInUser;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $pagerfanta;
 
     public function setUp()
