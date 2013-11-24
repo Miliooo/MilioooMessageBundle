@@ -20,6 +20,12 @@
         <requirement key="page">\d+</requirement>
     </route>
 
+    <route id="miliooo_message_archived" pattern="/archived/{page}">
+        <default key="_controller">miliooo_messaging.controller.archived_controller:ShowAction</default>
+        <default key="page">1</default>
+        <requirement key="page">\d+</requirement>
+    </route>
+
     <route id="miliooo_message_thread_view" pattern="/{threadId}">
         <default key="_controller">miliooo_messaging.controller.show_thread_controller:ShowAction</default>
         <requirement key="threadId">\d+</requirement>

@@ -38,6 +38,13 @@
             <argument type="service" id="miliooo_messaging.participant_provider"/>
         </service>
 
+        <service id="miliooo_messaging.controller.archived_controller"
+                 class="Miliooo\MessagingBundle\Controller\ArchivedController" scope="request">
+            <argument type="service" id="miliooo_messaging.participant_provider"/>
+            <argument type="service" id="miliooo_messaging.thread_provider.archived_pagerfanta"/>
+            <argument type="service" id="templating"/>
+        </service>
+
         <service id="miliooo_messaging.controller.delete_thread_controller"
                  class="Miliooo\MessagingBundle\Controller\DeleteThreadController"
                  scope="request">

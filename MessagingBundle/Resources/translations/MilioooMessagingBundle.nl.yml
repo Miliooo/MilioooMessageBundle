@@ -5,6 +5,7 @@ messenger: Berichten
 navigate:
   inbox:            Ontvangen
   outbox:           Verzonden
+  archived:         Gearchiveerd
   send_new_message: Nieuw bericht
 
 #titles

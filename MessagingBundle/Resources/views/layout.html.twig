@@ -26,6 +26,7 @@
                 <a href="{{ url('miliooo_message_thread_new' )}}"><button type="button" class="btn btn-default">{% trans from 'MilioooMessagingBundle' %}navigate.send_new_message{% endtrans %}</button></a>
                 <a href="{{ url('miliooo_message_inbox') }}"><button type="button" class="btn btn-default">{% trans from 'MilioooMessagingBundle' %}navigate.inbox{% endtrans %}</button></a>
                 <a href="{{ url('miliooo_message_outbox') }}"><button type="button" class="btn btn-default">{% trans from 'MilioooMessagingBundle' %}navigate.outbox{% endtrans %}</button></a>
+                <a href="{{ url('miliooo_message_archived') }}"><button type="button" class="btn btn-default">{% trans from 'MilioooMessagingBundle' %}navigate.archived{% endtrans %}</button></a>
             </div>
 
         {% block miliooo_messaging_content %}{% endblock %}
