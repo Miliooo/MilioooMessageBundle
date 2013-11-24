@@ -49,11 +49,31 @@ interface ThreadRepositoryInterface
     public function getOutboxThreadsForParticipant(ParticipantInterface $participant);
 
     /**
+     * Gets the querybuilder for the outbox threads for a given participant
+     *
      * @param ParticipantInterface $participant
      *
      * @return QueryBuilder
      */
     public function getOutboxThreadsForParticipantQueryBuilder(ParticipantInterface $participant);
+
+    /**
+     * Gets the archived threads for a given participant
+     *
+     * @param ParticipantInterface $participant
+     *
+     * @return ThreadInterface[]|null Array of thread interfaces or null when no threads found
+     */
+    public function getArchivedThreadsForParticipant(ParticipantInterface $participant);
+
+    /**
+     * Gets the querybuilder for the archived threads for a given participant
+     *
+     * @param ParticipantInterface $participant
+     *
+     * @return QueryBuilder
+     */
+    public function getArchivedThreadsForParticipantQueryBuilder(ParticipantInterface $participant);
 
     /**
      * Finds a thread by it's unique id
@@ -69,8 +89,8 @@ interface ThreadRepositoryInterface
      *
      * This is essentially the same as findThread but now it's optimized to only return one query. And not do dozens
      * of query calls. If the participant is not part of the thread (this can happen if you allow people to see
-     * threads if they are not participants, eg an admin) Then this query should still work since it's an left join
-     * and not an inner join.
+     * threads if they are not participants, eg an admin) Then this query should still work since we use a left join
+     * on the metas.
      *
      * @param $id
      * @param ParticipantInterface $participant

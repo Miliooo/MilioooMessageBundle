@@ -136,4 +136,30 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
             $em->flush();
         }
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getArchivedThreadsForParticipantQueryBuilder(ParticipantInterface $participant)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t', 'tm')
+            ->innerJoin('t.threadMeta', 'tm')
+            ->innerJoin('tm.participant', 'p')
+            ->andWhere('p.participant = :participant')
+            ->setParameter('participant', $participant)
+            ->andWhere('tm.status = :status')
+            ->setParameter('status', ThreadMetaInterface::STATUS_ARCHIVED, \PDO::PARAM_INT)
+            ->orderBy('tm.lastMessageDate', 'DESC');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getArchivedThreadsForParticipant(ParticipantInterface $participant)
+    {
+        return $this->getArchivedThreadsForParticipantQueryBuilder($participant)
+                ->getQuery()
+                ->execute();
+    }
 }
