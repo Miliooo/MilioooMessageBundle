@@ -142,11 +142,12 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
      */
     public function getArchivedThreadsForParticipantQueryBuilder(ParticipantInterface $participant)
     {
+        //not sure if this is right... we want both metas to get the last message date sorting right...
+        //maybe consider to use one meta...
         return $this->createQueryBuilder('t')
-            ->select('t', 'tm')
-            ->innerJoin('t.threadMeta', 'tm')
-            ->innerJoin('tm.participant', 'p')
-            ->andWhere('p.participant = :participant')
+            ->select('t', 'tm', 'tma')
+            ->innerJoin('t.threadMeta', 'tma', Join::WITH, 't.id = tma.thread')
+            ->innerJoin('t.threadMeta', 'tm', Join::WITH, 'tm.participant = :participant')
             ->setParameter('participant', $participant)
             ->andWhere('tm.status = :status')
             ->setParameter('status', ThreadMetaInterface::STATUS_ARCHIVED, \PDO::PARAM_INT)
