@@ -17,6 +17,7 @@ use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\Messaging\Model\ThreadInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Miliooo\Messaging\Model\MessageMetaInterface;
+
 /**
  * Doctrine ORM Repository class for messages
  *

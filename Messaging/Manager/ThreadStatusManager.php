@@ -55,7 +55,6 @@ class ThreadStatusManager implements ThreadStatusManagerInterface
      * @param MessageRepositoryInterface $messageRepository A message repository
      * @param ReadStatusManagerInterface $readStatusManager A read status manager
      */
-
     public function __construct(
         ThreadRepositoryInterface $threadRepository,
         MessageRepositoryInterface $messageRepository,
@@ -74,7 +73,6 @@ class ThreadStatusManager implements ThreadStatusManagerInterface
         ThreadInterface $thread,
         ParticipantInterface $participant
     ) {
-
         $threadMeta = $thread->getThreadMetaForParticipant($participant);
 
         //get the integer value of the thread status.
@@ -146,8 +144,7 @@ class ThreadStatusManager implements ThreadStatusManagerInterface
      */
     protected function updateActiveThreadToArchivedThread(ThreadStatus $oldThreadStatus, ThreadStatus $newThreadStatus)
     {
-        if (
-            $oldThreadStatus->getThreadStatus() !== ThreadMetaInterface::STATUS_ACTIVE
+        if ($oldThreadStatus->getThreadStatus() !== ThreadMetaInterface::STATUS_ACTIVE
             ||
             $newThreadStatus->getThreadStatus() !== ThreadMetaInterface::STATUS_ARCHIVED
         ) {

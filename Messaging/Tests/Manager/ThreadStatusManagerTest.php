@@ -75,7 +75,8 @@ class ThreadStatusManagerTest extends \PHPUnit_Framework_TestCase
         $this->threadStatusManager = new ThreadStatusManager(
             $this->threadRepository,
             $this->messageRepository,
-            $this->readStatusManager);
+            $this->readStatusManager
+        );
         $this->participant = new ParticipantTestHelper(1);
         $this->thread = $this->getMock('Miliooo\Messaging\Model\ThreadInterface');
         $this->threadMeta = $this->getMock('Miliooo\Messaging\Model\ThreadMetaInterface');
