@@ -25,12 +25,14 @@ interface ThreadStatusManagerInterface
     /**
      * Updates the thread status for a given participant.
      *
-     * @param ThreadStatus         $threadStatus The new thread status
+     * @param ThreadStatus         $newThreadStatus The new thread status
      * @param ThreadInterface      $thread       The thread for whom we update the status
      * @param ParticipantInterface $participant  The participant for whom we update the status
+     *
+     * @return boolean true if the thread status was updated false otherwise
      */
     public function updateThreadStatusForParticipant(
-        ThreadStatus $threadStatus,
+        ThreadStatus $newThreadStatus,
         ThreadInterface $thread,
         ParticipantInterface $participant
     );

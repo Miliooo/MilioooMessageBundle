@@ -11,6 +11,8 @@
 namespace Miliooo\Messaging\Repository;
 
 use Miliooo\Messaging\Model\MessageInterface;
+use Miliooo\Messaging\User\ParticipantInterface;
+use Miliooo\Messaging\Model\ThreadInterface;
 
 /**
  * Interface for threadRepository instances
@@ -19,6 +21,13 @@ use Miliooo\Messaging\Model\MessageInterface;
  */
 interface MessageRepositoryInterface
 {
+    /**
+     * @param ParticipantInterface $participant
+     * @param ThreadInterface      $thread
+     *
+     * @return MessageInterface[] Array of messages
+     */
+    public function getUnreadMessagesFromThreadForParticipant(ParticipantInterface $participant, ThreadInterface $thread);
     /**
      * Saves a message to the storage engine
      *

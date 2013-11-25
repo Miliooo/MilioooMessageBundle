@@ -13,7 +13,10 @@ namespace Miliooo\MessagingBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 use Miliooo\Messaging\Model\MessageInterface;
 use Miliooo\Messaging\Repository\MessageRepositoryInterface;
-
+use Miliooo\Messaging\User\ParticipantInterface;
+use Miliooo\Messaging\Model\ThreadInterface;
+use Doctrine\ORM\Query\Expr\Join;
+use Miliooo\Messaging\Model\MessageMetaInterface;
 /**
  * Doctrine ORM Repository class for messages
  *
@@ -32,6 +35,22 @@ class MessageRepository extends EntityRepository implements MessageRepositoryInt
         if ($flush) {
             $em->flush();
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUnreadMessagesFromThreadForParticipant(ParticipantInterface $participant, ThreadInterface $thread)
+    {
+        return $this->createQueryBuilder('m')
+            ->select('m', 'mm')
+            ->leftJoin('m.messageMeta', 'mm', Join::WITH, 'mm.participant = :participant')
+            ->setParameter('participant', $participant)
+            ->where('mm.readStatus != '.MessageMetaInterface::READ_STATUS_READ)
+            ->andWhere('m.thread = :thread')
+            ->setParameter('thread', $thread)
+            ->getQuery()
+            ->execute();
     }
 
     /**

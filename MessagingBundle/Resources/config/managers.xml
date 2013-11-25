@@ -18,7 +18,7 @@
         <service id="miliooo_messaging.read_status_manager_event_aware"
                  class="Miliooo\Messaging\Manager\ReadStatusManagerEventAware">
             <argument type="service" id="miliooo_messaging.read_status_manager"/>
-            <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="event_dispatcher"/>
         </service>
 
         <service id="miliooo_messaging.delete_thread_manager" class="Miliooo\Messaging\Manager\DeleteThreadManager">
@@ -27,17 +27,20 @@
 
         <service id="miliooo_messaging.delete_thread_manager_secure"
                  class="Miliooo\Messaging\Manager\DeleteThreadManagerSpecificationAware">
-            <argument type="service" id="miliooo_messaging.delete_thread_manager" />
+            <argument type="service" id="miliooo_messaging.delete_thread_manager"/>
             <argument type="service" id="miliooo_messaging.specification.can_delete_thread"/>
         </service>
 
         <service id="miliooo_messaging.can_message_recipient_manager"
                  class="Miliooo\Messaging\Manager\CanMessageRecipientManager">
-            <argument type="service" id="miliooo_messaging.specification.can_message_recipient" />
-         </service>
+            <argument type="service" id="miliooo_messaging.specification.can_message_recipient"/>
+        </service>
 
-        <service id="miliooo_messaging.manager.thread_status_manager" class="Miliooo\Messaging\Manager\ThreadStatusManager">
-            <argument type="service" id="miliooo_messaging.repository.thread" />
+        <service id="miliooo_messaging.manager.thread_status_manager"
+                 class="Miliooo\Messaging\Manager\ThreadStatusManager">
+            <argument type="service" id="miliooo_messaging.repository.thread"/>
+            <argument type="service" id="miliooo_messaging.repository.message"/>
+            <argument type="service" id="miliooo_messaging.read_status_manager_event_aware"/>
         </service>
 
     </services>
