@@ -14,6 +14,7 @@ use Miliooo\Messaging\User\ParticipantProviderInterface;
 use Miliooo\Messaging\Model\MessageInterface;
 use Miliooo\Messaging\Model\MessageMetaInterface;
 use Miliooo\Messaging\Model\ThreadInterface;
+use Miliooo\Messaging\Notifications\UnreadMessagesProviderInterface;
 
 /**
  * Twig extension class
@@ -33,13 +34,24 @@ class MessagingExtension extends \Twig_Extension
     protected $participantProvider;
 
     /**
+     * An unread messages provider instance.
+     *
+     * @var UnreadMessagesProviderInterface
+     */
+    protected $unreadMessagesProvider;
+
+    /**
      * Constructor.
      *
-     * @param ParticipantProviderInterface $participantProvider A participant Provider Instance
+     * @param ParticipantProviderInterface $participantProvider
+     * @param UnreadMessagesProviderInterface $unreadMessagesProvider
      */
-    public function __construct(ParticipantProviderInterface $participantProvider)
-    {
+    public function __construct(
+        ParticipantProviderInterface $participantProvider,
+        UnreadMessagesProviderInterface $unreadMessagesProvider
+    ) {
         $this->participantProvider = $participantProvider;
+        $this->unreadMessagesProvider = $unreadMessagesProvider;
     }
 
     /**
@@ -51,7 +63,8 @@ class MessagingExtension extends \Twig_Extension
     {
         return [
             'miliooo_messaging_is_new_read' => new \Twig_Function_Method($this, 'isMessageNewRead'),
-            'miliooo_messaging_thread_unread_count' => new \Twig_Function_Method($this, 'getThreadUnreadCount')
+            'miliooo_messaging_thread_unread_count' => new \Twig_Function_Method($this, 'getThreadUnreadCount'),
+            'miliooo_messaging_unread_messages_count' => new \Twig_Function_Method($this, 'getUnreadMessagesCount')
         ];
     }
 
@@ -104,6 +117,18 @@ class MessagingExtension extends \Twig_Extension
         }
 
         return $threadMeta->getUnreadMessageCount();
+    }
+
+    /**
+     * Gets the total unread messages count for the logged in user.
+     *
+     * @return integer The unread messages count for the logged in user
+     */
+    public function getUnreadMessagesCount()
+    {
+        $currentUser = $this->participantProvider->getAuthenticatedParticipant();
+
+        return $this->unreadMessagesProvider->getUnreadMessageCountForParticipant($currentUser);
     }
 
     /**

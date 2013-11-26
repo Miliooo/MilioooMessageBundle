@@ -16,7 +16,7 @@ use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\Messaging\Model\MessageMetaInterface;
 
 /**
- * Test file for MessagingExtension
+ * Test file for Miliooo\MessagingBundle\Twig\Extension\MessagingExtension
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
@@ -59,10 +59,16 @@ class MessagingExtensionTest extends \PHPUnit_Framework_TestCase
      */
     private $loggedInUser;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $unreadMessagesProvider;
+
     public function setUp()
     {
         $this->participantProvider = $this->getMock('Miliooo\Messaging\User\ParticipantProviderInterface');
-        $this->messagingExtension = new MessagingExtension($this->participantProvider);
+        $this->unreadMessagesProvider = $this->getMock('Miliooo\Messaging\Notifications\UnreadMessagesProviderInterface');
+        $this->messagingExtension = new MessagingExtension($this->participantProvider, $this->unreadMessagesProvider);
 
         $this->message = $this->getMock('Miliooo\Messaging\Model\MessageInterface');
         $this->messageMeta = $this->getMock('Miliooo\Messaging\Model\MessageMetaInterface');
@@ -148,6 +154,18 @@ class MessagingExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertArrayHasKey('miliooo_messaging_is_new_read', $this->messagingExtension->getFunctions());
         $this->assertArrayHasKey('miliooo_messaging_thread_unread_count', $this->messagingExtension->getFunctions());
+        $this->assertArrayHasKey('miliooo_messaging_unread_messages_count', $this->messagingExtension->getFunctions());
+    }
+
+    public function testGetUnreadMessagesCount()
+    {
+        $this->expectsLoggedInUser();
+        $this->unreadMessagesProvider->expects($this->once())
+            ->method('getUnreadMessageCountForParticipant')
+            ->with($this->loggedInUser)
+            ->will($this->returnValue(3));
+
+        $this->assertEquals(3, $this->messagingExtension->getUnreadMessagesCount());
     }
 
     protected function expectsLoggedInUser()
