@@ -1,7 +1,5 @@
 <?php
 
-namespace Miliooo\Messaging\User;
-
 /*
  * This file is part of the MilioooMessageBundle package.
  *
@@ -9,6 +7,8 @@ namespace Miliooo\Messaging\User;
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
+
+namespace Miliooo\Messaging\User;
 
 /**
  * This is the interface your user class should implement
@@ -18,7 +18,7 @@ namespace Miliooo\Messaging\User;
 interface ParticipantInterface
 {
     /**
-     * Gets an uniqie identifier for the participant
+     * Gets an unique identifier for the participant
      *
      * In most cases should be the id of the user but it can be anything
      * that uniquely represents a participant
