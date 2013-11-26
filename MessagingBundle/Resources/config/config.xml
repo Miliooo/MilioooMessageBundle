@@ -40,6 +40,10 @@
             <argument>error</argument>
         </service>
 
+        <service id="miliooo_messaging.notifications.unread_messages_provider_doctrine" class="Miliooo\Messaging\Notifications\UnreadMessagesProviderDoctrine">
+            <argument type="service" id="miliooo_messaging.repository.thread" />
+        </service>
+
     </services>
 
 </container>
