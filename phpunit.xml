@@ -8,10 +8,10 @@
         <log type="coverage-php" target="build/logs/coverage.cov"/>
     </logging>
     <testsuites>
-        <testsuite name="MiliooMessaging">
+        <testsuite name="MilioooMessaging">
             <directory suffix="Test.php">./Messaging/Tests</directory>
         </testsuite>
-        <testsuite name="MiliooMessagingBundle">
+        <testsuite name="MilioooMessagingBundle">
             <directory suffix="Test.php">./MessagingBundle/Tests</directory>
         </testsuite>
     </testsuites>
