@@ -14,7 +14,7 @@
     {% if pagerfanta.getNbResults > 0 %}
 
         {% for thread in pagerfanta.getCurrentPageResults %}
-            {% set unreadCount = miliooo_messaging_unread_message_count(thread) %}
+            {% set unreadCount = miliooo_messaging_thread_unread_count(thread) %}
             <tr>
                 <td>
                     <label>

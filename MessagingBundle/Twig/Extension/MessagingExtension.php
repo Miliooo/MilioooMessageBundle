@@ -51,7 +51,7 @@ class MessagingExtension extends \Twig_Extension
     {
         return [
             'miliooo_messaging_is_new_read' => new \Twig_Function_Method($this, 'isMessageNewRead'),
-            'miliooo_messaging_unread_message_count' => new \Twig_Function_Method($this, 'getUnreadMessageCount')
+            'miliooo_messaging_thread_unread_count' => new \Twig_Function_Method($this, 'getThreadUnreadCount')
         ];
     }
 
@@ -72,10 +72,12 @@ class MessagingExtension extends \Twig_Extension
 
         if ($messageMeta) {
             return (
-                //since it's not null the read status has changed
+                // if this is not null this means we changed the read status,
+                // Since we changed it in read it was unread before
                 $messageMeta->getPreviousReadStatus() !== null
                 &&
-                //the recent read status is read
+                //the current read status is already read, this is because we marked this message as read
+                // just before sending it to the output.
                 $messageMeta->getReadStatus() === MessageMetaInterface::READ_STATUS_READ
             );
         }
@@ -85,13 +87,13 @@ class MessagingExtension extends \Twig_Extension
     }
 
     /**
-     * Checks how many unread messages a topic has.
+     * Checks how many unread messages a thread has for the logged in participant
      *
-     * @param ThreadInterface $thread
+     * @param ThreadInterface $thread The thread we check
      *
-     * @return integer
+     * @return integer The number of unread messages for this thread for the participant
      */
-    public function getUnreadMessageCount(ThreadInterface $thread)
+    public function getThreadUnreadCount(ThreadInterface $thread)
     {
         $currentUser = $this->participantProvider->getAuthenticatedParticipant();
         $threadMeta = $thread->getThreadMetaForParticipant($currentUser);

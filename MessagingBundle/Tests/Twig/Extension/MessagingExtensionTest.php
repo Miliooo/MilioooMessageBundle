@@ -79,10 +79,7 @@ class MessagingExtensionTest extends \PHPUnit_Framework_TestCase
     public function testIsMessageReadWithNoMessageMetaForParticipant()
     {
         $this->expectsLoggedInUser();
-        $this->message->expects($this->once())
-            ->method('getMessageMetaForParticipant')
-            ->with($this->loggedInUser)
-            ->will($this->returnValue(null));
+        $this->expectsNoMessageMetaForLoggedInUser();
 
         $this->assertFalse($this->messagingExtension->isMessageNewRead($this->message));
     }
@@ -91,9 +88,11 @@ class MessagingExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectsLoggedInUser();
         $this->expectsMessageMetaForLoggedInUser();
+        //read status has not changed
         $this->messageMeta->expects($this->once())
             ->method('getPreviousReadStatus')
             ->will($this->returnValue(null));
+        //so it cant be a new read
         $this->messageMeta->expects($this->never())
             ->method('getReadStatus');
 
@@ -116,10 +115,7 @@ class MessagingExtensionTest extends \PHPUnit_Framework_TestCase
     public function testIsNewReadWReturnsTrue()
     {
         $this->expectsLoggedInUser();
-        $this->message->expects($this->once())
-            ->method('getMessageMetaForParticipant')
-            ->with($this->loggedInUser)
-            ->will($this->returnValue($this->messageMeta));
+        $this->expectsMessageMetaForLoggedInUser();
 
         $this->messageMeta->expects($this->once())->method('getPreviousReadStatus')
             ->will($this->returnValue(MessageMetaInterface::READ_STATUS_NEVER_READ));
@@ -130,33 +126,28 @@ class MessagingExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->messagingExtension->isMessageNewRead($this->message));
     }
 
-    public function testGetUnreadMessageCount()
+    public function testGetThreadUnreadCount()
     {
         $this->expectsLoggedInUser();
-
-        $this->thread->expects($this->once())->method('getThreadMetaForParticipant')
-            ->with($this->loggedInUser)
-            ->will($this->returnValue($this->threadMeta));
+        $this->expectsThreadMetaForLoggedInUser();
 
         $this->threadMeta->expects($this->once())->method('getUnreadMessageCount')
             ->will($this->returnValue(5));
 
-        $this->assertEquals(5, $this->messagingExtension->getUnreadMessageCount($this->thread));
+        $this->assertEquals(5, $this->messagingExtension->getThreadUnreadCount($this->thread));
     }
 
     public function testGetUnreadMessageCountWhenParticipantNotThreadParticipant()
     {
         $this->expectsLoggedInUser();
-        $this->thread->expects($this->once())->method('getThreadMetaForParticipant')
-            ->with($this->loggedInUser)
-            ->will($this->returnValue(null));
-        $this->assertEquals(0, $this->messagingExtension->getUnreadMessageCount($this->thread));
+        $this->expectsNoThreadMetaForLoggedInUser();
+        $this->assertEquals(0, $this->messagingExtension->getThreadUnreadCount($this->thread));
     }
 
     public function testGetFunctions()
     {
         $this->assertArrayHasKey('miliooo_messaging_is_new_read', $this->messagingExtension->getFunctions());
-        $this->assertArrayHasKey('miliooo_messaging_unread_message_count', $this->messagingExtension->getFunctions());
+        $this->assertArrayHasKey('miliooo_messaging_thread_unread_count', $this->messagingExtension->getFunctions());
     }
 
     protected function expectsLoggedInUser()
@@ -173,5 +164,27 @@ class MessagingExtensionTest extends \PHPUnit_Framework_TestCase
             ->method('getMessageMetaForParticipant')
             ->with($this->loggedInUser)
             ->will($this->returnValue($this->messageMeta));
+    }
+
+    protected function expectsThreadMetaForLoggedInUser()
+    {
+        $this->thread->expects($this->once())->method('getThreadMetaForParticipant')
+            ->with($this->loggedInUser)
+            ->will($this->returnValue($this->threadMeta));
+    }
+
+    protected function expectsNoThreadMetaForLoggedInUser()
+    {
+        $this->thread->expects($this->once())->method('getThreadMetaForParticipant')
+            ->with($this->loggedInUser)
+            ->will($this->returnValue(null));
+    }
+
+    protected function expectsNoMessageMetaForLoggedInUser()
+    {
+        $this->message->expects($this->once())
+            ->method('getMessageMetaForParticipant')
+            ->with($this->loggedInUser)
+            ->will($this->returnValue(null));
     }
 }
