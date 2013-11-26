@@ -108,6 +108,15 @@ interface ThreadRepositoryInterface
     public function save(ThreadInterface $thread, $flush = true);
 
     /**
+     * Gets the unread message count for a given participant.
+     *
+     * @param ParticipantInterface $participant The participant for whom we get the unread count
+     *
+     * @return integer The unread message count
+     */
+    public function getUnreadMessageCountForParticipant(ParticipantInterface $participant);
+
+    /**
      * Calls flush to the entityManager.
      *
      * If you want to persist multiple objects but only flush once you can call this method.

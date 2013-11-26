@@ -114,6 +114,20 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
     /**
      * {@inheritdoc}
      */
+    public function getUnreadMessageCountForParticipant(ParticipantInterface $participant)
+    {
+
+        return $this->createQueryBuilder('t')
+            ->select('SUM(tm.unreadMessageCount) as total')
+            ->innerJoin('t.threadMeta', 'tm', Join::WITH, 'tm.participant = :participant')
+            ->setParameter('participant', $participant)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function save(ThreadInterface $thread, $flush = true)
     {
         $em = $this->getEntityManager();
