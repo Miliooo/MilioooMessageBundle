@@ -14,6 +14,7 @@ use Miliooo\Messaging\User\ParticipantInterface;
 use Miliooo\MessagingBundle\Controller\NewThreadController;
 use Miliooo\Messaging\TestHelpers\ParticipantTestHelper;
 use Miliooo\Messaging\Helpers\FlashMessages\FlashMessageProviderInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Test file for Miliooo\MessagingBundle\Controller\NewThreadController
@@ -99,7 +100,7 @@ class NewThreadControllerTest extends \PHPUnit_Framework_TestCase
         $this->expectsFormProcessingWillReturn(false);
         $this->expectsTwigRendering();
         $this->flashMessageProvider->expects($this->never())->method('addFlash');
-        $this->controller->createAction();
+        $this->controller->createAction(new Request());
     }
 
     public function testCreateActionWithProcessedForm()
@@ -113,7 +114,7 @@ class NewThreadControllerTest extends \PHPUnit_Framework_TestCase
             ->with('miliooo_message_thread_new')
             ->will($this->returnValue('http://www.test.com'));
 
-        $this->controller->createAction();
+        $this->controller->createAction(new Request());
     }
 
     protected function expectsLoggedInUser()

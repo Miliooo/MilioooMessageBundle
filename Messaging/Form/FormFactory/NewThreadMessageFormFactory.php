@@ -84,7 +84,7 @@ class NewThreadMessageFormFactory extends AbstractMessageFormFactory
      */
     protected function maybeSetRecipient($recipient, $formModel)
     {
-        $recipient = $this->transformer->transform($recipient);
+        $recipient = $this->transformer->reverseTransform($recipient);
         if ($recipient instanceof ParticipantInterface) {
             $formModel->setRecipient($recipient);
         }

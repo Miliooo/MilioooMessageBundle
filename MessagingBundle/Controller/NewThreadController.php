@@ -18,6 +18,7 @@ use Miliooo\Messaging\User\ParticipantProviderInterface;
 use Miliooo\Messaging\Helpers\FlashMessages\FlashMessageProviderInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Controller for adding new threads.
@@ -104,12 +105,16 @@ class NewThreadController
      * When the form is submitted it has to process the creation of that thread
      * and return an response.
      *
+     * @param Request $request
+     *
      * @return Response
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $sender = $this->participantProvider->getAuthenticatedParticipant();
-        $form = $this->formFactory->create($sender);
+
+        $recipient = $request->query->get('recipient', false);
+        $form = $this->formFactory->create($sender, $recipient);
         $processed = $this->formHandler->process($form);
         if ($processed) {
             return $this->doProcessValidForm();

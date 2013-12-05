@@ -30,6 +30,7 @@ class NewThreadMessageFormFactoryTest extends \PHPUnit_Framework_TestCase
     private $formType;
     private $formName;
     private $modelClassName;
+    private $transformer;
 
     public function setUp()
     {
@@ -37,7 +38,14 @@ class NewThreadMessageFormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->formType = $this->getMockBuilder('Symfony\Component\Form\AbstractType')->disableOriginalConstructor()->getMock();
         $this->formName = 'message';
         $this->modelClassName = '\Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipient';
-        $this->newThreadFormfactory = new NewThreadMessageFormFactory($this->formFactory, $this->formType, $this->formName, $this->modelClassName);
+        $this->transformer = $this->getMock('Symfony\Component\Form\DataTransformerInterface');
+        $this->newThreadFormfactory = new NewThreadMessageFormFactory(
+            $this->formFactory,
+            $this->formType,
+            $this->formName,
+            $this->modelClassName,
+            $this->transformer
+        );
     }
 
     public function testCreateCallsFormFactoryWithRightArguments()
@@ -45,7 +53,15 @@ class NewThreadMessageFormFactoryTest extends \PHPUnit_Framework_TestCase
         $sender = new ParticipantTestHelper('sender');
 
         $newThreadFormFactoryMock = $this->getMockBuilder('Miliooo\Messaging\Form\FormFactory\NewThreadMessageFormFactory')
-            ->setConstructorArgs(array($this->formFactory, $this->formType, $this->formName, $this->modelClassName))
+            ->setConstructorArgs(
+                [
+                    $this->formFactory,
+                    $this->formType,
+                    $this->formName,
+                    $this->modelClassName,
+                    $this->transformer
+                ]
+            )
             ->setMethods(array('createNewFormModel'))
             ->getMock();
 
