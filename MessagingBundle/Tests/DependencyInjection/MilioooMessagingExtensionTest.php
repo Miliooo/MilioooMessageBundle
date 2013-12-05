@@ -104,6 +104,7 @@ thread_class: \Acme\MyBundle\Entity\Thread
 thread_meta_class: \Acme\MyBundle\Entity\ThreadMeta
 message_class: \Acme\MyBundle\Entity\Message
 message_meta_class: \Acme\MyBundle\Entity\MessageMeta
+username_object_transformer: acme_my_foo_service
 EOF;
         $parser = new Parser();
 
