@@ -4,11 +4,11 @@
 
     <h2>{% trans from 'MilioooMessagingBundle' %}title.send_new_message{% endtrans %}</h2>
 
-<form action="" method="post" {{ form_enctype(form) }}>
+        {{ form_start(form) }}
         {{ form_widget(form) }}
     <p>
         <button type="submit">{% trans from 'MilioooMessagingBundle' %}action.create_new_thread{% endtrans %}</button>
     </p>
-</form>
+        {{ form_end(form) }}
 
 {% endblock %}
