@@ -16,7 +16,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\DataTransformerInterface;
-
+use Symfony\Component\Form\Exception\TransformationFailedException;
 /**
  * The form factory for new thread messages
  *
@@ -84,7 +84,13 @@ class NewThreadMessageFormFactory extends AbstractMessageFormFactory
      */
     protected function maybeSetRecipient($recipient, $formModel)
     {
-        $recipient = $this->transformer->reverseTransform($recipient);
+        try {
+            $recipient = $this->transformer->reverseTransform($recipient);
+        } catch (TransformationFailedException $e) {
+            return;
+        }
+
+
         if ($recipient instanceof ParticipantInterface) {
             $formModel->setRecipient($recipient);
         }
