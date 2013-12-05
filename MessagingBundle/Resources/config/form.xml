@@ -9,7 +9,6 @@
         <service id="miliooo_message.new_thread_form.type" class="Miliooo\Messaging\Form\FormType\NewThreadFormType" public="false" />
 
         <service id="miliooo_messaging.new_thread_form.factory.default" class="Miliooo\Messaging\Form\FormFactory\NewThreadMessageFormFactory">
-            <argument type="service" id="miliooo_messaging.username_object_transformer"/>
             <argument type="service" id="form.factory" />
             <argument type="service" id="miliooo_message.new_thread_form.type" />
             <argument>Message</argument>
