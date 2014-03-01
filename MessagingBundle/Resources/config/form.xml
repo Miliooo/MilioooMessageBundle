@@ -6,7 +6,7 @@
 
     <services>
 
-        <service id="miliooo_message.new_thread_form.type" class="Miliooo\Messaging\Form\FormType\NewThreadFormType" />
+        <service id="miliooo_message.new_thread_form.type.default" class="Miliooo\Messaging\Form\FormType\NewThreadFormType" />
 
         <service id="miliooo_messaging.new_thread_form.factory.default" class="Miliooo\Messaging\Form\FormFactory\NewThreadMessageFormFactory">
             <argument type="service" id="form.factory" />

@@ -41,6 +41,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('factory')->defaultValue('miliooo_messaging.new_thread_form.factory.default')->cannotBeEmpty()->end()
                         ->scalarNode('model')->defaultValue('Miliooo\Messaging\Form\FormModel\NewThreadSingleRecipient')->cannotBeEmpty()->end()
+                        ->scalarNode('type')->defaultValue('miliooo_message.new_thread_form.type.default')->cannotBeEmpty()->end()
                     ->end()
             ->end();
 
