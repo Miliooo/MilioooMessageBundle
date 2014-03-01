@@ -45,7 +45,7 @@
             <argument type="service" id="miliooo_messaging.new_message_manager" />
         </service>
 
-        <service id="miliooo_messaging.form.type.username" class="Miliooo\Messaging\Form\FormType\UsernameFormType">
+        <service id="miliooo_messaging.form.type.username" class="Miliooo\Messaging\Form\FormType\UserNameFormType">
             <argument type="service" id="miliooo_messaging.username_object_transformer" />
             <tag name="form.type" alias="miliooo_messaging_user_transformer" />
         </service>
