@@ -44,7 +44,7 @@ class NewThreadFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('recipient', 'username_selector', ['label' => 'form.label.recipient'])
+            ->add('recipient', 'miliooo_messaging_user_transformer', ['label' => 'form.label.recipient'])
             ->add('subject', 'text', ['label' => 'form.label.subject'])
             ->add('body', 'textarea', ['label' => 'form.label.body']);
     }
