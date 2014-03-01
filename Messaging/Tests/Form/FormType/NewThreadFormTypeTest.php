@@ -45,7 +45,7 @@ class NewThreadFormTypeTest extends \PHPUnit_Framework_TestCase
 
         $formBuilder->expects($this->at(0))->method('add')->with(
             'recipient',
-            'username_selector',
+            'miliooo_messaging_user_transformer',
             ['label' => 'form.label.recipient']
         )
             ->will($this->returnValue($formBuilder));
