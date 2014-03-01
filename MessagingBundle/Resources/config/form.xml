@@ -6,31 +6,31 @@
 
     <services>
 
-        <service id="miliooo_message.new_thread_form.type.default" class="Miliooo\Messaging\Form\FormType\NewThreadFormType" />
+        <service id="miliooo_messaging.new_thread_form.type.default" class="Miliooo\Messaging\Form\FormType\NewThreadFormType" />
 
         <service id="miliooo_messaging.new_thread_form.factory.default" class="Miliooo\Messaging\Form\FormFactory\NewThreadMessageFormFactory">
             <argument type="service" id="form.factory" />
-            <argument type="service" id="miliooo_message.new_thread_form.type" />
+            <argument type="service" id="miliooo_messaging.new_thread_form.type" />
             <argument>Message</argument>
             <argument>%miliooo_messaging.new_thread_form.model%</argument>
             <argument type="service" id="miliooo_messaging.username_object_transformer" />
         </service>
 
-        <service id="miliooo_message.new_single_thread_default_processor" class="Miliooo\Messaging\Form\FormModelProcessor\NewSingleThreadDefaultProcessor">
+        <service id="miliooo_messaging.new_single_thread_default_processor" class="Miliooo\Messaging\Form\FormModelProcessor\NewSingleThreadDefaultProcessor">
             <argument type="service" id="miliooo_messaging.new_thread_builder" />
             <argument type="service" id="miliooo_messaging.new_message_manager" />
         </service>
 
         <service id="miliooo_messaging.new_thread_form.handler" class="Miliooo\Messaging\Form\FormHandler\NewSingleThreadFormHandler" scope="request" public="false">
             <argument type="service" id="request" />
-            <argument type="service" id="miliooo_message.new_single_thread_default_processor" />
+            <argument type="service" id="miliooo_messaging.new_single_thread_default_processor" />
         </service>
 
-        <service id="miliooo_message.reply_form.type" class="Miliooo\Messaging\Form\FormType\ReplyThreadFormType" public="false" />
+        <service id="miliooo_messaging.reply_form.type" class="Miliooo\Messaging\Form\FormType\ReplyThreadFormType" public="false" />
 
         <service id="miliooo_messaging.reply_form.factory" class="Miliooo\Messaging\Form\FormFactory\ReplyMessageFormFactory" >
             <argument type="service" id="form.factory" />
-            <argument type="service" id="miliooo_message.reply_form.type" />
+            <argument type="service" id="miliooo_messaging.reply_form.type" />
             <argument>Reply</argument>
             <argument>Miliooo\Messaging\Form\FormModel\ReplyMessage</argument>
         </service>
