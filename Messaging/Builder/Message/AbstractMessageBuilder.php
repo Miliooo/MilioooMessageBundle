@@ -335,7 +335,7 @@ abstract class AbstractMessageBuilder
         $status = $threadMeta->getStatus();
         if (in_array($status, [ThreadMetaInterface::STATUS_ARCHIVED], true)) {
             $updateStatus = new ThreadStatus(ThreadMetaInterface::STATUS_ACTIVE);
-            $threadMeta->setStatus($updateStatus);
+            $threadMeta->setStatus($updateStatus->getThreadStatus());
         }
     }
 }
