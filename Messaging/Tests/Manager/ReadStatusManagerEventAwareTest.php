@@ -80,31 +80,20 @@ class ReadStatusManagerEventAwareTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdateReadStatusFiresEventWhenReadStatusChanged()
     {
-        //expects call to the readstatusmanager to get the updates
+        //the readstatus manager returns an array with updated messages
         $this->readStatusManager->expects($this->once())
             ->method('updateReadStatusForMessageCollection')
             ->with($this->newReadStatus, $this->participant, [$this->message])
             ->will($this->returnValue([$this->message]));
 
-        //expects call to the message to get the messagemeta for the participant
-        $this->message->expects($this->once())->method('getMessageMetaForParticipant')
-            ->with($this->participant)
-            ->will($this->returnValue($this->messageMeta));
-
-        //expects call on the read status
-        $this->messageMeta->expects($this->once())->method('getReadStatus')
-            ->will($this->returnValue(MessageMetaInterface::READ_STATUS_READ));
-
-        //expects call on the previous read status
-        $this->messageMeta->expects($this->once())->method('getPreviousReadStatus')
-            ->will($this->returnValue(MessageMetaInterface::READ_STATUS_NEVER_READ));
 
         // create the event
         $event = new ReadStatusMessageEvent(
             $this->message,
             $this->participant
-        );
 
+        );
+        //we expect a dispatch call
         $this->eventDispatcher->expects($this->once())->method('dispatch')
             ->with(MilioooMessagingEvents::READ_STATUS_CHANGED, $event);
 
@@ -119,12 +108,13 @@ class ReadStatusManagerEventAwareTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdateReadStatusDoesNotDispatchWhenNoUpdates()
     {
-        //expects call to the readstatusmanager to get the updates
+        //the read status manager returns an empty array so no messages have been updated
         $this->readStatusManager->expects($this->once())
             ->method('updateReadStatusForMessageCollection')
             ->with($this->newReadStatus, $this->participant, [$this->message])
             ->will($this->returnValue([]));
 
+        //we don't expect a dispatch call
         $this->eventDispatcher->expects($this->never())->method('dispatch');
 
         $result = $this->object->updateReadStatusForMessageCollection(

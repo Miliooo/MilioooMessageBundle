@@ -98,11 +98,7 @@ class ReadStatusManagerEventAware implements ReadStatusManagerInterface
      */
     protected function dispatchMessage(MessageInterface $message, ParticipantInterface $participant)
     {
-        $metaForParticipant = $message->getMessageMetaForParticipant($participant);
-        $readStatus = $metaForParticipant->getReadStatus();
-        $oldReadStatus = $metaForParticipant->getPreviousReadStatus();
-
-        $event = new ReadStatusMessageEvent($message, $participant, $oldReadStatus, $readStatus);
+        $event = new ReadStatusMessageEvent($message, $participant);
         $this->eventDispatcher->dispatch(MilioooMessagingEvents::READ_STATUS_CHANGED, $event);
     }
 }
