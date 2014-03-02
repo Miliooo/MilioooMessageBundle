@@ -33,8 +33,10 @@ class ArchivedProviderPagerFanta extends AbstractProviderPagerFanta implements A
     protected $itemsPerPage;
 
     /**
+     * Constructor.
+     *
      * @param ThreadRepositoryInterface $threadRepository A thread repository instance
-     * @param integer $itemsPerPage Total items per page
+     * @param integer                   $itemsPerPage     Total items per page
      */
     public function __construct(ThreadRepositoryInterface $threadRepository, $itemsPerPage = 15)
     {
