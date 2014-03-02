@@ -38,6 +38,8 @@ interface ThreadProviderInterface
      *
      * @param integer              $threadId    The unique thread id
      * @param ParticipantInterface $participant The participant for whom we find the thread
+     *
+     * @return ThreadInterface|null The thread when found or null when not found
      */
     public function findThreadForParticipant($threadId, ParticipantInterface $participant);
 }
