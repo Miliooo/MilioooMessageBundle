@@ -32,7 +32,7 @@ class MilioooMessagingExtensionTest extends \PHPUnit_Framework_TestCase
         $loader = new MilioooMessagingExtension();
         $config = $this->getEmptyConfig();
         unset($config['message_class']);
-        $loader->load(array($config), new ContainerBuilder());
+        $loader->load([$config], new ContainerBuilder());
     }
 
     /**
@@ -43,7 +43,7 @@ class MilioooMessagingExtensionTest extends \PHPUnit_Framework_TestCase
         $loader = new MilioooMessagingExtension();
         $config = $this->getEmptyConfig();
         unset($config['message_meta_class']);
-        $loader->load(array($config), new ContainerBuilder());
+        $loader->load([$config], new ContainerBuilder());
     }
 
     /**
@@ -54,7 +54,7 @@ class MilioooMessagingExtensionTest extends \PHPUnit_Framework_TestCase
         $loader = new MilioooMessagingExtension();
         $config = $this->getEmptyConfig();
         unset($config['thread_class']);
-        $loader->load(array($config), new ContainerBuilder());
+        $loader->load([$config], new ContainerBuilder());
     }
 
     /**
@@ -65,7 +65,7 @@ class MilioooMessagingExtensionTest extends \PHPUnit_Framework_TestCase
         $loader = new MilioooMessagingExtension();
         $config = $this->getEmptyConfig();
         unset($config['thread_meta_class']);
-        $loader->load(array($config), new ContainerBuilder());
+        $loader->load([$config], new ContainerBuilder());
     }
 
     public function testMessagingLoadModelClassesWithDefaults()
@@ -88,7 +88,7 @@ class MilioooMessagingExtensionTest extends \PHPUnit_Framework_TestCase
         $this->containerBuilder = new ContainerBuilder();
         $loader = new MilioooMessagingExtension();
         $config = $this->getEmptyConfig();
-        $loader->load(array($config), $this->containerBuilder);
+        $loader->load([$config], $this->containerBuilder);
         $this->assertTrue($this->containerBuilder instanceof ContainerBuilder);
     }
 

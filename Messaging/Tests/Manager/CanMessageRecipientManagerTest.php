@@ -46,7 +46,7 @@ class CanMessageRecipientManagerTest extends \PHPUnit_Framework_TestCase
     {
         $this->loggedInUser = new ParticipantTestHelper('1');
         $this->recipient = new ParticipantTestHelper('2');
-        $this->specification = $this->getMock('Miliooo\Messaging\Specifications\CanMessageRecipientSpecification');
+        $this->specification = $this->getMock('Miliooo\Messaging\Specifications\CanMessageRecipientInterface');
         $this->manager = new CanMessageRecipientManager($this->specification);
     }
 

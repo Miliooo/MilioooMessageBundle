@@ -50,5 +50,7 @@ class MilioooMessagingExtension extends Extension
         $container->setAlias('miliooo_messaging.participant_provider', $config['participant_provider']);
         $container->setAlias('miliooo_messaging.new_thread_form.factory', $config['new_thread_form']['factory']);
         $container->setAlias('miliooo_messaging.username_object_transformer', $config['username_object_transformer']);
+
+        $container->setAlias('miliooo_messaging.specification.can_message_recipient', $config['specification']['can_message_recipient']);
     }
 }

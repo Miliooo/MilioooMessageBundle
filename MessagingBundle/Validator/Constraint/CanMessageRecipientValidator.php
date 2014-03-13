@@ -56,13 +56,30 @@ class CanMessageRecipientValidator extends ConstraintValidator
      *
      * @param ParticipantInterface $recipient  The recipient we check
      * @param Constraint           $constraint The CanMessageRecipient constraint
+     *
      */
     public function validate($recipient, Constraint $constraint)
     {
+        $constraint = $this->getConstraint($constraint);
+
         $loggedInUser = $this->participantProvider->getAuthenticatedParticipant();
 
         if ($this->manager->canMessageRecipient($loggedInUser, $recipient) === false) {
-            $this->context->addViolation($constraint->message);
+            //get the error code from the manager
+            $errorCode = $this->manager->getErrorMessage();
+            //use the error code from the manager or the default error code if the manager returns no error code
+            $errorMessage = $errorCode ? $errorCode : $constraint->message;
+            $this->context->addViolation($errorMessage);
         }
+    }
+
+    /**
+     * @param CanMessageRecipient $constraint
+     *
+     * @return CanMessageRecipient
+     */
+    protected function getConstraint(CanMessageRecipient $constraint)
+    {
+        return $constraint;
     }
 }

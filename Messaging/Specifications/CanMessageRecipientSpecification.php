@@ -19,18 +19,24 @@ use Miliooo\Messaging\User\ParticipantInterface;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class CanMessageRecipientSpecification
+class CanMessageRecipientSpecification implements CanMessageRecipientInterface
 {
+
+    protected $error;
+
     /**
-     * Decides whether the current participant can send a message to the given recipient.
-     *
-     * @param ParticipantInterface $currentParticipant The current participant
-     * @param ParticipantInterface $recipient          The recipient
-     *
-     * @return boolean true if the participant can send a message to the recipient, false otherwise
+     * {@inheritdoc}
      */
     public function isSatisfiedBy(ParticipantInterface $currentParticipant, ParticipantInterface $recipient)
     {
         return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getErrorMessage()
+    {
+        return $this->error;
     }
 }

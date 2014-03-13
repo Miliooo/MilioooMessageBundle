@@ -28,4 +28,6 @@ interface CanMessageRecipientManagerInterface
      * @return boolean true if the loggedInUser can send a message to the recipient, false otherwise.
      */
     public function canMessageRecipient(ParticipantInterface $loggedInUser, ParticipantInterface $recipient);
+
+    public function getErrorMessage();
 }
