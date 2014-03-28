@@ -97,9 +97,9 @@ class ThreadActionsController
         $loggedInUser = $this->participantProvider->getAuthenticatedParticipant();
 
         //no action needed here... probably no threads selected but pressed submit
-        if (!is_array($threadIds) || !$threadAction) {
+        if (empty($threadIds) || !$threadAction) {
             //the user has not selected any threads
-            if (!is_array($threadIds)) {
+            if (empty($threadIds)) {
                 //add flash messsage that they have no threads selected
                 $this->flashMessageProvider->addFlash(FlashMessageProviderInterface::TYPE_ERROR, 'flash.thread_updates.no_threads_selected');
             } else {
@@ -135,13 +135,7 @@ class ThreadActionsController
 
     protected function getThreadIdsFromRequest(Request $request)
     {
-        $threadIds = $request->request->get('selected_threads');
-
-        if (empty($threadIds) || !is_array($threadIds)) {
-            return false;
-        }
-
-        return $threadIds;
+        return $request->request->get('selected_threads', []);
     }
 
     /**
