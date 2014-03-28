@@ -21,13 +21,12 @@ use Miliooo\Messaging\ValueObjects\ThreadStatus;
  */
 interface ThreadStatusManagerInterface
 {
-
     /**
      * Updates the thread status for a given participant.
      *
      * @param ThreadStatus         $newThreadStatus The new thread status
-     * @param ThreadInterface      $thread       The thread for whom we update the status
-     * @param ParticipantInterface $participant  The participant for whom we update the status
+     * @param ThreadInterface      $thread          The thread for whom we update the status
+     * @param ParticipantInterface $participant     The participant for whom we update the status
      *
      * @return boolean true if the thread status was updated false otherwise
      */
