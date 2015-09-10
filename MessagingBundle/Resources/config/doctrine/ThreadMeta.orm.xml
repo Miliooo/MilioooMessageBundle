@@ -7,7 +7,7 @@
     <mapped-superclass name="Miliooo\MessagingBundle\Entity\ThreadMeta">
 
         <unique-constraints>
-            <unique-constraint columns="thread_id, participant_id" name="search_idx" />
+            <unique-constraint columns="thread_id,participant_id" name="search_idx" />
         </unique-constraints>
 
         <field name="status" column="status" type="smallint"/>
