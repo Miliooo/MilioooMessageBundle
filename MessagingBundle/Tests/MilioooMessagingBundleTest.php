@@ -30,13 +30,4 @@ class MilioooMessagingBundleTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('Symfony\Component\HttpKernel\Bundle\BundleInterface', $this->MilioooMessagingBundle);
     }
-
-    //useless test but we'll know if we add a compilerpass to update this
-    public function testBuild()
-    {
-        $container = $this->getMock('\Symfony\Component\DependencyInjection\ContainerBuilder');
-        $container->expects($this->never())->method('addCompilerPass');
-        $bundle = new MilioooMessagingBundle();
-        $bundle->build($container);
-    }
 }
