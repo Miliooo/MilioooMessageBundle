@@ -93,7 +93,7 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
             ->andWhere('tm.status = :status')
             ->setParameter('status', ThreadMetaInterface::STATUS_ACTIVE, \PDO::PARAM_INT)
             ->andWhere('tm.lastMessageDate IS NOT NULL')
-            ->orderBy('tm.lastMessageDate', 'DESC');
+            ->orderBy('t.id', 'DESC');
     }
 
     /**
@@ -108,7 +108,7 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
             ->andWhere('tm.status = :status')
             ->setParameter('status', ThreadMetaInterface::STATUS_ACTIVE, \PDO::PARAM_INT)
             ->andWhere('tm.lastParticipantMessageDate IS NOT NULL')
-            ->orderBy('tm.lastParticipantMessageDate', 'DESC');
+            ->orderBy('t.id', 'DESC');
     }
 
     /**
@@ -165,7 +165,7 @@ class ThreadRepository extends EntityRepository implements ThreadRepositoryInter
             ->setParameter('participant', $participant)
             ->andWhere('tm.status = :status')
             ->setParameter('status', ThreadMetaInterface::STATUS_ARCHIVED, \PDO::PARAM_INT)
-            ->orderBy('tm.lastMessageDate', 'DESC');
+            ->orderBy('t.id', 'DESC');
     }
 
     /**
