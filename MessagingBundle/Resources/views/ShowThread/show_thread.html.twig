@@ -13,7 +13,7 @@
     <div class="panel panel-default" id="message-{{ message.id }}">
         <div class="panel-heading">{{ message.sender|e}} {{ message.createdAt|date}} {{ newReadInfo }}</div>
         <div class="panel-body">
-            {{ message.body }}
+            {{ message.body|nl2br }}
         </div>
     </div>
 {% endfor %}
