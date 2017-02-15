@@ -40,12 +40,7 @@ class MessagingExtension extends \Twig_Extension
      */
     protected $unreadMessagesProvider;
 
-    /**
-     * Constructor.
-     *
-     * @param ParticipantProviderInterface $participantProvider
-     * @param UnreadMessagesProviderInterface $unreadMessagesProvider
-     */
+
     public function __construct(
         ParticipantProviderInterface $participantProvider,
         UnreadMessagesProviderInterface $unreadMessagesProvider
