@@ -62,9 +62,9 @@ class MessagingExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'miliooo_messaging_is_new_read' => new \Twig_Function_Method($this, 'isMessageNewRead'),
-            'miliooo_messaging_thread_unread_count' => new \Twig_Function_Method($this, 'getThreadUnreadCount'),
-            'miliooo_messaging_unread_messages_count' => new \Twig_Function_Method($this, 'getUnreadMessagesCount')
+            new \Twig_SimpleFunction('miliooo_messaging_is_new_read', array($this, 'isMessageNewRead')),
+            new \Twig_SimpleFunction('miliooo_messaging_thread_unread_count', array($this, 'getThreadUnreadCount')),
+            new \Twig_SimpleFunction('miliooo_messaging_unread_messages_count', array($this, 'getUnreadMessagesCount')),
         ];
     }
 
