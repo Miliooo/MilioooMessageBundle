@@ -15,6 +15,7 @@ use Miliooo\Messaging\Model\MessageInterface;
 use Miliooo\Messaging\Model\MessageMetaInterface;
 use Miliooo\Messaging\Model\ThreadInterface;
 use Miliooo\Messaging\Notifications\UnreadMessagesProviderInterface;
+use Twig\TwigFunction;
 
 /**
  * Twig extension class
@@ -40,7 +41,12 @@ class MessagingExtension extends \Twig_Extension
      */
     protected $unreadMessagesProvider;
 
-
+    /**
+     * Constructor.
+     *
+     * @param ParticipantProviderInterface $participantProvider
+     * @param UnreadMessagesProviderInterface $unreadMessagesProvider
+     */
     public function __construct(
         ParticipantProviderInterface $participantProvider,
         UnreadMessagesProviderInterface $unreadMessagesProvider
@@ -57,9 +63,9 @@ class MessagingExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('miliooo_messaging_is_new_read', array($this, 'isMessageNewRead')),
-            new \Twig_SimpleFunction('miliooo_messaging_thread_unread_count', array($this, 'getThreadUnreadCount')),
-            new \Twig_SimpleFunction('miliooo_messaging_unread_messages_count', array($this, 'getUnreadMessagesCount')),
+            new TwigFunction('miliooo_messaging_is_new_read', [$this, 'isMessageNewRead']),
+            new TwigFunction('miliooo_messaging_thread_unread_count', [$this, 'getThreadUnreadCount']),
+            new TwigFunction('miliooo_messaging_unread_messages_count', [$this, 'getUnreadMessagesCount']),
         ];
     }
 
